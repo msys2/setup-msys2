@@ -3,6 +3,7 @@ const io = require('@actions/io');
 const exec = require('@actions/exec');
 const tc = require('@actions/tool-cache');
 const path = require('path');
+const fs = require('fs');
 
 async function run() {
   try {
@@ -18,9 +19,10 @@ async function run() {
 
     await exec.exec(`"${tar}"`, ['-x', '-J', '--force-local', '-C', normalizedDest, '-f', msys2base])
 
-    const msys2do = await tc.downloadTool('https://raw.githubusercontent.com/numworks/setup-msys2/master/msys2do.cmd')
-
-    io.mv(msys2do, path.join(dest, "msys2do.cmd"))
+    fs.writeFileSync(
+      path.join(dest, 'msys2do.cmd'),
+      fs.readFileSync(path.join(__dirname, 'msys2do.cmd'))
+    )
 
     core.addPath(dest);
   }
