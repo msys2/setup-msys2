@@ -1,0 +1,32 @@
+{
+  "name": "setup-msys2",
+  "version": "1.0.0",
+  "description": "Msys2 GitHub action",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/numworks/setup-msys2.git"
+  },
+  "keywords": [
+    "GitHub",
+    "Actions",
+    "Msys2"
+  ],
+  "author": "NumWorks",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/numworks/setup-msys2/issues"
+  },
+  "homepage": "https://github.com/numworks/setup-msys2",
+  "dependencies": {
+    "@actions/core": "^1.1.1",
+    "@actions/exec": "^1.0.1",
+    "@actions/tool-cache": "1.1.2"
+  },
+  "devDependencies": {
+    "eslint": "^6.3.0"
+  }
+}

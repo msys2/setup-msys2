@@ -1,0 +1,6 @@
+name: 'Setup Msys2 environment'
+description: 'Setup an Msys2 environment and provide an msys2do helper'
+author: 'NumWorks'
+runs:
+  using: 'node12'
+  main: 'index.js'
