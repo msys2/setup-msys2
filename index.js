@@ -33,9 +33,11 @@ async function run() {
     ])
 
     let cmd = path.join(dest, 'msys2do.cmd')
-    fs.writeFileSync(cmd, ['setlocal', 'set MSYS2_PATH_TYPE=strict', 'set MSYSTEM=MINGW64', `%~dp0\\msys64\\usr\\bin\\bash.exe -l -i -c "cd $OLDPWD && %*"`].join('\n\r'))
+    fs.writeFileSync(cmd, ['setlocal', 'set MSYS2_PATH_TYPE=strict', `%~dp0\\msys64\\usr\\bin\\bash.exe -ilc "cd $OLDPWD && %*"`].join('\n\r'))
 
     core.addPath(dest);
+
+    core.exportVariable('MSYSTEM', core.getInput('msystem'));
 
     core.startGroup('Starting MSYS2 for the first time...')
       // For some reason, `msys2do` does not work

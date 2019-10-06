@@ -1,10 +1,38 @@
 name: 'action'
 on: [ push, pull_request ]
 jobs:
-  action:
+  set:
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v1
-    - run: npm ci
-    - uses: ./
-    - run: msys2do uname -a
+    - name: install deps
+      run: npm ci
+    - name: run action
+      uses: ./
+    - name: test MSYS
+      run: |
+        set MSYSTEM=MSYS
+        msys2do ./test.sh
+    - name: test MINGW64
+      run: |
+        set MSYSTEM=MINGW64
+        msys2do ./test.sh
+    - name: test MINGW32
+      run: |
+        set MSYSTEM=MINGW32
+        msys2do ./test.sh
+
+  undef:
+    strategy:
+      matrix:
+        task: [ MSYS, MINGW64, MINGW32 ]
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: install deps
+      run: npm ci
+    - name: run action
+      uses: ./
+      with:
+        msystem: ${{ matrix.task }}
+    - run: msys2do ./test.sh
