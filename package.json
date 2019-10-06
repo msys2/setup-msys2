@@ -7,6 +7,9 @@
     "type": "git",
     "url": "git+https://github.com/numworks/setup-msys2.git"
   },
+  "scripts": {
+    "build": "ncc build main.js -m -o ./"
+  },
   "keywords": [
     "GitHub",
     "Actions",
@@ -22,5 +25,8 @@
     "@actions/core": "^1.2.0",
     "@actions/exec": "^1.0.1",
     "@actions/tool-cache": "1.1.2"
+  },
+  "devDependencies": {
+    "@zeit/ncc": "^0.20.5"
   }
 }
