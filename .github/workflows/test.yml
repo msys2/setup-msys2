@@ -5,8 +5,12 @@ jobs:
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v1
-    - name: install deps
-      run: npm ci
+    - name: build action
+      shell: bash
+      run: |
+        npm ci
+        npm run build
+        rm -rf node_modules
     - name: run action
       uses: ./
     - name: test MSYS
@@ -29,8 +33,12 @@ jobs:
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v1
-    - name: install deps
-      run: npm ci
+    - name: build action
+      shell: bash
+      run: |
+        npm ci
+        npm run build
+        rm -rf node_modules
     - name: run action
       uses: ./
       with:
@@ -44,8 +52,12 @@ jobs:
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v1
-    - name: install deps
-      run: npm ci
+    - name: build action
+      shell: bash
+      run: |
+        npm ci
+        npm run build
+        rm -rf node_modules
     - name: run action
       uses: ./
       with:
