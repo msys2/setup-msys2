@@ -26,7 +26,7 @@ async function run() {
 
     fs.writeFileSync(
       path.join(dest, 'msys2do.cmd'),
-      fs.readFileSync(path.join(__dirname, 'msys2do.cmd'))
+      fs.readFileSync(path.join(__dirname, 'msys2do.in'))
     )
 
     core.addPath(dest);
