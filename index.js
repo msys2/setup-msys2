@@ -13,7 +13,13 @@ async function run() {
     }
 
     const tar = await io.which('tar', true);
-    const dest = path.join(process.env['RUNNER_TEMP'], 'msys')
+
+    const tmp_dir = process.env['RUNNER_TEMP']
+    if (!tmp_dir) {
+      core.setFailed('environment variable RUNNER_TEMP is undefined');
+      return
+    }
+    const dest = path.join(tmp_dir, 'msys')
 
     await io.mkdirP(dest)
 
