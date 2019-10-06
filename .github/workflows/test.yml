@@ -1,0 +1,10 @@
+name: 'action'
+on: [ push, pull_request ]
+jobs:
+  action:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v1
+    - run: npm ci
+    - uses: ./
+    - run: msys2do uname -a
