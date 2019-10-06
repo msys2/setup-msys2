@@ -33,7 +33,7 @@ async function run() {
     ])
 
     let cmd = path.join(dest, 'msys2do.cmd')
-    fs.writeFileSync(cmd, fs.readFileSync(path.join(__dirname, 'msys2do.in')))
+    fs.writeFileSync(cmd, ['setlocal', 'set MSYS2_PATH_TYPE=strict', 'set MSYSTEM=MINGW64', `%~dp0\\msys64\\usr\\bin\\bash.exe -l -i -c "cd $OLDPWD && %*"`].join('\n\r'))
 
     core.addPath(dest);
 
