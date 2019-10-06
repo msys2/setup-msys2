@@ -7,6 +7,11 @@ const fs = require('fs');
 
 async function run() {
   try {
+    if (process.platform !== 'win32') {
+      core.setFailed("MSYS2 does not work on non-windows platforms; please check the 'runs-on' field of the job");
+      return
+    }
+
     const msys2base = await tc.downloadTool('http://repo.msys2.org/distrib/x86_64/msys2-base-x86_64-20190524.tar.xz');
     const tar = await io.which('tar', true);
 
