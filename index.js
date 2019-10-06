@@ -24,12 +24,15 @@ async function run() {
 
     await exec.exec(`"${tar}"`, ['-x', '-J', '--force-local', '-C', normalizedDest, '-f', msys2base])
 
-    fs.writeFileSync(
-      path.join(dest, 'msys2do.cmd'),
-      fs.readFileSync(path.join(__dirname, 'msys2do.in'))
-    )
+    let cmd = path.join(dest, 'msys2do.cmd')
+    fs.writeFileSync(cmd, fs.readFileSync(path.join(__dirname, 'msys2do.in')))
 
     core.addPath(dest);
+
+    core.startGroup('Starting MSYS2 for the first time...')
+      // For some reason, `msys2do` does not work
+      await exec.exec(`"${cmd}"`, ['uname', '-a'])
+    core.endGroup()
   }
   catch (error) {
     core.setFailed(error.message);
