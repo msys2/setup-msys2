@@ -36,3 +36,19 @@ jobs:
       with:
         msystem: ${{ matrix.task }}
     - run: msys2do ./test.sh
+
+  update:
+    strategy:
+      matrix:
+        task: [ MSYS, MINGW64, MINGW32 ]
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: install deps
+      run: npm ci
+    - name: run action
+      uses: ./
+      with:
+        update: True
+        msystem: ${{ matrix.task }}
+    - run: msys2do ./test.sh

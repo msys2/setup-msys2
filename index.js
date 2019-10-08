@@ -45,7 +45,11 @@ async function run() {
 
     core.startGroup('Starting MSYS2 for the first time...');
       // For some reason, `msys2do` does not work
-      await exec.exec(`"${cmd}"`, ['uname', '-a']);
+      await exec.exec(`"${cmd}"`, (core.getInput('update') == 'true') ?
+        ['pacman', '-Syu', '--noconfirm']
+        :
+        ['uname', '-a']
+      );
     core.endGroup();
   }
   catch (error) {

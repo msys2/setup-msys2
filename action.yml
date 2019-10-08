@@ -6,6 +6,10 @@ inputs:
     description: 'Variant of the environment to set by default: MSYS, MINGW32 or MINGW64'
     required: false
     default: 'MINGW64'
+  update:
+    description: 'Update MSYS2 installation through pacman'
+    required: false
+    default: false
 runs:
   using: 'node12'
   main: 'index.js'
