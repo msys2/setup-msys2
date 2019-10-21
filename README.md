@@ -11,6 +11,10 @@ The latest tarball available at [repo.msys2.org/distrib/x86_64](http://repo.msys
   - run: msys2do uname -a
 ```
 
+### Options
+
+#### msystem
+
 By default, `MSYSTEM` is set to `MINGW64`. However, an optional parameter named `msystem` is supported, which expects `MSYS`, `MINGW64` or `MING32`. For example:
 
 ```yaml
@@ -30,4 +34,14 @@ Furthermore, the environment variable can be overriden. This is useful when mult
   - run: |
       set MSYSTEM=MINGW64
       msys2do <command to test the package>
+```
+
+#### update
+
+By default, the installation is not updated; hence package versions are those of the installation tarball. By setting option `update` to `true`, the action will execute `pacman -Syu --no-confirm`:
+
+```yaml
+  - uses: numworks/setup-msys2@v1
+    with:
+      update: true
 ```
