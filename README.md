@@ -1,5 +1,11 @@
 # Setup MSYS2
 
+<p align="center">
+  <a title="Dependency Status" href="https://david-dm.org/numworks/setup-msys2"><img src="https://img.shields.io/david/numworks/setup-msys2.svg?longCache=true&logo=npm&label=deps"></a><!--
+  -->
+  <a title="'action' workflow Status" href="https://github.com/numworks/setup-msys2/actions"><img alt="'action' workflow Status" src="https://github.com/numworks/setup-msys2/workflows/action/badge.svg"></a>
+</p>
+
 **setup-msys2** is a JavaScript GitHub Action (GHA) to setup a full-featured [MSYS2](https://www.msys2.org/) environment, using the GHA [toolkit](https://github.com/actions/toolkit).
 
 The latest tarball available at [repo.msys2.org/distrib/x86_64](http://repo.msys2.org/distrib/x86_64/) is cached. Using the action extracts it and provides an entrypoint named `msys2do`.
