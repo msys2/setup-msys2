@@ -27,10 +27,18 @@ async function run() {
 
     let cmd = path.join(dest, 'msys2do.cmd');
     fs.writeFileSync(cmd, [
-      'setlocal',
-      '@echo off',
-      'IF NOT DEFINED MSYS2_PATH_TYPE set MSYS2_PATH_TYPE=' + core.getInput('path-type'),
+      `setlocal`,
+      `@echo off`,
+      `IF NOT DEFINED MSYS2_PATH_TYPE set MSYS2_PATH_TYPE=` + core.getInput('path-type'),
       `%~dp0\\msys64\\usr\\bin\\bash.exe -ilc "cd $OLDPWD && %*"`
+    ].join('\r\n'));
+
+    fs.writeFileSync('C:/hostedtoolcache/windows/Python/3.6.8/x64/msys2.cmd', [
+      `setlocal`,
+      `@echo off`,
+      `set "args=%*"`,
+      `set "args=%args:\\=/%"`,
+      cmd + ` %args%`
     ].join('\r\n'));
 
     core.addPath(dest);
