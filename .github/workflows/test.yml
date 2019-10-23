@@ -72,6 +72,19 @@ jobs:
       env:
         MSYSTEM: MINGW32
 
+  shell:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: install deps
+      run: npm ci
+    - name: run action
+      uses: ./
+    - shell: msys2 {0}
+      run: |
+        uname -a
+        pacman -Syu --noconfirm
+
   msystem:
     strategy:
       matrix:
