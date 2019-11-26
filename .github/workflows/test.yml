@@ -103,7 +103,7 @@ jobs:
         msystem: ${{ matrix.task }}
     - run: msys2do ./test.sh ${{ matrix.task }}
 
-  path_env:
+  MSYS2_PATH_TYPE:
     runs-on: windows-latest
     steps:
       - uses: actions/setup-go@v1
@@ -113,3 +113,14 @@ jobs:
       - run: msys2do go env
         env:
           MSYS2_PATH_TYPE: inherit
+
+  path-type:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/setup-go@v1
+      - uses: actions/checkout@v1
+      - run: yarn
+      - uses: ./
+        with:
+          path-type: inherit
+      - run: msys2do go env

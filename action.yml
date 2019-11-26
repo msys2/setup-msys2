@@ -6,6 +6,10 @@ inputs:
     description: 'Variant of the environment to set by default: MSYS, MINGW32 or MINGW64'
     required: false
     default: 'MINGW64'
+  path-type:
+    description: 'Default value for MSYS2_PATH_TYPE environment variable: strict, inherit or minimal'
+    required: false
+    default: 'strict'
   update:
     description: 'Update MSYS2 installation through pacman'
     required: false

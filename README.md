@@ -42,6 +42,24 @@ Furthermore, the environment variable can be overriden. This is useful when mult
       msys2do <command to test the package>
 ```
 
+#### path-type
+
+By default, `MSYS2_PATH_TYPE` is set to `strict` by `msys2do`. It is possible to override it either using an option or setting the environment variable explicitly:
+
+```yaml
+  - uses: numworks/setup-msys2@v1
+    with:
+      path-type: inherit
+  - run: msys2do <command>
+```
+
+```yaml
+  - uses: numworks/setup-msys2@v1
+  - run: msys2do <command>
+    env:
+      MSYS2_PATH_TYPE: inherit
+```
+
 #### update
 
 By default, the installation is not updated; hence package versions are those of the installation tarball. By setting option `update` to `true`, the action will execute `pacman -Syu --no-confirm`:
