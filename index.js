@@ -28,6 +28,7 @@ async function run() {
     let cmd = path.join(dest, 'msys2do.cmd');
     fs.writeFileSync(cmd, [
       'setlocal',
+      '@echo off',
       'IF NOT DEFINED MSYS2_PATH_TYPE set MSYS2_PATH_TYPE=' + core.getInput('path-type'),
       `%~dp0\\msys64\\usr\\bin\\bash.exe -ilc "cd $OLDPWD && %*"`
     ].join('\r\n'));
