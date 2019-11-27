@@ -5,7 +5,8 @@ on:
   schedule:
     - cron: '0 0 * * 3,6'
 jobs:
-  set:
+
+  powershell:
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v1
@@ -15,18 +16,63 @@ jobs:
       uses: ./
     - name: test MSYS
       run: |
+        $env:MSYSTEM = 'MSYS'
+        msys2do ./test.sh MSYS
+    - name: test MINGW64
+      run: |
+        $env:MSYSTEM = 'MINGW64'
+        msys2do ./test.sh MINGW64
+    - name: test MINGW32
+      run: |
+        $env:MSYSTEM = 'MINGW32'
+        msys2do ./test.sh MINGW32
+
+  cmd:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: install deps
+      run: npm ci
+    - name: run action
+      uses: ./
+    - name: test MSYS
+      shell: cmd
+      run: |
         set MSYSTEM=MSYS
         msys2do ./test.sh MSYS
     - name: test MINGW64
+      shell: cmd
       run: |
         set MSYSTEM=MINGW64
         msys2do ./test.sh MINGW64
     - name: test MINGW32
+      shell: cmd
       run: |
         set MSYSTEM=MINGW32
         msys2do ./test.sh MINGW32
 
-  undef:
+  env:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: install deps
+      run: npm ci
+    - name: run action
+      uses: ./
+    - name: test MSYS
+      run: msys2do ./test.sh MSYS
+      env:
+        MSYSTEM: MSYS
+    - name: test MINGW64
+      run: msys2do ./test.sh MINGW64
+      env:
+        MSYSTEM: MINGW64
+    - name: test MINGW32
+      run: msys2do ./test.sh MINGW32
+      env:
+        MSYSTEM: MINGW32
+
+  msystem:
     strategy:
       matrix:
         task: [ MSYS, MINGW64, MINGW32 ]
