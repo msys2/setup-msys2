@@ -16,15 +16,15 @@ jobs:
     - name: test MSYS
       run: |
         set MSYSTEM=MSYS
-        msys2do ./test.sh
+        msys2do ./test.sh MSYS
     - name: test MINGW64
       run: |
         set MSYSTEM=MINGW64
-        msys2do ./test.sh
+        msys2do ./test.sh MINGW64
     - name: test MINGW32
       run: |
         set MSYSTEM=MINGW32
-        msys2do ./test.sh
+        msys2do ./test.sh MINGW32
 
   undef:
     strategy:
@@ -39,7 +39,7 @@ jobs:
       uses: ./
       with:
         msystem: ${{ matrix.task }}
-    - run: msys2do ./test.sh
+    - run: msys2do ./test.sh ${{ matrix.task }}
 
   update:
     strategy:
@@ -55,4 +55,4 @@ jobs:
       with:
         update: True
         msystem: ${{ matrix.task }}
-    - run: msys2do ./test.sh
+    - run: msys2do ./test.sh ${{ matrix.task }}
