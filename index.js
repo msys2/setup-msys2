@@ -12,8 +12,6 @@ async function run() {
       return;
     }
 
-    const tar = await io.which('tar', true);
-
     const tmp_dir = process.env['RUNNER_TEMP'];
     if (!tmp_dir) {
       core.setFailed('environment variable RUNNER_TEMP is undefined');
@@ -25,7 +23,7 @@ async function run() {
 
     const distrib = await tc.downloadTool('http://repo.msys2.org/distrib/x86_64/msys2-base-x86_64-20190524.tar.xz');
 
-    await exec.exec(`"${tar}"`, [
+    await exec.exec(`tar`, [
       '-x', '-J', '--force-local',
       // For some reason, GNU Tar on Windows expects paths to be slash-separated
       '-C', dest.replace(/\\/g, '/'),
@@ -44,8 +42,7 @@ async function run() {
     core.exportVariable('MSYSTEM', core.getInput('msystem'));
 
     core.startGroup('Starting MSYS2 for the first time...');
-      // For some reason, `msys2do` does not work
-      await exec.exec(`"${cmd}"`, (core.getInput('update') == 'true') ?
+      await exec.exec(`msys2do`, (core.getInput('update') == 'true') ?
         ['pacman', '-Syu', '--noconfirm']
         :
         ['uname', '-a']
