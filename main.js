@@ -30,7 +30,7 @@ async function run() {
       `setlocal`,
       `@echo off`,
       `IF NOT DEFINED MSYS2_PATH_TYPE set MSYS2_PATH_TYPE=` + core.getInput('path-type'),
-      `%~dp0\\msys64\\usr\\bin\\bash.exe -ilc "cd $OLDPWD && %*"`
+      `%~dp0\\msys64\\usr\\bin\\bash.exe --norc -ilceo pipefail "cd $OLDPWD && %*"`
     ].join('\r\n'));
 
     fs.writeFileSync(path.join(dest, 'msys2.cmd'), [
