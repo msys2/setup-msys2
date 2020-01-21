@@ -23,7 +23,7 @@ async function run() {
 
     const distrib = await tc.downloadTool('http://repo.msys2.org/distrib/x86_64/msys2-base-x86_64-20190524.tar.xz');
 
-    await exec.exec(`bash`, ['-c', `7z x ${distrib.replace(/\\/g, '/')} -so | 7z x -aoa -si -ttar`], {cwd: dest} );
+    await exec.exec('bash', ['-c', `7z x ${distrib.replace(/\\/g, '/')} -so | 7z x -aoa -si -ttar`], {cwd: dest} );
 
     let cmd = path.join(dest, 'msys2do.cmd');
     fs.writeFileSync(cmd, [
@@ -37,11 +37,8 @@ async function run() {
     core.exportVariable('MSYSTEM', core.getInput('msystem'));
 
     core.startGroup('Starting MSYS2 for the first time...');
-      await exec.exec(`msys2do`, (core.getInput('update') == 'true') ?
-        ['pacman', '-Syu', '--noconfirm']
-        :
-        ['uname', '-a']
-      );
+      let pacmanCommand = (core.getInput('update') == 'true') ?  ['pacman', '-Syu', '--noconfirm'] : ['uname', '-a'];
+      await exec.exec('cmd', ['/D', '/S', '/C', cmd].concat(pacmanCommand));
     core.endGroup();
   }
   catch (error) {
