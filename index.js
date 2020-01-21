@@ -23,12 +23,7 @@ async function run() {
 
     const distrib = await tc.downloadTool('http://repo.msys2.org/distrib/x86_64/msys2-base-x86_64-20190524.tar.xz');
 
-    await exec.exec(`tar`, [
-      '-x', '-J', '--force-local',
-      // For some reason, GNU Tar on Windows expects paths to be slash-separated
-      '-C', dest.replace(/\\/g, '/'),
-      '-f', distrib
-    ]);
+    await exec.exec(`bash`, ['-c', `7z x ${distrib.replace(/\\/g, '/')} -so | 7z x -aoa -si -ttar`], {cwd: dest} );
 
     let cmd = path.join(dest, 'msys2do.cmd');
     fs.writeFileSync(cmd, [
