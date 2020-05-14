@@ -1,6 +1,5 @@
-name: 'Setup Msys2 environment'
-description: 'Setup an Msys2 environment and provide an msys2do helper'
-author: 'NumWorks'
+name: 'Setup MSYS2 environment'
+description: 'Setup an MSYS2 environment'
 inputs:
   msystem:
     description: 'Variant of the environment to set by default: MSYS, MINGW32 or MINGW64'

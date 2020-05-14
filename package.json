@@ -1,19 +1,18 @@
 {
   "name": "setup-msys2",
   "version": "1.0.0",
-  "description": "Msys2 GitHub action",
-  "main": "index.js",
+  "description": "MSYS2 Setup GitHub Action",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/numworks/setup-msys2.git"
   },
   "scripts": {
-    "build": "ncc build main.js -m -o ./"
+    "pkg": "ncc build main.js -m -o ./"
   },
   "keywords": [
     "GitHub",
     "Actions",
-    "Msys2"
+    "MSYS2"
   ],
   "author": "NumWorks",
   "license": "MIT",
