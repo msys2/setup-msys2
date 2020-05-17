@@ -45,23 +45,34 @@ async function run() {
 
     core.exportVariable('MSYSTEM', core.getInput('msystem'));
 
+    async function pacman(args) {
+      await exec.exec('cmd', ['/D', '/S', '/C', cmd, 'pacman', '--noconfirm'].concat(args));
+    }
+
     core.startGroup('Starting MSYS2 for the first time...');
       if (core.getInput('update') == 'true') {
-        await exec.exec('cmd', ['/D', '/S', '/C', cmd].concat(['pacman', '-Sy', '--noconfirm']));
+        await pacman(['-Sy']);
         core.endGroup();
         core.startGroup('Updating bash and pacman...');
-        await exec.exec('cmd', ['/D', '/S', '/C', cmd].concat(['pacman', '--needed', '-S', 'bash', 'pacman', '--noconfirm']));
+        await pacman(['--needed', '-S', 'bash', 'pacman'])
         core.endGroup();
         core.startGroup('Killing remaining tasks...');
         await exec.exec('taskkill', ['/IM', 'gpg-agent.exe', '/F']);
         await exec.exec('taskkill', ['/IM', 'dirmngr.exe', '/F']);
         core.endGroup();
         core.startGroup('Updating packages...');
-        await exec.exec('cmd', ['/D', '/S', '/C', cmd].concat(['pacman', '-Suu', '--noconfirm']));
+        await pacman(['-Suu']);
       } else {
         await exec.exec('cmd', ['/D', '/S', '/C', cmd].concat(['uname', '-a']));
       }
     core.endGroup();
+
+    let install = core.getInput('install');
+    if (install != '' && install != 'false') {
+      core.startGroup('Installing additional packages...');
+      await pacman(['-S'].concat(install.split(' ')));
+      core.endGroup();
+    }
   }
   catch (error) {
     core.setFailed(error.message);

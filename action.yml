@@ -13,6 +13,10 @@ inputs:
     description: 'Update MSYS2 installation through pacman'
     required: false
     default: false
+  install:
+    description: 'Install packages after installation through pacman'
+    required: false
+    default: false
 runs:
   using: 'node12'
   main: 'index.js'

@@ -123,8 +123,9 @@ jobs:
   update:
     strategy:
       fail-fast: false
+      max-parallel: 3
       matrix:
-        task: [ MSYS, MINGW64, MINGW32 ]
+        msystem: [ MSYS, MINGW64, MINGW32 ]
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v1
@@ -137,9 +138,9 @@ jobs:
     - name: run action
       uses: ./
       with:
-        update: True
-        msystem: ${{ matrix.task }}
-    - run: msys2do ./test.sh ${{ matrix.task }}
+        update: true
+        msystem: ${{ matrix.msystem }}
+    - run: msys2do ./test.sh ${{ matrix.msystem }}
 
   MSYS2_PATH_TYPE:
     runs-on: windows-latest
@@ -174,3 +175,26 @@ jobs:
       with:
         path-type: inherit
     - run: msys2do go env
+
+  install:
+    strategy:
+      fail-fast: false
+      max-parallel: 3
+      matrix:
+        install: [ false, git, 'base-devel git' ]
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: build action
+      shell: bash
+      run: |
+        npm ci
+        npm run pkg
+        rm -rf node_modules
+    - name: run action
+      uses: ./
+      with:
+        update: true
+        install: ${{ matrix.install }}
+        msystem: MINGW64
+    - run: msys2do ./test.sh MINGW64
