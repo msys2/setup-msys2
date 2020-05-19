@@ -122,6 +122,7 @@ jobs:
 
   update:
     strategy:
+      fail-fast: false
       matrix:
         task: [ MSYS, MINGW64, MINGW32 ]
     runs-on: windows-latest
