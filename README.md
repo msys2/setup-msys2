@@ -13,13 +13,14 @@ The latest tarball available at [repo.msys2.org/distrib/x86_64](http://repo.msys
 ## Usage
 
 ```yaml
-  - uses: eine/setup-msys2@v1
+  - uses: eine/setup-msys2@v0
   - shell: msys2 {0}
-    run: uname -a
+    run: |
+      uname -a
 ```
 
 ```yaml
-  - uses: eine/setup-msys2@v1
+  - uses: eine/setup-msys2@v0
   - run: msys2do uname -a
 ```
 
@@ -30,7 +31,7 @@ The latest tarball available at [repo.msys2.org/distrib/x86_64](http://repo.msys
 By default, `MSYSTEM` is set to `MINGW64`. However, an optional parameter named `msystem` is supported, which expects `MSYS`, `MINGW64` or `MING32`. For example:
 
 ```yaml
-  - uses: eine/setup-msys2@v1
+  - uses: eine/setup-msys2@v0
     with:
       msystem: MSYS
 ```
@@ -38,7 +39,7 @@ By default, `MSYSTEM` is set to `MINGW64`. However, an optional parameter named 
 Furthermore, the environment variable can be overriden. This is useful when multiple commands need to be executed in different contexts. For example, in order to build a PKGBUILD file and then test the installed artifact:
 
 ```yaml
-  - uses: eine/setup-msys2@v1
+  - uses: eine/setup-msys2@v0
     with:
       msystem: MSYS
   - shell: msys2
@@ -55,14 +56,14 @@ Furthermore, the environment variable can be overriden. This is useful when mult
 By default, `MSYS2_PATH_TYPE` is set to `strict` by `msys2do`. It is possible to override it either using an option or setting the environment variable explicitly:
 
 ```yaml
-  - uses: eine/setup-msys2@v1
+  - uses: eine/setup-msys2@v0
     with:
       path-type: inherit
   - run: msys2do <command>
 ```
 
 ```yaml
-  - uses: eine/setup-msys2@v1
+  - uses: eine/setup-msys2@v0
   - run: msys2do <command>
     env:
       MSYS2_PATH_TYPE: inherit
@@ -70,10 +71,21 @@ By default, `MSYS2_PATH_TYPE` is set to `strict` by `msys2do`. It is possible to
 
 #### update
 
-By default, the installation is not updated; hence package versions are those of the installation tarball. By setting option `update` to `true`, the action will execute `pacman -Syu --no-confirm`:
+By default, the installation is not updated; hence package versions are those of the installation tarball. By setting option `update` to `true`, the action will try to update the runtime and packages cleanly:
 
 ```yaml
-  - uses: eine/setup-msys2@v1
+  - uses: eine/setup-msys2@v0
     with:
       update: true
+```
+
+#### install
+
+Installing additional packages after updating the system is supported through option `install`. The package or list of packages are intalled through `pacman --noconfirm -S`.
+
+```yaml
+  - uses: eine/setup-msys2@v0
+    with:
+      update: true
+      install: 'git base-devel'
 ```
