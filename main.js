@@ -56,16 +56,13 @@ async function run() {
 
     core.startGroup('Starting MSYS2 for the first time...');
       if (core.getInput('update') == 'true') {
-        await pacman(['-Sy']);
-        changeGroup('Updating bash and pacman...');
-        await pacman(['--needed', '-S', 'bash', 'pacman'])
         changeGroup('Updating packages...');
-        await pacman(['-Suu']);
+        await pacman(['-Syuu']);
         changeGroup('Killing remaining tasks...');
         await exec.exec('taskkill', ['/IM', 'gpg-agent.exe', '/F']);
         await exec.exec('taskkill', ['/IM', 'dirmngr.exe', '/F']);
         changeGroup('Final system upgrade...');
-        await pacman(['-Syuu']);
+        await pacman(['-Suu']);
       } else {
         await exec.exec('cmd', ['/D', '/S', '/C', cmd].concat(['uname', '-a']));
       }
