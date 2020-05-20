@@ -49,19 +49,23 @@ async function run() {
       await exec.exec('cmd', ['/D', '/S', '/C', cmd, 'pacman', '--noconfirm'].concat(args));
     }
 
+    function changeGroup(str) {
+      core.endGroup();
+      core.startGroup(str);
+    }
+
     core.startGroup('Starting MSYS2 for the first time...');
       if (core.getInput('update') == 'true') {
         await pacman(['-Sy']);
-        core.endGroup();
-        core.startGroup('Updating bash and pacman...');
+        changeGroup('Updating bash and pacman...');
         await pacman(['--needed', '-S', 'bash', 'pacman'])
-        core.endGroup();
-        core.startGroup('Killing remaining tasks...');
+        changeGroup('Updating packages...');
+        await pacman(['-Suu']);
+        changeGroup('Killing remaining tasks...');
         await exec.exec('taskkill', ['/IM', 'gpg-agent.exe', '/F']);
         await exec.exec('taskkill', ['/IM', 'dirmngr.exe', '/F']);
-        core.endGroup();
-        core.startGroup('Updating packages...');
-        await pacman(['-Suu']);
+        changeGroup('Final system upgrade...');
+        await pacman(['-Syuu']);
       } else {
         await exec.exec('cmd', ['/D', '/S', '/C', cmd].concat(['uname', '-a']));
       }
