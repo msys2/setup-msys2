@@ -59,8 +59,7 @@ async function run() {
         changeGroup('Updating packages...');
         await pacman(['-Syuu']);
         changeGroup('Killing remaining tasks...');
-        await exec.exec('taskkill', ['/IM', 'gpg-agent.exe', '/F']);
-        await exec.exec('taskkill', ['/IM', 'dirmngr.exe', '/F']);
+        await exec.exec('taskkill', ['/F', '/FI', 'MODULES eq msys-2.0.dll']);
         changeGroup('Final system upgrade...');
         await pacman(['-Suu']);
       } else {
