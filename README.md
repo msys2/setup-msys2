@@ -6,21 +6,29 @@
   <a title="'action' workflow Status" href="https://github.com/eine/setup-msys2/actions"><img alt="'action' workflow Status" src="https://github.com/eine/setup-msys2/workflows/action/badge.svg"></a>
 </p>
 
-**setup-msys2** is a JavaScript GitHub Action (GHA) to setup a full-featured [MSYS2](https://www.msys2.org/) environment, using the GHA [toolkit](https://github.com/actions/toolkit).
+[MSYS2](https://www.msys2.org/) is available by default in [windows-latest](https://github.com/actions/virtual-environments/blob/master/images/win/Windows2019-Readme.md#msys2) virtual environment for GitHub Actions. However, the default installation is updated and it includes some pre-installed packages. Moreover, it is neither added to the PATH nor available as a custom `shell` option.
 
-The latest tarball available at [repo.msys2.org/distrib/x86_64](http://repo.msys2.org/distrib/x86_64/) is cached. Using the action extracts it and provides two entrypoints named `msys2` and `msys2do`.
+**setup-msys2** is a JavaScript GitHub Action (GHA) to optionally setup a stable [MSYS2](https://www.msys2.org/) environment in a temporal location, using the GHA [toolkit](https://github.com/actions/toolkit); and to provide two custom entrypoints.
+
+If option `update` is `true`, the default installation is used, in order to reduce startup latency. Otherwise, the latest tarball available at [repo.msys2.org/distrib/x86_64](http://repo.msys2.org/distrib/x86_64/) is downloaded and extracted.
 
 ## Usage
 
 ```yaml
   - uses: eine/setup-msys2@v0
+```
+
+Then, for multi-line scripts:
+
+```yaml
   - shell: msys2 {0}
     run: |
       uname -a
 ```
 
+Or, for single line commands:
+
 ```yaml
-  - uses: eine/setup-msys2@v0
   - run: msys2do uname -a
 ```
 
