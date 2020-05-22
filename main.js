@@ -21,16 +21,22 @@ async function run() {
 
     await io.mkdirP(dest);
 
-    const distrib = await tc.downloadTool('https://github.com/msys2/msys2-installer/releases/download/2020-05-17/msys2-base-x86_64-20200517.tar.xz');
+    const update = core.getInput('update') == 'true';
 
-    await exec.exec('bash', ['-c', `7z x ${distrib.replace(/\\/g, '/')} -so | 7z x -aoa -si -ttar`], {cwd: dest} );
+    let drive = 'C:';
+
+    if (!update) {
+      drive = '%~dp0';
+      const distrib = await tc.downloadTool('https://github.com/msys2/msys2-installer/releases/download/2020-05-17/msys2-base-x86_64-20200517.tar.xz');
+      await exec.exec('bash', ['-c', `7z x ${distrib.replace(/\\/g, '/')} -so | 7z x -aoa -si -ttar`], {cwd: dest} );
+    }
 
     let cmd = path.join(dest, 'msys2do.cmd');
     fs.writeFileSync(cmd, [
       `setlocal`,
       `@echo off`,
       `IF NOT DEFINED MSYS2_PATH_TYPE set MSYS2_PATH_TYPE=` + core.getInput('path-type'),
-      `%~dp0\\msys64\\usr\\bin\\bash.exe --norc -ilceo pipefail "cd $OLDPWD && %*"`
+      drive + `\\msys64\\usr\\bin\\bash.exe --norc -ilceo pipefail "cd $OLDPWD && %*"`
     ].join('\r\n'));
 
     fs.writeFileSync(path.join(dest, 'msys2.cmd'), [
@@ -54,18 +60,19 @@ async function run() {
       core.startGroup(str);
     }
 
-    core.startGroup('Starting MSYS2 for the first time...');
-      if (core.getInput('update') == 'true') {
-        changeGroup('Updating packages...');
-        await pacman(['-Syuu']);
-        changeGroup('Killing remaining tasks...');
-        await exec.exec('taskkill', ['/F', '/FI', 'MODULES eq msys-2.0.dll']);
-        changeGroup('Final system upgrade...');
-        await pacman(['-Suu']);
-      } else {
-        await exec.exec('cmd', ['/D', '/S', '/C', cmd].concat(['uname', '-a']));
-      }
-    core.endGroup();
+    if (update) {
+      core.startGroup('Updating packages...');
+      await pacman(['-Syuu']);
+      changeGroup('Killing remaining tasks...');
+      await exec.exec('taskkill', ['/F', '/FI', 'MODULES eq msys-2.0.dll']);
+      changeGroup('Final system upgrade...');
+      await pacman(['-Suu']);
+      core.endGroup();
+    } else {
+      core.startGroup('Starting MSYS2 for the first time...');
+      await exec.exec('cmd', ['/D', '/S', '/C', cmd].concat(['uname', '-a']));
+      core.endGroup();
+    }
 
     let install = core.getInput('install');
     if (install != '' && install != 'false') {
