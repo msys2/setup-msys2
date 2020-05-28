@@ -31,21 +31,20 @@ async function run() {
       await exec.exec('bash', ['-c', `7z x ${distrib.replace(/\\/g, '/')} -so | 7z x -aoa -si -ttar`], {cwd: dest} );
     }
 
-    let cmd = path.join(dest, 'msys2do.cmd');
-    fs.writeFileSync(cmd, [
+    let wrap = [
       `setlocal`,
       `@echo off`,
       `IF NOT DEFINED MSYS2_PATH_TYPE set MSYS2_PATH_TYPE=` + core.getInput('path-type'),
-      drive + `\\msys64\\usr\\bin\\bash.exe --norc -ilceo pipefail "cd $OLDPWD && %*"`
-    ].join('\r\n'));
-
-    fs.writeFileSync(path.join(dest, 'msys2.cmd'), [
-      `setlocal`,
-      `@echo off`,
       `set "args=%*"`,
       `set "args=%args:\\=/%"`,
-      cmd + ` %args%`
-    ].join('\r\n'));
+      drive + `\\msys64\\usr\\bin\\bash.exe --norc -ilceo pipefail "cd $OLDPWD && %args%"`
+    ].join('\r\n');
+
+    let cmd = path.join(dest, 'msys2.cmd');
+    fs.writeFileSync(cmd, wrap);
+
+    // TO BE DEPRECATED
+    fs.writeFileSync(path.join(dest, 'msys2do.cmd'), wrap);
 
     core.addPath(dest);
 

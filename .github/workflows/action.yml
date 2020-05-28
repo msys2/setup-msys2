@@ -198,3 +198,49 @@ jobs:
         install: ${{ matrix.install }}
         msystem: MINGW64
     - run: msys2do ./test.sh MINGW64
+
+  defaultclean:
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: msys2 {0}
+    steps:
+    - run: git config --global core.autocrlf input
+      shell: bash
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+    - name: build action
+      shell: bash
+      run: |
+        npm ci
+        npm run pkg
+        rm -rf node_modules
+    - name: run action
+      uses: ./
+      with:
+        update: true
+        install: base-devel git
+    - run: git describe --dirty --tags
+
+  defaultdirty:
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: msys2 {0}
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+    - name: build action
+      shell: bash
+      run: |
+        npm ci
+        npm run pkg
+        rm -rf node_modules
+    - name: run action
+      uses: ./
+      with:
+        update: true
+        install: base-devel git
+    - run: git describe --dirty --tags
