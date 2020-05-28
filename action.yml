@@ -17,6 +17,10 @@ inputs:
     description: 'Install packages after installation through pacman'
     required: false
     default: false
+  cache:
+    description: 'Cache /var/cache/pacman/pkg to speed up future updates'
+    required: false
+    default: false
 runs:
   using: 'node12'
   main: 'index.js'

@@ -1,9 +1,11 @@
+const cache = require('@actions/cache');
 const core = require('@actions/core');
 const io = require('@actions/io');
 const exec = require('@actions/exec');
 const tc = require('@actions/tool-cache');
 const path = require('path');
 const fs = require('fs');
+const { hashElement } = require('folder-hash');
 
 async function run() {
   try {
@@ -21,11 +23,15 @@ async function run() {
 
     await io.mkdirP(dest);
 
-    const update = core.getInput('update') == 'true';
+    const p_update = core.getInput('update') === 'true';
+    const p_pathtype = core.getInput('path-type');
+    const p_msystem = core.getInput('msystem');
+    const p_install = core.getInput('install');
+    const p_cache = core.getInput('cache');
 
     let drive = 'C:';
 
-    if (!update) {
+    if (!p_update) {
       drive = '%~dp0';
       const distrib = await tc.downloadTool('https://github.com/msys2/msys2-installer/releases/download/2020-06-02/msys2-base-x86_64-20200602.tar.xz');
       await exec.exec('bash', ['-c', `7z x ${distrib.replace(/\\/g, '/')} -so | 7z x -aoa -si -ttar`], {cwd: dest} );
@@ -34,7 +40,7 @@ async function run() {
     let wrap = [
       `setlocal`,
       `@echo off`,
-      `IF NOT DEFINED MSYS2_PATH_TYPE set MSYS2_PATH_TYPE=` + core.getInput('path-type'),
+      `IF NOT DEFINED MSYS2_PATH_TYPE set MSYS2_PATH_TYPE=` + p_pathtype,
       `set "args=%*"`,
       `set "args=%args:\\=/%"`,
       drive + `\\msys64\\usr\\bin\\bash.exe --norc -ilceo pipefail "cd $OLDPWD && %args%"`
@@ -45,7 +51,14 @@ async function run() {
 
     core.addPath(dest);
 
-    core.exportVariable('MSYSTEM', core.getInput('msystem'));
+    core.exportVariable('MSYSTEM', p_msystem);
+
+    if (p_cache === 'true') {
+      core.startGroup('Restoring cache...');
+      const paths = [(p_update ? 'C:' : dest) + `\\msys64\\var\\cache\\pacman\\pkg\\`];
+      console.log('Cache ID:', await cache.restoreCache(paths, 'msys2', ['msys2-']));
+      core.endGroup();
+    }
 
     async function pacman(args) {
       await exec.exec('cmd', ['/D', '/S', '/C', cmd, 'pacman', '--noconfirm'].concat(args));
@@ -56,7 +69,7 @@ async function run() {
       core.startGroup(str);
     }
 
-    if (update) {
+    if (p_update) {
       core.startGroup('Updating packages...');
       await pacman(['-Syuu']);
       changeGroup('Killing remaining tasks...');
@@ -70,10 +83,16 @@ async function run() {
       core.endGroup();
     }
 
-    let install = core.getInput('install');
-    if (install != '' && install != 'false') {
+    if (p_install != '' && p_install != 'false') {
       core.startGroup('Installing additional packages...');
-      await pacman(['-S'].concat(install.split(' ')));
+      await pacman(['-S'].concat(p_install.split(' ')));
+      core.endGroup();
+    }
+
+    if (p_cache === 'true') {
+      core.startGroup('Saving cache...');
+      const paths = [(p_update ? 'C:' : dest) + `\\msys64\\var\\cache\\pacman\\pkg\\`];
+      console.log('Cache ID:', await cache.saveCache(paths, 'msys2-' + (await hashElement(paths[0]))['hash'].toString() + (new Date()).getTime().toString()));
       core.endGroup();
     }
   }
