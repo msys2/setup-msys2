@@ -12,7 +12,10 @@
   "keywords": [
     "GitHub",
     "Actions",
-    "MSYS2"
+    "MSYS2",
+    "MINGW64",
+    "MINGW32",
+    "MSYS"
   ],
   "license": "MIT",
   "bugs": {
