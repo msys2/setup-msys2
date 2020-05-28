@@ -43,9 +43,6 @@ async function run() {
     let cmd = path.join(dest, 'msys2.cmd');
     fs.writeFileSync(cmd, wrap);
 
-    // TO BE DEPRECATED
-    fs.writeFileSync(path.join(dest, 'msys2do.cmd'), wrap);
-
     core.addPath(dest);
 
     core.exportVariable('MSYSTEM', core.getInput('msystem'));

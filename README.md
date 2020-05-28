@@ -69,29 +69,29 @@ Furthermore, the environment variable can be overriden. This is useful when mult
   - uses: eine/setup-msys2@v0
     with:
       msystem: MSYS
-  - shell: msys2
+  - shell: msys2 {0}
     run: |
       makepkg-mingw -sCLfc --noconfirm --noprogressbar
       pacman --noconfirm -U mingw-w64-*-any.pkg.tar.xz
   - run: |
       set MSYSTEM=MINGW64
-      msys2do <command to test the package>
+      msys2 <command to test the package>
 ```
 
 #### path-type
 
-By default, `MSYS2_PATH_TYPE` is set to `strict` by `msys2do`. It is possible to override it either using an option or setting the environment variable explicitly:
+By default, `MSYS2_PATH_TYPE` is set to `strict` by `msys2`. It is possible to override it either using an option or setting the environment variable explicitly:
 
 ```yaml
   - uses: eine/setup-msys2@v0
     with:
       path-type: inherit
-  - run: msys2do <command>
+  - run: msys2 <command>
 ```
 
 ```yaml
   - uses: eine/setup-msys2@v0
-  - run: msys2do <command>
+  - run: msys2 <command>
     env:
       MSYS2_PATH_TYPE: inherit
 ```
