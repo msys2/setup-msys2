@@ -9,7 +9,7 @@ jobs:
   powershell:
     runs-on: windows-latest
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
     - name: build action
       shell: bash
       run: |
@@ -34,7 +34,7 @@ jobs:
   cmd:
     runs-on: windows-latest
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
     - name: build action
       shell: bash
       run: |
@@ -62,7 +62,7 @@ jobs:
   env:
     runs-on: windows-latest
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
     - name: build action
       shell: bash
       run: |
@@ -87,7 +87,7 @@ jobs:
   shell:
     runs-on: windows-latest
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
     - name: build action
       shell: bash
       run: |
@@ -107,7 +107,7 @@ jobs:
         task: [ MSYS, MINGW64, MINGW32 ]
     runs-on: windows-latest
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
     - name: build action
       shell: bash
       run: |
@@ -128,7 +128,7 @@ jobs:
         msystem: [ MSYS, MINGW64, MINGW32 ]
     runs-on: windows-latest
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
     - name: build action
       shell: bash
       run: |
@@ -146,7 +146,7 @@ jobs:
     runs-on: windows-latest
     steps:
     - uses: actions/setup-go@v1
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
     - name: build action
       shell: bash
       run: |
@@ -163,7 +163,7 @@ jobs:
     runs-on: windows-latest
     steps:
     - uses: actions/setup-go@v1
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
     - name: build action
       shell: bash
       run: |
@@ -184,7 +184,7 @@ jobs:
         install: [ false, git, 'base-devel git' ]
     runs-on: windows-latest
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
     - name: build action
       shell: bash
       run: |
