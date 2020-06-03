@@ -2,6 +2,10 @@
 
 ## [Unreleased](https://github.com/eine/setup-msys2/compare/877608b23cc3051911e4c84b919db4e9e14ad65c...HEAD)
 
+## Changed
+
+- Update base distribution to [20200602](https://github.com/msys2/msys2-installer/releases/tag/2020-06-02).
+
 ## [1.0.0](https://github.com/eine/setup-msys2/compare/5cb94deb40d2e279c09e837a8f5350dd3a3aef8e...877608b23cc3051911e4c84b919db4e9e14ad65c) - 2020/05/28
 
 ### Changed
