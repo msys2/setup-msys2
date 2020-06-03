@@ -99,7 +99,6 @@ jobs:
     - shell: msys2 {0}
       run: |
         uname -a
-        pacman -Syu --noconfirm
 
   msystem:
     strategy:
