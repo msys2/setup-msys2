@@ -1,6 +1,8 @@
 # Changelog
 
-## [Unreleased](https://github.com/eine/setup-msys2/compare/877608b23cc3051911e4c84b919db4e9e14ad65c...HEAD)
+## [Unreleased](https://github.com/eine/setup-msys2/compare/b506907ae6185e399cfae0191555c6c99523fdb1...HEAD)
+
+## [1.0.1](https://github.com/eine/setup-msys2/compare/877608b23cc3051911e4c84b919db4e9e14ad65c...b506907ae6185e399cfae0191555c6c99523fdb1) - 2020/06/04
 
 ## Changed
 
