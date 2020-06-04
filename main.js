@@ -70,7 +70,10 @@ async function run() {
     }
 
     if (p_update) {
-      core.startGroup('Updating packages...');
+      core.startGroup('Disable CheckSpace...');
+      //# reduce time required to install packages by disabling pacman's disk space checking
+      await exec.exec('cmd', ['/D', '/S', '/C', cmd, 'sed', '-i', 's/^CheckSpace/#CheckSpace/g', '/etc/pacman.conf']);
+      changeGroup('Updating packages...');
       await pacman(['-Syuu']);
       changeGroup('Killing remaining tasks...');
       await exec.exec('taskkill', ['/F', '/FI', 'MODULES eq msys-2.0.dll']);
