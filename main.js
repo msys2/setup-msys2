@@ -93,10 +93,11 @@ async function run() {
       core.endGroup();
     }
 
-    if (p_cache === 'true') {
+    if (p_cache === 'true' || p_cache === 'save') {
       core.startGroup('Saving cache...');
       const paths = [(p_update ? 'C:' : dest) + `\\msys64\\var\\cache\\pacman\\pkg\\`];
-      console.log('Cache ID:', await cache.saveCache(paths, 'msys2-' + (await hashElement(paths[0]))['hash'].toString() + (new Date()).getTime().toString()));
+      const key = (await hashElement(paths[0]))['hash'].toString() + (new Date()).getTime().toString();
+      console.log('Cache ID:', await cache.saveCache(paths, 'msys2-' + key), '[' + key + ']');
       core.endGroup();
     }
   }

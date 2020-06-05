@@ -129,10 +129,18 @@ Installing additional packages after updating the system is supported through op
 
 #### cache
 
-If set to `true`, directory `/var/cache/pacman/pkg` is cached in order to speed up future updates:
+If set to `true`, directory `/var/cache/pacman/pkg` is restored/cached in order to speed up future updates:
 
 ```yaml
   - uses: eine/setup-msys2@v1
     with:
       cache: true
+```
+
+If set to `save`, the same directory is cached, but it is not restored. This can be used to force a save of a clean state.
+
+```yaml
+  - uses: eine/setup-msys2@v1
+    with:
+      cache: save
 ```

@@ -6,7 +6,26 @@ on:
     - cron: '0 0 * * 3,6'
 jobs:
 
+  save:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: build action
+      shell: bash
+      run: |
+        npm ci
+        npm run pkg
+        rm -rf node_modules
+    - name: run action
+      uses: ./
+      with:
+        cache: save
+    - shell: msys2 {0}
+      run: |
+        uname -a
+
   cache:
+    needs: [save]
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v2
