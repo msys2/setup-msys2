@@ -2,6 +2,8 @@
 
 ## [Unreleased](https://github.com/eine/setup-msys2/compare/b506907ae6185e399cfae0191555c6c99523fdb1...HEAD)
 
+## [v1.1.0](https://github.com/eine/setup-msys2/compare/b506907ae6185e399cfae0191555c6c99523fdb1...9da8a47f7acedd87a157ef2d99246f877fc15e9c)
+
 ### Added
 
 - Option `cache`.
@@ -82,11 +84,11 @@
 ## [0.0.1](https://github.com/eine/setup-msys2/compare/0a7d108a24ab21d01436197d61e330816e522816...287bc00c1ce99eb99aa853c3c866ec66ed7a8bf2) - 2020/01/19
 
 ### Added
-- Options: `msystem`, `update` and `path-type`.
-- `msys.cmd`, to support multi-line run steps.
-- Bundle for deployment with [ncc](https://github.com/vercel/ncc).
-- Add GitHub Actions workflow.
-- README: badges/shields.
+- Options: `msystem`, `update` and `path-type`. [[numworks/setup-msys2#1](https://github.com/numworks/setup-msys2/pull/1), [numworks/setup-msys2#3](https://github.com/numworks/setup-msys2/pull/3), [numworks/setup-msys2#6](https://github.com/numworks/setup-msys2/pull/6), [numworks/setup-msys2#7](https://github.com/numworks/setup-msys2/pull/7), [numworks/setup-msys2#14](https://github.com/numworks/setup-msys2/pull/14)]
+- `msys2.cmd`, to support multi-line run steps. [[numworks/setup-msys2#8](https://github.com/numworks/setup-msys2/pull/8), [numworks/setup-msys2#21](https://github.com/numworks/setup-msys2/pull/21)]
+- Bundle for deployment with [ncc](https://github.com/vercel/ncc). [[numworks/setup-msys2#4](https://github.com/numworks/setup-msys2/pull/4), [numworks/setup-msys2#5](https://github.com/numworks/setup-msys2/pull/5)]
+- Add GitHub Actions workflow. [[numworks/setup-msys2#3](https://github.com/numworks/setup-msys2/pull/3), [numworks/setup-msys2#15](https://github.com/numworks/setup-msys2/pull/15), [numworks/setup-msys2#16](https://github.com/numworks/setup-msys2/pull/16), [numworks/setup-msys2#18](https://github.com/numworks/setup-msys2/pull/18)]
+- README: badges/shields. , [[numworks/setup-msys2#9](https://github.com/numworks/setup-msys2/pull/9)]
 - `.gitignore`.
 
 ### Changed
@@ -94,7 +96,7 @@
   - Is the host platform Windows?
   - Is RUNNER_TMP empty?
 - Extraction:
-  - Use `7z` instead of `tar`.
+  - Use `7z` instead of `tar`. [[numworks/setup-msys2#26](https://github.com/numworks/setup-msys2/pull/26), [numworks/setup-msys2#28](https://github.com/numworks/setup-msys2/pull/28)]
   - Use `ExecOptions.cwd`.
 - `msys2do.cmd`:
   - Hardcode it in `index.js`.
@@ -104,7 +106,7 @@
 - Ensure that MSYS2 is initialized.
 - Bump dependencies:
   - @actions/core to v1.2.0
-  - @actions/exec to v1.0.2
+  - @actions/exec to v1.0.2 [[numworks/setup-msys2#24](https://github.com/numworks/setup-msys2/pull/24)]
 
 ### Removed
 - `io.which` is not required anymore.
