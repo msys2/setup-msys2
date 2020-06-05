@@ -9,12 +9,20 @@ inputs:
     description: 'Default value for MSYS2_PATH_TYPE environment variable: strict, inherit or minimal'
     required: false
     default: 'strict'
+  release:
+    description: 'Retrieve and extract base installation from upstream GitHub Releases'
+    required: false
+    default: true
   update:
     description: 'Update MSYS2 installation through pacman'
     required: false
     default: false
   install:
     description: 'Install packages after installation through pacman'
+    required: false
+    default: false
+  cache:
+    description: 'Cache /var/cache/pacman/pkg to speed up future updates'
     required: false
     default: false
 runs:

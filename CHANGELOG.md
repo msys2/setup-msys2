@@ -1,6 +1,19 @@
 # Changelog
 
-## [Unreleased](https://github.com/eine/setup-msys2/compare/877608b23cc3051911e4c84b919db4e9e14ad65c...HEAD)
+## [Unreleased](https://github.com/eine/setup-msys2/compare/b506907ae6185e399cfae0191555c6c99523fdb1...HEAD)
+
+### Added
+
+- Option `cache`.
+- Option `release`.
+
+### Changed
+
+- `update: true` alone now defaults to using the installation from GitHub Releases, instead of the default installation in the virtual environment. [[#23](https://github.com/eine/setup-msys2/issues/23)]
+- Disable `CheckSpace` to reduce update time.
+- ignoreReturnCode when executing `pacman -Syuu` for the first time.
+
+## [1.0.1](https://github.com/eine/setup-msys2/compare/877608b23cc3051911e4c84b919db4e9e14ad65c...b506907ae6185e399cfae0191555c6c99523fdb1) - 2020/06/04
 
 ## Changed
 
