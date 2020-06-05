@@ -6,11 +6,11 @@
   <a title="Dependency Status" href="https://david-dm.org/eine/setup-msys2"><img src="https://img.shields.io/david/eine/setup-msys2.svg?longCache=true&style=flat-square&label=deps&logo=npm"></a>
 </p>
 
-[MSYS2](https://www.msys2.org/) is available by default in [windows-latest](https://github.com/actions/virtual-environments/blob/master/images/win/Windows2019-Readme.md#msys2) virtual environment for GitHub Actions. However, the default installation is updated and it includes some pre-installed packages. Moreover, it is neither added to the PATH nor available as a custom `shell` option.
+[MSYS2](https://www.msys2.org/) is available by default in [windows-latest](https://github.com/actions/virtual-environments/blob/master/images/win/Windows2019-Readme.md#msys2) virtual environment for GitHub Actions. However, the default installation is updated every ~10 days, and it includes some pre-installed packages. As a result, startup time can be up to 10 min. Moreover, MSYS2/MINGW are neither added to the PATH nor available as a custom `shell` option.
 
-**setup-msys2** is a JavaScript GitHub Action (GHA) to optionally setup a stable [MSYS2](https://www.msys2.org/) environment in a temporal location, using the GHA [toolkit](https://github.com/actions/toolkit); and to provide two custom entrypoints.
+**setup-msys2** is a JavaScript GitHub Action (GHA) to optionally setup an up-to-date and stable [MSYS2](https://www.msys2.org/) environment in a temporal location, using the GHA [toolkit](https://github.com/actions/toolkit). Moreover, it provides a custom entrypoint.
 
-If option `update` is `true`, the default installation is used, in order to reduce startup latency. Otherwise, the latest tarball available at [repo.msys2.org/distrib/x86_64](http://repo.msys2.org/distrib/x86_64/) is downloaded and extracted.
+If option `release` is `false`, the default installation is used. Otherwise (by default), the latest tarball available at [repo.msys2.org/distrib/x86_64](http://repo.msys2.org/distrib/x86_64/) is downloaded and extracted.
 
 ## Usage
 
@@ -96,6 +96,16 @@ By default, `MSYS2_PATH_TYPE` is set to `strict` by `msys2`. It is possible to o
       MSYS2_PATH_TYPE: inherit
 ```
 
+#### release
+
+By default (`true`), retrieve and extract base installation from upstream GitHub Releases. If set to `false`, the installation available in the virtual environment is used:
+
+```yaml
+  - uses: eine/setup-msys2@v1
+    with:
+      update: false
+```
+
 #### update
 
 By default, the installation is not updated; hence package versions are those of the installation tarball. By setting option `update` to `true`, the action will try to update the runtime and packages cleanly:
@@ -115,4 +125,14 @@ Installing additional packages after updating the system is supported through op
     with:
       update: true
       install: 'git base-devel'
+```
+
+#### cache
+
+If set to `true`, directory `/var/cache/pacman/pkg` is cached in order to speed up future updates:
+
+```yaml
+  - uses: eine/setup-msys2@v1
+    with:
+      cache: true
 ```
