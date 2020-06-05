@@ -61,8 +61,8 @@ async function run() {
       core.endGroup();
     }
 
-    async function pacman(args) {
-      await exec.exec('cmd', ['/D', '/S', '/C', cmd, 'pacman', '--noconfirm'].concat(args));
+    async function pacman(args, opts) {
+      await exec.exec('cmd', ['/D', '/S', '/C', cmd, 'pacman', '--noconfirm'].concat(args), opts);
     }
 
     function changeGroup(str) {
@@ -75,11 +75,11 @@ async function run() {
       //# reduce time required to install packages by disabling pacman's disk space checking
       await exec.exec('cmd', ['/D', '/S', '/C', cmd, 'sed', '-i', 's/^CheckSpace/#CheckSpace/g', '/etc/pacman.conf']);
       changeGroup('Updating packages...');
-      await pacman(['-Syuu']);
+      await pacman(['-Syuu'], {ignoreReturnCode: true});
       changeGroup('Killing remaining tasks...');
       await exec.exec('taskkill', ['/F', '/FI', 'MODULES eq msys-2.0.dll']);
       changeGroup('Final system upgrade...');
-      await pacman(['-Suu']);
+      await pacman(['-Suu'], {});
       core.endGroup();
     } else {
       core.startGroup('Starting MSYS2 for the first time...');
@@ -89,7 +89,7 @@ async function run() {
 
     if (p_install != '' && p_install != 'false') {
       core.startGroup('Installing additional packages...');
-      await pacman(['-S'].concat(p_install.split(' ')));
+      await pacman(['-S'].concat(p_install.split(' ')), {});
       core.endGroup();
     }
 
