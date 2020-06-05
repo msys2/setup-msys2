@@ -23,6 +23,7 @@ async function run() {
 
     await io.mkdirP(dest);
 
+    const p_release = core.getInput('release') === 'true';
     const p_update = core.getInput('update') === 'true';
     const p_pathtype = core.getInput('path-type');
     const p_msystem = core.getInput('msystem');
@@ -31,7 +32,7 @@ async function run() {
 
     let drive = 'C:';
 
-    if (!p_update) {
+    if (p_release) {
       drive = '%~dp0';
       const distrib = await tc.downloadTool('https://github.com/msys2/msys2-installer/releases/download/2020-06-02/msys2-base-x86_64-20200602.tar.xz');
       await exec.exec('bash', ['-c', `7z x ${distrib.replace(/\\/g, '/')} -so | 7z x -aoa -si -ttar`], {cwd: dest} );
