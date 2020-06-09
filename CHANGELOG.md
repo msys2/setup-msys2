@@ -2,6 +2,10 @@
 
 ## [Unreleased](https://github.com/eine/setup-msys2/compare/b506907ae6185e399cfae0191555c6c99523fdb1...HEAD)
 
+### Changed
+
+- Call `/usr/bin/env` instead of `/usr/bin/bash` directly.
+
 ## [v1.1.0](https://github.com/eine/setup-msys2/compare/b506907ae6185e399cfae0191555c6c99523fdb1...9da8a47f7acedd87a157ef2d99246f877fc15e9c)
 
 ### Added

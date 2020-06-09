@@ -44,7 +44,13 @@ async function run() {
       `IF NOT DEFINED MSYS2_PATH_TYPE set MSYS2_PATH_TYPE=` + p_pathtype,
       `set "args=%*"`,
       `set "args=%args:\\=/%"`,
-      drive + `\\msys64\\usr\\bin\\bash.exe --norc -ilceo pipefail "cd $OLDPWD && %args%"`
+      /* TODO:
+        See https://www.msys2.org/wiki/Launchers/#the-idea
+        Ideally, there would be some better solution than 'cd $OLDPWD', such as using 'CHERE_INVOKING=1'.
+        However, since an intermediate file is used, it would probably make CHERE_INVOKING use the location of
+        'msys2.cmd' or the temporal file created by GitHub's runner.
+      */
+      drive + `\\msys64\\usr\\bin\\env.exe /usr/bin/bash --norc -ilceo pipefail "cd $OLDPWD && %args%"`
     ].join('\r\n');
 
     let cmd = path.join(dest, 'msys2.cmd');
