@@ -33,6 +33,7 @@ async function run() {
     let drive = 'C:';
 
     if (p_release) {
+      // Use upstream package instead of the default installation in the virtual environment.
       drive = '%~dp0';
       const distrib = await tc.downloadTool('https://github.com/msys2/msys2-installer/releases/download/2020-06-02/msys2-base-x86_64-20200602.tar.xz');
       await exec.exec('bash', ['-c', `7z x ${distrib.replace(/\\/g, '/')} -so | 7z x -aoa -si -ttar`], {cwd: dest} );
@@ -57,13 +58,13 @@ async function run() {
     fs.writeFileSync(cmd, wrap);
 
     core.addPath(dest);
+    const c_paths = [(p_release ? dest : 'C:') + `\\msys64\\var\\cache\\pacman\\pkg\\`];
 
     core.exportVariable('MSYSTEM', p_msystem);
 
     if (p_cache === 'true') {
       core.startGroup('Restoring cache...');
-      const paths = [(p_update ? 'C:' : dest) + `\\msys64\\var\\cache\\pacman\\pkg\\`];
-      console.log('Cache ID:', await cache.restoreCache(paths, 'msys2', ['msys2-']));
+      console.log('Cache ID:', await cache.restoreCache(c_paths, 'msys2', ['msys2-']));
       core.endGroup();
     }
 
@@ -101,9 +102,8 @@ async function run() {
 
     if (p_cache === 'true' || p_cache === 'save') {
       core.startGroup('Saving cache...');
-      const paths = [(p_update ? 'C:' : dest) + `\\msys64\\var\\cache\\pacman\\pkg\\`];
-      const key = (await hashElement(paths[0]))['hash'].toString() + (new Date()).getTime().toString();
-      console.log('Cache ID:', await cache.saveCache(paths, 'msys2-' + key), '[' + key + ']');
+      const key = (await hashElement(c_paths[0]))['hash'].toString() + (new Date()).getTime().toString();
+      console.log('Cache ID:', await cache.saveCache(c_paths, 'msys2-' + key), '[' + key + ']');
       core.endGroup();
     }
   }
