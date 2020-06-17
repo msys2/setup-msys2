@@ -144,3 +144,37 @@ If set to `save`, the same directory is cached, but it is not restored. This can
     with:
       cache: save
 ```
+
+## Development
+
+The steps to publish a new release are the following:
+
+```sh
+# Remove/clean dir 'dist'
+rm -rf dist
+
+# Package the action with ncc
+yarn pkg
+
+# - Copy release artifacts to subdir dir
+# - Create a new orphan branch in a new empty repo
+# - Push the branch
+./release.sh v1.x.x
+
+# Fetch the new branch and checkout it
+git fetch --all
+git checkout -b tmp origin/v1.x.x
+
+# Reset the 'rolling' tag to the just released branch
+git tag -d v1
+git tag v1
+git push origin +v1
+
+# Remove the temporal branch
+git checkout master
+git branch -D tmp
+```
+
+> NOTE: although it feels unidiomatic having 'rolling' tags and/or storing release assets in specific branches, it is the recommended solution. Retrieving assets from GitHub Releases is not supported by GitHub Actions (yet). See [actions/javascript-action: Create a release branch](https://github.com/actions/javascript-action#create-a-release-branch), [actions/toolkit: docs/action-versioning.md](https://github.com/actions/toolkit/blob/master/docs/action-versioning.md) and [actions/toolkit#214](https://github.com/actions/toolkit/issues/214).
+
+> NOTE: tag `tag-for-git-describe` is used for testing `git describe --dirty --tags` in CI. See [actions/checkout#250](https://github.com/actions/checkout/issues/250).
