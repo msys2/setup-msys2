@@ -4,7 +4,7 @@
   "description": "MSYS2 Setup GitHub Action",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/eine/setup-msys2.git"
+    "url": "git+https://github.com/msys2/setup-msys2.git"
   },
   "scripts": {
     "pkg": "ncc build main.js -m -o ./"
@@ -19,9 +19,9 @@
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/eine/setup-msys2/issues"
+    "url": "https://github.com/msys2/setup-msys2/issues"
   },
-  "homepage": "https://github.com/eine/setup-msys2",
+  "homepage": "https://github.com/msys2/setup-msys2",
   "dependencies": {
     "@actions/cache": "^0.2.1",
     "@actions/core": "^1.2.4",

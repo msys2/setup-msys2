@@ -1,9 +1,9 @@
 # Setup MSYS2
 
 <p align="center">
-  <a title="'action' workflow Status" href="https://github.com/eine/setup-msys2/actions?query=workflow%3Aaction"><img alt="'action' workflow Status" src="https://img.shields.io/github/workflow/status/eine/setup-msys2/action?longCache=true&style=flat-square&label=action&logo=github"></a><!--
+  <a title="'action' workflow Status" href="https://github.com/msys2/setup-msys2/actions?query=workflow%3Aaction"><img alt="'action' workflow Status" src="https://img.shields.io/github/workflow/status/msys2/setup-msys2/action?longCache=true&style=flat-square&label=action&logo=github"></a><!--
   -->
-  <a title="Dependency Status" href="https://david-dm.org/eine/setup-msys2"><img src="https://img.shields.io/david/eine/setup-msys2.svg?longCache=true&style=flat-square&label=deps&logo=npm"></a>
+  <a title="Dependency Status" href="https://david-dm.org/msys2/setup-msys2"><img src="https://img.shields.io/david/msys2/setup-msys2.svg?longCache=true&style=flat-square&label=deps&logo=npm"></a>
 </p>
 
 [MSYS2](https://www.msys2.org/) is available by default in [windows-latest](https://github.com/actions/virtual-environments/blob/master/images/win/Windows2019-Readme.md#msys2) virtual environment for GitHub Actions. However, the default installation is updated every ~10 days, and it includes some pre-installed packages. As a result, startup time can be up to 10 min. Moreover, MSYS2/MINGW are neither added to the PATH nor available as a custom `shell` option.
@@ -15,7 +15,7 @@ If option `release` is `false`, the default installation is used. Otherwise (by 
 ## Usage
 
 ```yaml
-  - uses: eine/setup-msys2@v1
+  - uses: msys2/setup-msys2@v1
 ```
 
 Then, for multi-line scripts:
@@ -39,7 +39,7 @@ It is also possible to set `msys2` as the default shell. For example:
     run:
       shell: msys2 {0}
   steps:
-  - uses: eine/setup-msys2@v1
+  - uses: msys2/setup-msys2@v1
     with:
       update: true
       install: base-devel git
@@ -58,7 +58,7 @@ Note that setting `autocrlf` is required in specific use cases only. See [action
 By default, `MSYSTEM` is set to `MINGW64`. However, an optional parameter named `msystem` is supported, which expects `MSYS`, `MINGW64` or `MING32`. For example:
 
 ```yaml
-  - uses: eine/setup-msys2@v1
+  - uses: msys2/setup-msys2@v1
     with:
       msystem: MSYS
 ```
@@ -66,7 +66,7 @@ By default, `MSYSTEM` is set to `MINGW64`. However, an optional parameter named 
 Furthermore, the environment variable can be overriden. This is useful when multiple commands need to be executed in different contexts. For example, in order to build a PKGBUILD file and then test the installed artifact:
 
 ```yaml
-  - uses: eine/setup-msys2@v1
+  - uses: msys2/setup-msys2@v1
     with:
       msystem: MSYS
   - shell: msys2 {0}
@@ -83,14 +83,14 @@ Furthermore, the environment variable can be overriden. This is useful when mult
 By default, `MSYS2_PATH_TYPE` is set to `strict` by `msys2`. It is possible to override it either using an option or setting the environment variable explicitly:
 
 ```yaml
-  - uses: eine/setup-msys2@v1
+  - uses: msys2/setup-msys2@v1
     with:
       path-type: inherit
   - run: msys2 <command>
 ```
 
 ```yaml
-  - uses: eine/setup-msys2@v1
+  - uses: msys2/setup-msys2@v1
   - run: msys2 <command>
     env:
       MSYS2_PATH_TYPE: inherit
@@ -101,7 +101,7 @@ By default, `MSYS2_PATH_TYPE` is set to `strict` by `msys2`. It is possible to o
 By default (`true`), retrieve and extract base installation from upstream GitHub Releases. If set to `false`, the installation available in the virtual environment is used:
 
 ```yaml
-  - uses: eine/setup-msys2@v1
+  - uses: msys2/setup-msys2@v1
     with:
       update: false
 ```
@@ -111,7 +111,7 @@ By default (`true`), retrieve and extract base installation from upstream GitHub
 By default, the installation is not updated; hence package versions are those of the installation tarball. By setting option `update` to `true`, the action will try to update the runtime and packages cleanly:
 
 ```yaml
-  - uses: eine/setup-msys2@v1
+  - uses: msys2/setup-msys2@v1
     with:
       update: true
 ```
@@ -121,7 +121,7 @@ By default, the installation is not updated; hence package versions are those of
 Installing additional packages after updating the system is supported through option `install`. The package or list of packages are intalled through `pacman --noconfirm -S`.
 
 ```yaml
-  - uses: eine/setup-msys2@v1
+  - uses: msys2/setup-msys2@v1
     with:
       update: true
       install: 'git base-devel'
@@ -132,7 +132,7 @@ Installing additional packages after updating the system is supported through op
 If set to `true`, directory `/var/cache/pacman/pkg` is restored/cached in order to speed up future updates:
 
 ```yaml
-  - uses: eine/setup-msys2@v1
+  - uses: msys2/setup-msys2@v1
     with:
       cache: true
 ```
@@ -140,7 +140,7 @@ If set to `true`, directory `/var/cache/pacman/pkg` is restored/cached in order 
 If set to `save`, the same directory is cached, but it is not restored. This can be used to force a save of a clean state.
 
 ```yaml
-  - uses: eine/setup-msys2@v1
+  - uses: msys2/setup-msys2@v1
     with:
       cache: save
 ```
