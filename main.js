@@ -68,8 +68,12 @@ async function run() {
       core.endGroup();
     }
 
+    async function run(args, opts) {
+      await exec.exec('cmd', ['/D', '/S', '/C', cmd].concat(args), opts);
+    }
+
     async function pacman(args, opts) {
-      await exec.exec('cmd', ['/D', '/S', '/C', cmd, 'pacman', '--noconfirm'].concat(args), opts);
+      await run(['pacman', '--noconfirm'].concat(args), opts);
     }
 
     function changeGroup(str) {
@@ -80,7 +84,7 @@ async function run() {
     if (p_update) {
       core.startGroup('Disable CheckSpace...');
       //# reduce time required to install packages by disabling pacman's disk space checking
-      await exec.exec('cmd', ['/D', '/S', '/C', cmd, 'sed', '-i', 's/^CheckSpace/#CheckSpace/g', '/etc/pacman.conf']);
+      await run(['sed', '-i', 's/^CheckSpace/#CheckSpace/g', '/etc/pacman.conf']);
       changeGroup('Updating packages...');
       await pacman(['-Syuu'], {ignoreReturnCode: true});
       changeGroup('Killing remaining tasks...');
@@ -90,7 +94,7 @@ async function run() {
       core.endGroup();
     } else {
       core.startGroup('Starting MSYS2 for the first time...');
-      await exec.exec('cmd', ['/D', '/S', '/C', cmd].concat(['uname', '-a']));
+      await run(['uname', '-a']);
       core.endGroup();
     }
 
