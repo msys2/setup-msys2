@@ -34,9 +34,14 @@ async function run() {
 
     if (p_release) {
       // Use upstream package instead of the default installation in the virtual environment.
+      core.startGroup('Installing MSYS2...');
       drive = '%~dp0';
-      const distrib = await tc.downloadTool('https://github.com/msys2/msys2-installer/releases/download/2020-06-02/msys2-base-x86_64-20200602.tar.xz');
-      await exec.exec('bash', ['-c', `7z x ${distrib.replace(/\\/g, '/')} -so | 7z x -aoa -si -ttar`], {cwd: dest} );
+      let inst_dest = path.join(tmp_dir, 'base.exe');
+      const distrib = await tc.downloadTool(
+        'https://github.com/msys2/msys2-installer/releases/download/2020-06-02/msys2-base-x86_64-20200602.sfx.exe',
+        inst_dest);
+      await exec.exec(inst_dest, ['-y'], {cwd: dest});
+      core.endGroup();
     }
 
     let wrap = [
