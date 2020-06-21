@@ -81,6 +81,10 @@ async function run() {
       core.startGroup(str);
     }
 
+    core.startGroup('Starting MSYS2 for the first time...');
+    await run(['uname', '-a']);
+    core.endGroup();
+
     if (p_update) {
       core.startGroup('Disable CheckSpace...');
       //# reduce time required to install packages by disabling pacman's disk space checking
@@ -91,10 +95,6 @@ async function run() {
       await exec.exec('taskkill', ['/F', '/FI', 'MODULES eq msys-2.0.dll']);
       changeGroup('Final system upgrade...');
       await pacman(['-Suu'], {});
-      core.endGroup();
-    } else {
-      core.startGroup('Starting MSYS2 for the first time...');
-      await run(['uname', '-a']);
       core.endGroup();
     }
 
