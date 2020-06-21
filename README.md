@@ -118,7 +118,7 @@ By default, the installation is not updated; hence package versions are those of
 
 #### install
 
-Installing additional packages after updating the system is supported through option `install`. The package or list of packages are installed through `pacman --noconfirm -S`.
+Installing additional packages after updating the system is supported through option `install`. The package or list of packages are installed through `pacman --noconfirm -S --needed`.
 
 ```yaml
   - uses: msys2/setup-msys2@v1
