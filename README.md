@@ -63,7 +63,7 @@ By default, `MSYSTEM` is set to `MINGW64`. However, an optional parameter named 
       msystem: MSYS
 ```
 
-Furthermore, the environment variable can be overriden. This is useful when multiple commands need to be executed in different contexts. For example, in order to build a PKGBUILD file and then test the installed artifact:
+Furthermore, the environment variable can be overridden. This is useful when multiple commands need to be executed in different contexts. For example, in order to build a PKGBUILD file and then test the installed artifact:
 
 ```yaml
   - uses: msys2/setup-msys2@v1
@@ -118,7 +118,7 @@ By default, the installation is not updated; hence package versions are those of
 
 #### install
 
-Installing additional packages after updating the system is supported through option `install`. The package or list of packages are intalled through `pacman --noconfirm -S`.
+Installing additional packages after updating the system is supported through option `install`. The package or list of packages are installed through `pacman --noconfirm -S`.
 
 ```yaml
   - uses: msys2/setup-msys2@v1
