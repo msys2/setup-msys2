@@ -96,7 +96,7 @@ async function run() {
 
     if (p_install != '' && p_install != 'false') {
       core.startGroup('Installing additional packages...');
-      await pacman(['-S'].concat(p_install.split(' ')), {});
+      await pacman(['-S', '--needed'].concat(p_install.split(' ')), {});
       core.endGroup();
     }
 
