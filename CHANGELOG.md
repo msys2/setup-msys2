@@ -7,6 +7,8 @@
 - Transfer from 'eine' to 'msys2'.
 - Call `/usr/bin/env` instead of `/usr/bin/bash` directly.
 - Fix the path to be cached, which depends on `p_release`, not `p_update`.
+- Use `needed` when installing additional packages (`install`).
+- Use the self extracting archive instead of the `.tar.xz`.
 - Bump dependencies:
   - folder-hash to v3.3.2
 
