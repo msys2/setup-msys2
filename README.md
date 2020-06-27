@@ -1,10 +1,14 @@
-# Setup MSYS2
-
 <p align="center">
+  <a title="msys2.github.io" href="https://msys2.github.io"><img src="https://img.shields.io/website.svg?label=msys2.github.io&longCache=true&style=flat-square&url=http%3A%2F%2Fmsys2.github.io%2Findex.html&logo=github"></a><!--
+  -->
+  <a title="Join the chat at https://gitter.im/msys2/msys2" href="https://gitter.im/msys2/msys2"><img src="https://img.shields.io/badge/chat-on%20gitter-4db797.svg?longCache=true&style=flat-square&logo=gitter&logoColor=e8ecef"></a><!--
+  -->
   <a title="'action' workflow Status" href="https://github.com/msys2/setup-msys2/actions?query=workflow%3Aaction"><img alt="'action' workflow Status" src="https://img.shields.io/github/workflow/status/msys2/setup-msys2/action?longCache=true&style=flat-square&label=action&logo=github"></a><!--
   -->
   <a title="Dependency Status" href="https://david-dm.org/msys2/setup-msys2"><img src="https://img.shields.io/david/msys2/setup-msys2.svg?longCache=true&style=flat-square&label=deps&logo=npm"></a>
 </p>
+
+# Setup MSYS2
 
 [MSYS2](https://www.msys2.org/) is available by default in [windows-latest](https://github.com/actions/virtual-environments/blob/master/images/win/Windows2019-Readme.md#msys2) virtual environment for GitHub Actions. However, the default installation is updated every ~10 days, and it includes some pre-installed packages. As a result, startup time can be up to 10 min. Moreover, MSYS2/MINGW are neither added to the PATH nor available as a custom `shell` option.
 
