@@ -103,7 +103,7 @@ By default (`true`), retrieve and extract base installation from upstream GitHub
 ```yaml
   - uses: msys2/setup-msys2@v1
     with:
-      update: false
+      release: false
 ```
 
 #### update
