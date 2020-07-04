@@ -1,0 +1,30 @@
+name: 'Setup MSYS2 environment'
+description: 'Setup an MSYS2 environment'
+inputs:
+  msystem:
+    description: 'Variant of the environment to set by default: MSYS, MINGW32 or MINGW64'
+    required: false
+    default: 'MINGW64'
+  path-type:
+    description: 'Default value for MSYS2_PATH_TYPE environment variable: strict, inherit or minimal'
+    required: false
+    default: 'strict'
+  release:
+    description: 'Retrieve and extract base installation from upstream GitHub Releases'
+    required: false
+    default: true
+  update:
+    description: 'Update MSYS2 installation through pacman'
+    required: false
+    default: false
+  install:
+    description: 'Install packages after installation through pacman'
+    required: false
+    default: false
+  cache:
+    description: 'Cache /var/cache/pacman/pkg to speed up future updates'
+    required: false
+    default: false
+runs:
+  using: 'node12'
+  main: 'index.js'
