@@ -7,6 +7,14 @@ const path = require('path');
 const fs = require('fs');
 const { hashElement } = require('folder-hash');
 
+const inst_url = 'https://github.com/msys2/msys2-installer/releases/download/2020-06-29/msys2-base-x86_64-20200629.sfx.exe';
+const checksum = '959E5672B3C26351345D9E5BAF7E5C2B34FE29AF4A0622E106FB079B9BADDF41';
+
+function changeGroup(str) {
+  core.endGroup();
+  core.startGroup(str);
+}
+
 async function run() {
   try {
     if (process.platform !== 'win32') {
@@ -34,16 +42,19 @@ async function run() {
 
     if (p_release) {
       // Use upstream package instead of the default installation in the virtual environment.
-      core.startGroup('Installing MSYS2...');
+      core.startGroup('Downloading MSYS2...');
       drive = '%~dp0';
       let inst_dest = path.join(tmp_dir, 'base.exe');
-      await tc.downloadTool(
-        'https://github.com/msys2/msys2-installer/releases/download/2020-06-29/msys2-base-x86_64-20200629.sfx.exe',
-        inst_dest);
-      if (await exec.exec(`powershell.exe`, [`(Get-FileHash ${inst_dest} -Algorithm SHA256)[0].Hash -eq "5C27950FE639F98B0B73E051C0787F7A08B7D22BCC3BE3ABCB9FA063028827EA"`])) {
-        core.setFailed(`The SHA256 of the installer does not match!`);
+      await tc.downloadTool(inst_url, inst_dest);
+
+      let inst_checksum = '';
+      await exec.exec(`powershell.exe`, [`(Get-FileHash ${inst_dest} -Algorithm SHA256)[0].Hash`], {listeners: {stdout: (data) => { inst_checksum += data.toString(); }}});
+      if (inst_checksum.slice(0, -2) !== checksum) {
+        core.setFailed(`The SHA256 of the installer does not match! expected ${checksum} got ${inst_checksum}`);
         return;
       }
+
+      changeGroup('Extracting MSYS2...');
       await exec.exec(inst_dest, ['-y'], {cwd: dest});
       core.endGroup();
     }
@@ -85,18 +96,13 @@ async function run() {
       await run(['pacman', '--noconfirm'].concat(args), opts);
     }
 
-    function changeGroup(str) {
-      core.endGroup();
-      core.startGroup(str);
-    }
-
     core.startGroup('Starting MSYS2 for the first time...');
     await run(['uname', '-a']);
     core.endGroup();
 
     if (p_update) {
       core.startGroup('Disable CheckSpace...');
-      //# reduce time required to install packages by disabling pacman's disk space checking
+      // Reduce time required to install packages by disabling pacman's disk space checking
       await run(['sed', '-i', 's/^CheckSpace/#CheckSpace/g', '/etc/pacman.conf']);
       changeGroup('Updating packages...');
       await pacman(['-Syuu'], {ignoreReturnCode: true});
