@@ -1,8 +1,18 @@
 # Changelog
 
-## [Unreleased](https://github.com/msys2/setup-msys2/compare/a4332eaf3b970340d6495b2076e1405ee48ea573...HEAD)
+## [Unreleased](https://github.com/msys2/setup-msys2/compare/05abb8d585d071301cc19e6177945011875d9479...HEAD)
 
 ### Changed
+
+## [v1.1.2](https://github.com/msys2/setup-msys2/compare/a4332eaf3b970340d6495b2076e1405ee48ea573...05abb8d585d071301cc19e6177945011875d9479)
+
+### Added
+
+- Check the SHA256 of the installer, before extracting it.
+
+### Changed
+
+- Update base distribution to [20200629](https://github.com/msys2/msys2-installer/releases/tag/2020-06-29).
 
 ## [v1.1.1](https://github.com/msys2/setup-msys2/compare/9da8a47f7acedd87a157ef2d99246f877fc15e9c...a4332eaf3b970340d6495b2076e1405ee48ea573)
 
