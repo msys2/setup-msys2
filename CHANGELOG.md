@@ -4,6 +4,8 @@
 
 ### Changed
 
+- Change default of option `path-type` from `strict` to `minimal`.
+
 ## [v1.1.2](https://github.com/msys2/setup-msys2/compare/a4332eaf3b970340d6495b2076e1405ee48ea573...05abb8d585d071301cc19e6177945011875d9479)
 
 ### Added
