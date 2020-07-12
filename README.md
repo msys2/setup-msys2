@@ -36,7 +36,9 @@ Or, for single line commands:
   - run: msys2 uname -a
 ```
 
-It is also possible to set `msys2` as the default shell. For example:
+### Default shell
+
+In order to reduce verbosity, it is possible to set `msys2` as the default shell. For example:
 
 ```yaml
   defaults:
@@ -54,6 +56,15 @@ It is also possible to set `msys2` as the default shell. For example:
 ```
 
 Note that setting `autocrlf` is required in specific use cases only. See [actions/checkout#250](https://github.com/actions/checkout/issues/250).
+
+### Build matrix
+
+It is common to test some packge/tool on MINGW32 (32 bit) and MINGW64 (64 bit), which typically requires installing different sets of packages through option `install`. GitHub Actions' `strategy` and `matrix` fields allow to do so, as explained in [docs.github.com: Configuring a build matrix](https://docs.github.com/en/actions/configuring-and-managing-workflows/configuring-a-workflow#configuring-a-build-matrix) and [docs.github.com: `jobs.<job_id>.strategy.matrix`](https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions#jobsjob_idstrategymatrix). See, for example:
+
+- [msys2/MINGW-packages: .github/workflows/main.yml](https://github.com/msys2/MINGW-packages/blob/master/.github/workflows/main.yml).
+- [ghdl/ghdl: .github/workflows/push.yml](https://github.com/ghdl/ghdl/blob/99b542c849311c92e87e2c70d283de133c9d4093/.github/workflows/push.yml#L56-L102).
+
+Find further details at [#40](https://github.com/msys2/setup-msys2/issues/40).
 
 ### Options
 
