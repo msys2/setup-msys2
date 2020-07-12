@@ -95,21 +95,21 @@ Furthermore, the environment variable can be overridden. This is useful when mul
 
 #### path-type
 
-By default, `MSYS2_PATH_TYPE` is set to `strict` by `msys2`. It is possible to override it either using an option or setting the environment variable explicitly:
+Defines which parts of the Windows `$env:PATH` environment variable leak into the MSYS2 environment.
+
+Possible values:
+
+* `strict` *(default)* - Do not inherit anything from `$env:PATH`
+* `minimal` - Only inherit the default Windows paths from `$env:PATH` (so that `cmd.exe` is available for example)
+* `inherit` - Inherit everything. Warning: This can lead to interference with other tools installed on the system.
 
 ```yaml
   - uses: msys2/setup-msys2@v1
     with:
-      path-type: inherit
-  - run: msys2 <command>
+      path-type: minimal
 ```
 
-```yaml
-  - uses: msys2/setup-msys2@v1
-  - run: msys2 <command>
-    env:
-      MSYS2_PATH_TYPE: inherit
-```
+(This option corresponds to the `MSYS2_PATH_TYPE` setting in MSYS2)
 
 #### release
 
