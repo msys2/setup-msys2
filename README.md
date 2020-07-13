@@ -33,7 +33,7 @@ Then, for multi-line scripts:
 Or, for single line commands:
 
 ```yaml
-  - run: msys2 uname -a
+  - run: msys2 -c 'uname -a'
 ```
 
 ### Default shell
@@ -90,7 +90,7 @@ Furthermore, the environment variable can be overridden. This is useful when mul
       pacman --noconfirm -U mingw-w64-*-any.pkg.tar.xz
   - run: |
       set MSYSTEM=MINGW64
-      msys2 <command to test the package>
+      msys2 -c '<command to test the package>'
 ```
 
 #### path-type

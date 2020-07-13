@@ -199,7 +199,7 @@ jobs:
         rm -rf node_modules
     - name: run action
       uses: ./
-    - run: msys2 go env
+    - run: msys2 -c "go env"
       env:
         MSYS2_PATH_TYPE: inherit
 
@@ -219,7 +219,7 @@ jobs:
       uses: ./
       with:
         path-type: inherit
-    - run: msys2 go env
+    - run: msys2 -c "go env"
 
   install:
     needs: [path-type]
@@ -292,3 +292,41 @@ jobs:
         update: true
         install: base-devel git
     - run: git describe --dirty --tags
+
+  errorhandling:
+    needs: [defaultdirty]
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: build action
+      shell: bash
+      run: |
+        npm ci
+        npm run pkg
+        rm -rf node_modules
+    - name: run action
+      uses: ./
+    - shell: msys2 {0}
+      run: |
+        (! false | true) || exit 1; # make sure "-o pipefail" is active  by default
+        [[ "$-" =~ 'e' ]] || exit 1; # make sure "set -e" is active by default
+
+  workingdir:
+    needs: [errorhandling]
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: build action
+      shell: bash
+      run: |
+        npm ci
+        npm run pkg
+        rm -rf node_modules
+    - name: run action
+      uses: ./
+    - shell: msys2 {0}
+      run: |
+        # make sure we are in checkout directory
+        dir="$(pwd)"
+        cd "$GITHUB_WORKSPACE"
+        [[ "$dir" == "$(pwd)" ]]
