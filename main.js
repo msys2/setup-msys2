@@ -38,12 +38,12 @@ async function run() {
     const p_install = core.getInput('install');
     const p_cache = core.getInput('cache');
 
-    let drive = 'C:';
+    let base = 'C:';
 
     if (p_release) {
       // Use upstream package instead of the default installation in the virtual environment.
       core.startGroup('Downloading MSYS2...');
-      drive = '%~dp0';
+      base = '%~dp0';
       let inst_dest = path.join(tmp_dir, 'base.exe');
       await tc.downloadTool(inst_url, inst_dest);
 
@@ -60,18 +60,11 @@ async function run() {
     }
 
     let wrap = [
-      `setlocal`,
       `@echo off`,
+      `setlocal`,
       `IF NOT DEFINED MSYS2_PATH_TYPE set MSYS2_PATH_TYPE=` + p_pathtype,
-      `set "args=%*"`,
-      `set "args=%args:\\=/%"`,
-      /* TODO:
-        See https://www.msys2.org/wiki/Launchers/#the-idea
-        Ideally, there would be some better solution than 'cd $OLDPWD', such as using 'CHERE_INVOKING=1'.
-        However, since an intermediate file is used, it would probably make CHERE_INVOKING use the location of
-        'msys2.cmd' or the temporal file created by GitHub's runner.
-      */
-      drive + `\\msys64\\usr\\bin\\env.exe /usr/bin/bash --norc -ilceo pipefail "cd $OLDPWD && %args%"`
+      `set CHERE_INVOKING=1`,
+      base + `\\msys64\\usr\\bin\\bash.exe -leo pipefail %*`
     ].join('\r\n');
 
     let cmd = path.join(dest, 'msys2.cmd');
@@ -89,7 +82,7 @@ async function run() {
     }
 
     async function run(args, opts) {
-      await exec.exec('cmd', ['/D', '/S', '/C', cmd].concat(args), opts);
+      await exec.exec('cmd', ['/D', '/S', '/C', cmd].concat(['-c', args.join(' ')]), opts);
     }
 
     async function pacman(args, opts) {
