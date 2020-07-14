@@ -22,7 +22,7 @@ If option `release` is `false`, the default installation is used. Otherwise (by 
   - uses: msys2/setup-msys2@v1
 ```
 
-Then, for multi-line scripts:
+Then, for scripts:
 
 ```yaml
   - shell: msys2 {0}
@@ -30,10 +30,16 @@ Then, for multi-line scripts:
       uname -a
 ```
 
-Or, for single line commands:
+It is also possible to execute specific commands from cmd/powershell scripts/snippets. In order to do so, `-c` is required:
 
 ```yaml
-  - run: msys2 -c 'uname -a'
+  - shell: powershell
+    run: msys2 -c 'uname -a'
+```
+
+```yaml
+  - shell: cmd
+    run: msys2 -c 'uname -a'
 ```
 
 ### Default shell
