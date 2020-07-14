@@ -56,6 +56,10 @@ async function run() {
 
       changeGroup('Extracting MSYS2...');
       await exec.exec(inst_dest, ['-y'], {cwd: dest});
+
+      changeGroup('Disable Key Refresh...');
+      let post_file = `${dest}\\msys64\\etc\\post-install\\07-pacman-key.post`;
+      await exec.exec(`powershell.exe`, [`((Get-Content -path ${post_file} -Raw) -replace '--refresh-keys', '--version') | Set-Content -Path ${post_file}`]);
       core.endGroup();
     }
 
