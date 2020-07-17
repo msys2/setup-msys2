@@ -1,4 +1,4 @@
-name: 'Setup MSYS2 environment'
+name: 'Setup MSYS2'
 description: 'Setup an MSYS2 environment'
 inputs:
   msystem:
