@@ -1,5 +1,8 @@
 name: 'Setup MSYS2 environment'
 description: 'Setup an MSYS2 environment'
+branding:
+  color: purple
+  icon: terminal
 inputs:
   msystem:
     description: 'Variant of the environment to set by default: MSYS, MINGW32 or MINGW64'
