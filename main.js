@@ -7,8 +7,8 @@ const path = require('path');
 const fs = require('fs');
 const { hashElement } = require('folder-hash');
 
-const inst_url = 'https://github.com/msys2/msys2-installer/releases/download/2020-06-29/msys2-base-x86_64-20200629.sfx.exe';
-const checksum = '959E5672B3C26351345D9E5BAF7E5C2B34FE29AF4A0622E106FB079B9BADDF41';
+const inst_url = 'https://github.com/msys2/msys2-installer/releases/download/2020-07-19/msys2-base-x86_64-20200719.sfx.exe';
+const checksum = '7abf59641c8216baf9be192a2072c041fffafc41328bac68f13f0e87c0baa1d3';
 
 function changeGroup(str) {
   core.endGroup();
@@ -49,7 +49,7 @@ async function run() {
 
       let inst_checksum = '';
       await exec.exec(`powershell.exe`, [`(Get-FileHash ${inst_dest} -Algorithm SHA256)[0].Hash`], {listeners: {stdout: (data) => { inst_checksum += data.toString(); }}});
-      if (inst_checksum.slice(0, -2) !== checksum) {
+      if (inst_checksum.slice(0, -2).toUpperCase() !== checksum.toUpperCase()) {
         core.setFailed(`The SHA256 of the installer does not match! expected ${checksum} got ${inst_checksum}`);
         return;
       }
