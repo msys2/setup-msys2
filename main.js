@@ -77,7 +77,12 @@ async function run() {
     core.addPath(dest);
     const c_paths = [(p_release ? dest : 'C:') + `\\msys64\\var\\cache\\pacman\\pkg\\`];
 
-    core.exportVariable('MSYSTEM', p_msystem);
+    const msystem_allowed = ['MSYS', 'MINGW32', 'MINGW64'];
+    if (!msystem_allowed.includes(p_msystem.toUpperCase())) {
+      core.setFailed(`'msystem' needs to be one of ${ msystem_allowed.join(', ') }, got ${p_msystem}`);
+      return;
+    }
+    core.exportVariable('MSYSTEM', p_msystem.toUpperCase());
 
     if (p_cache === 'true') {
       core.startGroup('Restoring cache...');
