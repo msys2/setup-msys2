@@ -146,24 +146,6 @@ Installing additional packages after updating the system is supported through op
       install: 'git base-devel'
 ```
 
-#### cache
-
-If set to `true`, directory `/var/cache/pacman/pkg` is restored/cached in order to speed up future updates:
-
-```yaml
-  - uses: msys2/setup-msys2@v1
-    with:
-      cache: true
-```
-
-If set to `save`, the same directory is cached, but it is not restored. This can be used to force a save of a clean state.
-
-```yaml
-  - uses: msys2/setup-msys2@v1
-    with:
-      cache: save
-```
-
 ## Development
 
 The steps to publish a new release are the following:

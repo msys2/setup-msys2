@@ -5,6 +5,7 @@ const exec = require('@actions/exec');
 const tc = require('@actions/tool-cache');
 const path = require('path');
 const fs = require('fs');
+const crypto = require('crypto');
 const { hashElement } = require('folder-hash');
 
 const inst_url = 'https://github.com/msys2/msys2-installer/releases/download/2020-07-19/msys2-base-x86_64-20200719.sfx.exe';
@@ -36,7 +37,6 @@ async function run() {
     const p_pathtype = core.getInput('path-type');
     const p_msystem = core.getInput('msystem');
     const p_install = core.getInput('install');
-    const p_cache = core.getInput('cache');
 
     let base = 'C:';
 
@@ -75,7 +75,7 @@ async function run() {
     fs.writeFileSync(cmd, wrap);
 
     core.addPath(dest);
-    const c_paths = [(p_release ? dest : 'C:') + `\\msys64\\var\\cache\\pacman\\pkg\\`];
+    const pkgCachePath = (p_release ? dest : 'C:') + `\\msys64\\var\\cache\\pacman\\pkg\\`;
 
     const msystem_allowed = ['MSYS', 'MINGW32', 'MINGW64'];
     if (!msystem_allowed.includes(p_msystem.toUpperCase())) {
@@ -84,11 +84,21 @@ async function run() {
     }
     core.exportVariable('MSYSTEM', p_msystem.toUpperCase());
 
-    if (p_cache === 'true') {
-      core.startGroup('Restoring cache...');
-      console.log('Cache ID:', await cache.restoreCache(c_paths, 'msys2', ['msys2-']));
-      core.endGroup();
-    }
+    // We want a cache key that is ideally always the same for the same kind of job.
+    // So that mingw32 and ming64 jobs, and jobs with different install packages have different caches.
+    let shasum = crypto.createHash('sha1');
+    shasum.update([p_release, p_update, p_pathtype, p_msystem, p_install].toString());
+    // We include "update" in the fallback key so that a job run with update=false never fetches
+    // a cache created with update=true. Because this would mean a newer version than needed is in the cache
+    // which would never be used but also would win during cache prunging because it is newer.
+    const baseCacheKey = 'msys2-pkgs-upd:' + p_update.toString();
+    const jobCacheKey = baseCacheKey + '-conf:' + shasum.digest('hex').slice(0, 8);
+
+    core.startGroup('Restoring cache...');
+    // We ideally want a cache matching our configuration, but every cache is OK since we prune it later anyway
+    const restoreKey = await cache.restoreCache([pkgCachePath], jobCacheKey, [jobCacheKey, baseCacheKey]);
+    console.log(`Cache restore for ${jobCacheKey}, got ${restoreKey}`);
+    core.endGroup();
 
     async function run(args, opts) {
       await exec.exec('cmd', ['/D', '/S', '/C', cmd].concat(['-c', args.join(' ')]), opts);
@@ -121,12 +131,28 @@ async function run() {
       core.endGroup();
     }
 
-    if (p_cache === 'true' || p_cache === 'save') {
-      core.startGroup('Saving cache...');
-      const key = (await hashElement(c_paths[0]))['hash'].toString() + (new Date()).getTime().toString();
-      console.log('Cache ID:', await cache.saveCache(c_paths, 'msys2-' + key), '[' + key + ']');
-      core.endGroup();
+    core.startGroup('Prune cache...');
+    // Remove all uninstalled packages
+    await run(['paccache', '-r', '-f', '-u', '-k0']);
+    // Keep the newest for all other packages
+    await run(['paccache', '-r', '-f', '-k1']);
+    core.endGroup();
+
+    core.startGroup('Saving cache...');
+    const saveKey = jobCacheKey + '-files:' + (await hashElement(pkgCachePath))['hash'].toString();
+    if (restoreKey === saveKey) {
+      console.log(`Cache unchanged, skipping save for ${saveKey}`);
+    } else {
+      try {
+        const cacheId  = await cache.saveCache([pkgCachePath], saveKey);
+        console.log(`Cache saved as ID ${cacheId} using key ${saveKey}`);
+      } catch (error) {
+        // In case something created the same cache since we restored we'll get an error here,
+        // but that's OK with us, so ignore.
+        console.log(error.message);
+      }
     }
+    core.endGroup();
   }
   catch (error) {
     core.setFailed(error.message);
