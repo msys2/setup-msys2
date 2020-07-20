@@ -6,26 +6,7 @@ on:
     - cron: '0 0 * * 3,6'
 jobs:
 
-  save:
-    runs-on: windows-latest
-    steps:
-    - uses: actions/checkout@v2
-    - name: build action
-      shell: bash
-      run: |
-        npm ci
-        npm run pkg
-        rm -rf node_modules
-    - name: run action
-      uses: ./
-      with:
-        cache: save
-    - shell: msys2 {0}
-      run: |
-        uname -a
-
   cache:
-    needs: [save]
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v2
@@ -39,7 +20,7 @@ jobs:
       uses: ./
       with:
         update: true
-        cache: true
+        install: base-devel git
     - shell: msys2 {0}
       run: |
         uname -a
@@ -71,7 +52,7 @@ jobs:
         msys2 ./test.sh MINGW32
 
   cmd:
-    needs: [powershell]
+    needs: [cache]
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v2
@@ -100,7 +81,7 @@ jobs:
         msys2 ./test.sh MINGW32
 
   env:
-    needs: [cmd]
+    needs: [cache]
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v2
@@ -126,7 +107,7 @@ jobs:
         MSYSTEM: MINGW32
 
   shell:
-    needs: [env]
+    needs: [cache]
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v2
@@ -143,7 +124,7 @@ jobs:
         uname -a
 
   msystem:
-    needs: [shell]
+    needs: [cache]
     strategy:
       matrix:
         task: [ MSYS, MINGW64, MINGW32 ]
@@ -163,7 +144,7 @@ jobs:
     - run: msys2 ./test.sh ${{ matrix.task }}
 
   update:
-    needs: [msystem]
+    needs: [cache]
     strategy:
       fail-fast: false
       max-parallel: 3
@@ -186,7 +167,7 @@ jobs:
     - run: msys2 ./test.sh ${{ matrix.msystem }}
 
   MSYS2_PATH_TYPE:
-    needs: [update]
+    needs: [cache]
     runs-on: windows-latest
     steps:
     - uses: actions/setup-go@v1
@@ -204,7 +185,7 @@ jobs:
         MSYS2_PATH_TYPE: inherit
 
   path-type:
-    needs: [update]
+    needs: [cache]
     runs-on: windows-latest
     steps:
     - uses: actions/setup-go@v1
@@ -222,7 +203,7 @@ jobs:
     - run: msys2 -c "go env"
 
   install:
-    needs: [path-type]
+    needs: [cache]
     strategy:
       fail-fast: false
       max-parallel: 3
@@ -246,7 +227,7 @@ jobs:
     - run: msys2 ./test.sh MINGW64
 
   defaultclean:
-    needs: [install]
+    needs: [cache]
     runs-on: windows-latest
     defaults:
       run:
@@ -271,7 +252,7 @@ jobs:
     - run: git describe --dirty --tags
 
   defaultdirty:
-    needs: [install]
+    needs: [cache]
     runs-on: windows-latest
     defaults:
       run:
@@ -294,7 +275,7 @@ jobs:
     - run: git describe --dirty --tags
 
   errorhandling:
-    needs: [defaultdirty]
+    needs: [cache]
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v2
@@ -312,7 +293,7 @@ jobs:
         [[ "$-" =~ 'e' ]] || exit 1; # make sure "set -e" is active by default
 
   workingdir:
-    needs: [errorhandling]
+    needs: [cache]
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v2
