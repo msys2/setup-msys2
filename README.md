@@ -19,10 +19,10 @@ If option `release` is `false`, the default installation is used. Otherwise (by 
 ## Usage
 
 ```yaml
-  - uses: msys2/setup-msys2@v1
+  - uses: msys2/setup-msys2@v2
 ```
 
-Then, for multi-line scripts:
+Then, for scripts:
 
 ```yaml
   - shell: msys2 {0}
@@ -30,20 +30,28 @@ Then, for multi-line scripts:
       uname -a
 ```
 
-Or, for single line commands:
+It is also possible to execute specific commands from cmd/powershell scripts/snippets. In order to do so, `-c` is required:
 
 ```yaml
-  - run: msys2 uname -a
+  - shell: powershell
+    run: msys2 -c 'uname -a'
 ```
 
-It is also possible to set `msys2` as the default shell. For example:
+```yaml
+  - shell: cmd
+    run: msys2 -c 'uname -a'
+```
+
+### Default shell
+
+In order to reduce verbosity, it is possible to set `msys2` as the default shell. For example:
 
 ```yaml
   defaults:
     run:
       shell: msys2 {0}
   steps:
-  - uses: msys2/setup-msys2@v1
+  - uses: msys2/setup-msys2@v2
     with:
       update: true
       install: base-devel git
@@ -55,6 +63,15 @@ It is also possible to set `msys2` as the default shell. For example:
 
 Note that setting `autocrlf` is required in specific use cases only. See [actions/checkout#250](https://github.com/actions/checkout/issues/250).
 
+### Build matrix
+
+It is common to test some package/tool on MINGW32 (32 bit) and MINGW64 (64 bit), which typically requires installing different sets of packages through option `install`. GitHub Actions' `strategy` and `matrix` fields allow to do so, as explained in [docs.github.com: Configuring a build matrix](https://docs.github.com/en/actions/configuring-and-managing-workflows/configuring-a-workflow#configuring-a-build-matrix) and [docs.github.com: `jobs.<job_id>.strategy.matrix`](https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions#jobsjob_idstrategymatrix). See, for example:
+
+- [msys2/MINGW-packages: .github/workflows/main.yml](https://github.com/msys2/MINGW-packages/blob/master/.github/workflows/main.yml).
+- [ghdl/ghdl: .github/workflows/push.yml](https://github.com/ghdl/ghdl/blob/99b542c849311c92e87e2c70d283de133c9d4093/.github/workflows/push.yml#L56-L102).
+
+Find further details at [#40](https://github.com/msys2/setup-msys2/issues/40).
+
 ### Options
 
 #### msystem
@@ -62,7 +79,7 @@ Note that setting `autocrlf` is required in specific use cases only. See [action
 By default, `MSYSTEM` is set to `MINGW64`. However, an optional parameter named `msystem` is supported, which expects `MSYS`, `MINGW64` or `MING32`. For example:
 
 ```yaml
-  - uses: msys2/setup-msys2@v1
+  - uses: msys2/setup-msys2@v2
     with:
       msystem: MSYS
 ```
@@ -70,7 +87,7 @@ By default, `MSYSTEM` is set to `MINGW64`. However, an optional parameter named 
 Furthermore, the environment variable can be overridden. This is useful when multiple commands need to be executed in different contexts. For example, in order to build a PKGBUILD file and then test the installed artifact:
 
 ```yaml
-  - uses: msys2/setup-msys2@v1
+  - uses: msys2/setup-msys2@v2
     with:
       msystem: MSYS
   - shell: msys2 {0}
@@ -79,33 +96,31 @@ Furthermore, the environment variable can be overridden. This is useful when mul
       pacman --noconfirm -U mingw-w64-*-any.pkg.tar.xz
   - run: |
       set MSYSTEM=MINGW64
-      msys2 <command to test the package>
+      msys2 -c '<command to test the package>'
 ```
 
 #### path-type
 
-By default, `MSYS2_PATH_TYPE` is set to `strict` by `msys2`. It is possible to override it either using an option or setting the environment variable explicitly:
+Defines which parts of the Windows `$env:PATH` environment variable leak into the MSYS2 environment. Allowed values:
+
+- `strict`: do not inherit anything from `$env:PATH`.
+- `minimal` *(default)*: only inherit the default Windows paths from `$env:PATH` (so that `cmd.exe` and `powershell.exe` are available for example).
+- `inherit`: inherit everything; warning: this can lead to interference with other tools installed on the system.
 
 ```yaml
-  - uses: msys2/setup-msys2@v1
+  - uses: msys2/setup-msys2@v2
     with:
-      path-type: inherit
-  - run: msys2 <command>
+      path-type: minimal
 ```
 
-```yaml
-  - uses: msys2/setup-msys2@v1
-  - run: msys2 <command>
-    env:
-      MSYS2_PATH_TYPE: inherit
-```
+This option corresponds to the `MSYS2_PATH_TYPE` setting in MSYS2; hence it can be set per step through `env`. See [msys2/MSYS2-packages: filesystem/profile](https://github.com/msys2/MSYS2-packages/blob/915946a637e1f2b7e26e32782f3af322009293db/filesystem/profile#L28-L45) for further details about the configuration of each option.
 
 #### release
 
 By default (`true`), retrieve and extract base installation from upstream GitHub Releases. If set to `false`, the installation available in the virtual environment is used:
 
 ```yaml
-  - uses: msys2/setup-msys2@v1
+  - uses: msys2/setup-msys2@v2
     with:
       release: false
 ```
@@ -115,7 +130,7 @@ By default (`true`), retrieve and extract base installation from upstream GitHub
 By default, the installation is not updated; hence package versions are those of the installation tarball. By setting option `update` to `true`, the action will try to update the runtime and packages cleanly:
 
 ```yaml
-  - uses: msys2/setup-msys2@v1
+  - uses: msys2/setup-msys2@v2
     with:
       update: true
 ```
@@ -125,28 +140,10 @@ By default, the installation is not updated; hence package versions are those of
 Installing additional packages after updating the system is supported through option `install`. The package or list of packages are installed through `pacman --noconfirm -S --needed`.
 
 ```yaml
-  - uses: msys2/setup-msys2@v1
+  - uses: msys2/setup-msys2@v2
     with:
       update: true
       install: 'git base-devel'
-```
-
-#### cache
-
-If set to `true`, directory `/var/cache/pacman/pkg` is restored/cached in order to speed up future updates:
-
-```yaml
-  - uses: msys2/setup-msys2@v1
-    with:
-      cache: true
-```
-
-If set to `save`, the same directory is cached, but it is not restored. This can be used to force a save of a clean state.
-
-```yaml
-  - uses: msys2/setup-msys2@v1
-    with:
-      cache: save
 ```
 
 ## Development
@@ -163,16 +160,16 @@ yarn pkg
 # - Copy release artifacts to subdir dir
 # - Create a new orphan branch in a new empty repo
 # - Push the branch
-./release.sh v1.x.x
+./release.sh v2.x.x
 
 # Fetch the new branch and checkout it
 git fetch --all
-git checkout -b tmp origin/v1.x.x
+git checkout -b tmp origin/v2.x.x
 
 # Reset the 'rolling' tag to the just released branch
-git tag -d v1
-git tag v1
-git push origin +v1
+git tag -d v2
+git tag v2
+git push origin +v2
 
 # Remove the temporal branch
 git checkout master
