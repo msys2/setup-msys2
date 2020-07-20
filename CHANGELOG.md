@@ -4,17 +4,31 @@
 
 ### Changed
 
-- Change default of option `path-type` from `strict` to `minimal`.
+- Update base distribution to [20200719](https://github.com/msys2/msys2-installer/releases/tag/2020-07-19). [[#47](https://github.com/msys2/setup-msys2/pull/47)]
+- Change default of option `path-type` from `strict` to `minimal`. [[#42](https://github.com/msys2/setup-msys2/pull/42)]
+- Allow lowercase values for option `msystem`, and validate them. [[#41](https://github.com/msys2/setup-msys2/pull/41), [#48](https://github.com/msys2/setup-msys2/pull/48)]
+- Disable initial key refresh to accelerate the setup. [[#45](https://github.com/msys2/setup-msys2/pull/45)]
+- README:
+  - Add refs about 'matrix'. [[#40](https://github.com/msys2/setup-msys2/pull/40)]
+  - Explain that specific commands can/need be executed with `msys2 -c`.
+- Bump dependencies:
+  - @actions/cache to v1.0.0
+  - @actions/tool-cache to v1.6.0
+
+### Removed
+
+- Shell arguments are passed directly to bash. Now, `msys2 -c mybinary` can be used in cmd/powershell, instead of `msys2 mybinary`. However, using `shell: msys2 {0}` is recommended. [[#43](https://github.com/msys2/setup-msys2/pull/43), [#44](https://github.com/msys2/setup-msys2/pull/44)]
+- `pacman` package cache is reworked and enabled by default. As a result, option `cache` is removed. [[#51](https://github.com/msys2/setup-msys2/pull/51)]
 
 ## [v1.1.2](https://github.com/msys2/setup-msys2/compare/a4332eaf3b970340d6495b2076e1405ee48ea573...05abb8d585d071301cc19e6177945011875d9479)
 
 ### Added
 
-- Check the SHA256 of the installer, before extracting it.
+- Check the SHA256 of the installer, before extracting it. [[#36](https://github.com/msys2/setup-msys2/pull/36)]
 
 ### Changed
 
-- Update base distribution to [20200629](https://github.com/msys2/msys2-installer/releases/tag/2020-06-29).
+- Update base distribution to [20200629](https://github.com/msys2/msys2-installer/releases/tag/2020-06-29). [[#35](https://github.com/msys2/setup-msys2/pull/35)]
 
 ## [v1.1.1](https://github.com/msys2/setup-msys2/compare/9da8a47f7acedd87a157ef2d99246f877fc15e9c...a4332eaf3b970340d6495b2076e1405ee48ea573)
 
@@ -23,8 +37,8 @@
 - Transfer from 'eine' to 'msys2'.
 - Call `/usr/bin/env` instead of `/usr/bin/bash` directly.
 - Fix the path to be cached, which depends on `p_release`, not `p_update`.
-- Use `needed` when installing additional packages (`install`).
-- Use the self extracting archive instead of the `.tar.xz`.
+- Use `--needed` when installing additional packages (`install`). [[#30](https://github.com/msys2/setup-msys2/pull/30)]
+- Use the self extracting archive instead of the `.tar.xz`. [[#31](https://github.com/msys2/setup-msys2/pull/31)]
 - Bump dependencies:
   - folder-hash to v3.3.2
 
