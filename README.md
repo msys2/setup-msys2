@@ -19,7 +19,7 @@ If option `release` is `false`, the default installation is used. Otherwise (by 
 ## Usage
 
 ```yaml
-  - uses: msys2/setup-msys2@v1
+  - uses: msys2/setup-msys2@v2
 ```
 
 Then, for scripts:
@@ -51,7 +51,7 @@ In order to reduce verbosity, it is possible to set `msys2` as the default shell
     run:
       shell: msys2 {0}
   steps:
-  - uses: msys2/setup-msys2@v1
+  - uses: msys2/setup-msys2@v2
     with:
       update: true
       install: base-devel git
@@ -79,7 +79,7 @@ Find further details at [#40](https://github.com/msys2/setup-msys2/issues/40).
 By default, `MSYSTEM` is set to `MINGW64`. However, an optional parameter named `msystem` is supported, which expects `MSYS`, `MINGW64` or `MING32`. For example:
 
 ```yaml
-  - uses: msys2/setup-msys2@v1
+  - uses: msys2/setup-msys2@v2
     with:
       msystem: MSYS
 ```
@@ -87,7 +87,7 @@ By default, `MSYSTEM` is set to `MINGW64`. However, an optional parameter named 
 Furthermore, the environment variable can be overridden. This is useful when multiple commands need to be executed in different contexts. For example, in order to build a PKGBUILD file and then test the installed artifact:
 
 ```yaml
-  - uses: msys2/setup-msys2@v1
+  - uses: msys2/setup-msys2@v2
     with:
       msystem: MSYS
   - shell: msys2 {0}
@@ -108,7 +108,7 @@ Defines which parts of the Windows `$env:PATH` environment variable leak into th
 - `inherit`: inherit everything; warning: this can lead to interference with other tools installed on the system.
 
 ```yaml
-  - uses: msys2/setup-msys2@v1
+  - uses: msys2/setup-msys2@v2
     with:
       path-type: minimal
 ```
@@ -120,7 +120,7 @@ This option corresponds to the `MSYS2_PATH_TYPE` setting in MSYS2; hence it can 
 By default (`true`), retrieve and extract base installation from upstream GitHub Releases. If set to `false`, the installation available in the virtual environment is used:
 
 ```yaml
-  - uses: msys2/setup-msys2@v1
+  - uses: msys2/setup-msys2@v2
     with:
       release: false
 ```
@@ -130,7 +130,7 @@ By default (`true`), retrieve and extract base installation from upstream GitHub
 By default, the installation is not updated; hence package versions are those of the installation tarball. By setting option `update` to `true`, the action will try to update the runtime and packages cleanly:
 
 ```yaml
-  - uses: msys2/setup-msys2@v1
+  - uses: msys2/setup-msys2@v2
     with:
       update: true
 ```
@@ -140,7 +140,7 @@ By default, the installation is not updated; hence package versions are those of
 Installing additional packages after updating the system is supported through option `install`. The package or list of packages are installed through `pacman --noconfirm -S --needed`.
 
 ```yaml
-  - uses: msys2/setup-msys2@v1
+  - uses: msys2/setup-msys2@v2
     with:
       update: true
       install: 'git base-devel'
@@ -160,16 +160,16 @@ yarn pkg
 # - Copy release artifacts to subdir dir
 # - Create a new orphan branch in a new empty repo
 # - Push the branch
-./release.sh v1.x.x
+./release.sh v2.x.x
 
 # Fetch the new branch and checkout it
 git fetch --all
-git checkout -b tmp origin/v1.x.x
+git checkout -b tmp origin/v2.x.x
 
 # Reset the 'rolling' tag to the just released branch
-git tag -d v1
-git tag v1
-git push origin +v1
+git tag -d v2
+git tag v2
+git push origin +v2
 
 # Remove the temporal branch
 git checkout master
