@@ -40,6 +40,15 @@ function parseInput() {
   }
 }
 
+async function downloadInstaller(destination) {
+  await tc.downloadTool(inst_url, destination);
+  let computedChecksum = '';
+  await exec.exec(`powershell.exe`, [`(Get-FileHash ${destination} -Algorithm SHA256)[0].Hash`], {listeners: {stdout: (data) => { computedChecksum += data.toString(); }}});
+  if (computedChecksum.slice(0, -2).toUpperCase() !== checksum.toUpperCase()) {
+    throw new Error(`The SHA256 of the installer does not match! expected ${checksum} got ${computedChecksum}`);
+  }
+}
+
 async function run() {
   try {
     if (process.platform !== 'win32') {
@@ -65,14 +74,7 @@ async function run() {
       core.startGroup('Downloading MSYS2...');
       base = '%~dp0';
       let inst_dest = path.join(tmp_dir, 'base.exe');
-      await tc.downloadTool(inst_url, inst_dest);
-
-      let inst_checksum = '';
-      await exec.exec(`powershell.exe`, [`(Get-FileHash ${inst_dest} -Algorithm SHA256)[0].Hash`], {listeners: {stdout: (data) => { inst_checksum += data.toString(); }}});
-      if (inst_checksum.slice(0, -2).toUpperCase() !== checksum.toUpperCase()) {
-        core.setFailed(`The SHA256 of the installer does not match! expected ${checksum} got ${inst_checksum}`);
-        return;
-      }
+      await downloadInstaller(inst_dest);
 
       changeGroup('Extracting MSYS2...');
       await exec.exec(inst_dest, ['-y'], {cwd: dest});
