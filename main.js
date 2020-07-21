@@ -16,6 +16,30 @@ function changeGroup(str) {
   core.startGroup(str);
 }
 
+function parseInput() {
+  let p_release = core.getInput('release') === 'true';
+  let p_update = core.getInput('update') === 'true';
+  let p_pathtype = core.getInput('path-type');
+  let p_msystem = core.getInput('msystem');
+  let p_install = core.getInput('install');
+
+  const msystem_allowed = ['MSYS', 'MINGW32', 'MINGW64'];
+  if (!msystem_allowed.includes(p_msystem.toUpperCase())) {
+    throw new Error(`'msystem' needs to be one of ${ msystem_allowed.join(', ') }, got ${p_msystem}`);
+  }
+  p_msystem = p_msystem.toUpperCase()
+
+  p_install = (p_install === 'false') ? [] : p_install.split(' ');
+
+  return {
+    release: p_release,
+    update: p_update,
+    pathtype: p_pathtype,
+    msystem: p_msystem,
+    install: p_install,
+  }
+}
+
 async function run() {
   try {
     if (process.platform !== 'win32') {
@@ -32,15 +56,11 @@ async function run() {
 
     await io.mkdirP(dest);
 
-    const p_release = core.getInput('release') === 'true';
-    const p_update = core.getInput('update') === 'true';
-    const p_pathtype = core.getInput('path-type');
-    const p_msystem = core.getInput('msystem');
-    const p_install = core.getInput('install');
+    const input = parseInput();
 
     let base = 'C:';
 
-    if (p_release) {
+    if (input.release) {
       // Use upstream package instead of the default installation in the virtual environment.
       core.startGroup('Downloading MSYS2...');
       base = '%~dp0';
@@ -66,7 +86,7 @@ async function run() {
     let wrap = [
       `@echo off`,
       `setlocal`,
-      `IF NOT DEFINED MSYS2_PATH_TYPE set MSYS2_PATH_TYPE=` + p_pathtype,
+      `IF NOT DEFINED MSYS2_PATH_TYPE set MSYS2_PATH_TYPE=` + input.pathtype,
       `set CHERE_INVOKING=1`,
       base + `\\msys64\\usr\\bin\\bash.exe -leo pipefail %*`
     ].join('\r\n');
@@ -75,23 +95,18 @@ async function run() {
     fs.writeFileSync(cmd, wrap);
 
     core.addPath(dest);
-    const pkgCachePath = (p_release ? dest : 'C:') + `\\msys64\\var\\cache\\pacman\\pkg\\`;
+    const pkgCachePath = (input.release ? dest : 'C:') + `\\msys64\\var\\cache\\pacman\\pkg\\`;
 
-    const msystem_allowed = ['MSYS', 'MINGW32', 'MINGW64'];
-    if (!msystem_allowed.includes(p_msystem.toUpperCase())) {
-      core.setFailed(`'msystem' needs to be one of ${ msystem_allowed.join(', ') }, got ${p_msystem}`);
-      return;
-    }
-    core.exportVariable('MSYSTEM', p_msystem.toUpperCase());
+    core.exportVariable('MSYSTEM', input.msystem);
 
     // We want a cache key that is ideally always the same for the same kind of job.
     // So that mingw32 and ming64 jobs, and jobs with different install packages have different caches.
     let shasum = crypto.createHash('sha1');
-    shasum.update([p_release, p_update, p_pathtype, p_msystem, p_install].toString());
+    shasum.update([input.release, input.update, input.pathtype, input.msystem, input.install].toString());
     // We include "update" in the fallback key so that a job run with update=false never fetches
     // a cache created with update=true. Because this would mean a newer version than needed is in the cache
     // which would never be used but also would win during cache prunging because it is newer.
-    const baseCacheKey = 'msys2-pkgs-upd:' + p_update.toString();
+    const baseCacheKey = 'msys2-pkgs-upd:' + input.update.toString();
     const jobCacheKey = baseCacheKey + '-conf:' + shasum.digest('hex').slice(0, 8);
 
     core.startGroup('Restoring cache...');
@@ -112,7 +127,7 @@ async function run() {
     await run(['uname', '-a']);
     core.endGroup();
 
-    if (p_update) {
+    if (input.update) {
       core.startGroup('Disable CheckSpace...');
       // Reduce time required to install packages by disabling pacman's disk space checking
       await run(['sed', '-i', 's/^CheckSpace/#CheckSpace/g', '/etc/pacman.conf']);
@@ -125,9 +140,9 @@ async function run() {
       core.endGroup();
     }
 
-    if (p_install != '' && p_install != 'false') {
+    if (input.install.length) {
       core.startGroup('Installing additional packages...');
-      await pacman(['-S', '--needed'].concat(p_install.split(' ')), {});
+      await pacman(['-S', '--needed'].concat(input.install), {});
       core.endGroup();
     }
 
