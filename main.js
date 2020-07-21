@@ -49,6 +49,11 @@ async function downloadInstaller(destination) {
   }
 }
 
+async function disableKeyRefresh(msysRootDir) {
+  const postFile = path.join(msysRootDir, 'etc\\post-install\\07-pacman-key.post');
+  await exec.exec(`powershell.exe`, [`((Get-Content -path ${postFile} -Raw) -replace '--refresh-keys', '--version') | Set-Content -Path ${postFile}`]);
+}
+
 async function run() {
   try {
     if (process.platform !== 'win32') {
@@ -67,21 +72,19 @@ async function run() {
 
     const input = parseInput();
 
-    let base = 'C:';
-
+    let msysRootDir = path.join('C:', 'msys64');
     if (input.release) {
       // Use upstream package instead of the default installation in the virtual environment.
       core.startGroup('Downloading MSYS2...');
-      base = '%~dp0';
       let inst_dest = path.join(tmp_dir, 'base.exe');
       await downloadInstaller(inst_dest);
 
       changeGroup('Extracting MSYS2...');
       await exec.exec(inst_dest, ['-y'], {cwd: dest});
+      msysRootDir = path.join(dest, 'msys64');
 
       changeGroup('Disable Key Refresh...');
-      let post_file = `${dest}\\msys64\\etc\\post-install\\07-pacman-key.post`;
-      await exec.exec(`powershell.exe`, [`((Get-Content -path ${post_file} -Raw) -replace '--refresh-keys', '--version') | Set-Content -Path ${post_file}`]);
+      await disableKeyRefresh(msysRootDir);
       core.endGroup();
     }
 
@@ -90,14 +93,14 @@ async function run() {
       `setlocal`,
       `IF NOT DEFINED MSYS2_PATH_TYPE set MSYS2_PATH_TYPE=` + input.pathtype,
       `set CHERE_INVOKING=1`,
-      base + `\\msys64\\usr\\bin\\bash.exe -leo pipefail %*`
+      msysRootDir + `\\usr\\bin\\bash.exe -leo pipefail %*`
     ].join('\r\n');
 
     let cmd = path.join(dest, 'msys2.cmd');
     fs.writeFileSync(cmd, wrap);
 
     core.addPath(dest);
-    const pkgCachePath = (input.release ? dest : 'C:') + `\\msys64\\var\\cache\\pacman\\pkg\\`;
+    const pkgCachePath = path.join(msysRootDir, 'var', 'cache', 'pacman', 'pkg');;
 
     core.exportVariable('MSYSTEM', input.msystem);
 
