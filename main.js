@@ -6,6 +6,7 @@ const tc = require('@actions/tool-cache');
 const path = require('path');
 const fs = require('fs');
 const crypto = require('crypto');
+const assert = require('assert').strict;
 const { hashElement } = require('folder-hash');
 
 const inst_url = 'https://github.com/msys2/msys2-installer/releases/download/2020-07-19/msys2-base-x86_64-20200719.sfx.exe';
@@ -54,6 +55,31 @@ async function disableKeyRefresh(msysRootDir) {
   await exec.exec(`powershell.exe`, [`((Get-Content -path ${postFile} -Raw) -replace '--refresh-keys', '--version') | Set-Content -Path ${postFile}`]);
 }
 
+
+let cmd = null;
+
+async function writeWrapper(msysRootDir, pathtype, destDir, name) {
+  let wrap = [
+    `@echo off`,
+    `setlocal`,
+    `IF NOT DEFINED MSYS2_PATH_TYPE set MSYS2_PATH_TYPE=` + pathtype,
+    `set CHERE_INVOKING=1`,
+    msysRootDir + `\\usr\\bin\\bash.exe -leo pipefail %*`
+  ].join('\r\n');
+
+  cmd = path.join(destDir, name);
+  fs.writeFileSync(cmd, wrap);
+}
+
+async function runMsys(args, opts) {
+  assert.ok(cmd);
+  await exec.exec('cmd', ['/D', '/S', '/C', cmd].concat(['-c', args.join(' ')]), opts);
+}
+
+async function pacman(args, opts) {
+  await runMsys(['pacman', '--noconfirm'].concat(args), opts);
+}
+
 async function run() {
   try {
     if (process.platform !== 'win32') {
@@ -88,18 +114,9 @@ async function run() {
       core.endGroup();
     }
 
-    let wrap = [
-      `@echo off`,
-      `setlocal`,
-      `IF NOT DEFINED MSYS2_PATH_TYPE set MSYS2_PATH_TYPE=` + input.pathtype,
-      `set CHERE_INVOKING=1`,
-      msysRootDir + `\\usr\\bin\\bash.exe -leo pipefail %*`
-    ].join('\r\n');
-
-    let cmd = path.join(dest, 'msys2.cmd');
-    fs.writeFileSync(cmd, wrap);
-
+    writeWrapper(msysRootDir, input.pathtype, dest, 'msys2.cmd');
     core.addPath(dest);
+
     const pkgCachePath = path.join(msysRootDir, 'var', 'cache', 'pacman', 'pkg');;
 
     core.exportVariable('MSYSTEM', input.msystem);
@@ -120,22 +137,14 @@ async function run() {
     console.log(`Cache restore for ${jobCacheKey}, got ${restoreKey}`);
     core.endGroup();
 
-    async function run(args, opts) {
-      await exec.exec('cmd', ['/D', '/S', '/C', cmd].concat(['-c', args.join(' ')]), opts);
-    }
-
-    async function pacman(args, opts) {
-      await run(['pacman', '--noconfirm'].concat(args), opts);
-    }
-
     core.startGroup('Starting MSYS2 for the first time...');
-    await run(['uname', '-a']);
+    await runMsys(['uname', '-a']);
     core.endGroup();
 
     if (input.update) {
       core.startGroup('Disable CheckSpace...');
       // Reduce time required to install packages by disabling pacman's disk space checking
-      await run(['sed', '-i', 's/^CheckSpace/#CheckSpace/g', '/etc/pacman.conf']);
+      await runMsys(['sed', '-i', 's/^CheckSpace/#CheckSpace/g', '/etc/pacman.conf']);
       changeGroup('Updating packages...');
       await pacman(['-Syuu'], {ignoreReturnCode: true});
       changeGroup('Killing remaining tasks...');
@@ -153,9 +162,9 @@ async function run() {
 
     core.startGroup('Prune cache...');
     // Remove all uninstalled packages
-    await run(['paccache', '-r', '-f', '-u', '-k0']);
+    await runMsys(['paccache', '-r', '-f', '-u', '-k0']);
     // Keep the newest for all other packages
-    await run(['paccache', '-r', '-f', '-k1']);
+    await runMsys(['paccache', '-r', '-f', '-k1']);
     core.endGroup();
 
     core.startGroup('Saving cache...');
