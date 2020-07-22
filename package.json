@@ -7,7 +7,8 @@
     "url": "git+https://github.com/msys2/setup-msys2.git"
   },
   "scripts": {
-    "pkg": "ncc build main.js -m -o ./"
+    "pkg": "ncc build main.js -m -o ./",
+    "lint": "eslint ."
   },
   "keywords": [
     "GitHub",
@@ -30,6 +31,7 @@
     "folder-hash": "^3.3.2"
   },
   "devDependencies": {
-    "@zeit/ncc": "^0.22.3"
+    "@zeit/ncc": "^0.22.3",
+    "eslint": "^7.5.0"
   }
 }
