@@ -6,6 +6,14 @@ on:
     - cron: '0 0 * * 3,6'
 jobs:
 
+  eslint:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v2
+    - run: |
+        npm ci
+        npm run lint
+
   cache:
     runs-on: windows-latest
     steps:
