@@ -319,3 +319,24 @@ jobs:
         dir="$(pwd)"
         cd "$GITHUB_WORKSPACE"
         [[ "$dir" == "$(pwd)" ]]
+
+  norelease:
+    needs: [cache]
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: build action
+      shell: bash
+      run: |
+        npm ci
+        npm run pkg
+        rm -rf node_modules
+    - name: run action
+      uses: ./
+      with:
+        release: false
+        update: false
+        install: ccache
+    - shell: msys2 {0}
+      run: |
+        uname -a
