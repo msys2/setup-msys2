@@ -172,7 +172,8 @@ async function writeWrapper(msysRootDir, pathtype, destDir, name) {
 
 async function runMsys(args, opts) {
   assert.ok(cmd);
-  await exec.exec('cmd', ['/D', '/S', '/C', cmd].concat(['-c', args.join(' ')]), opts);
+  const quotedArgs = args.map((arg) => {return `'${arg.replace(/'/g, `'\\''`)}'`});
+  await exec.exec('cmd', ['/D', '/S', '/C', cmd].concat(['-c', quotedArgs.join(' ')]), opts);
 }
 
 async function pacman(args, opts) {
@@ -245,17 +246,17 @@ async function run() {
       // Reduce time required to install packages by disabling pacman's disk space checking
       await runMsys(['sed', '-i', 's/^CheckSpace/#CheckSpace/g', '/etc/pacman.conf']);
       changeGroup('Updating packages...');
-      await pacman(['-Syuu'], {ignoreReturnCode: true});
+      await pacman(['-Syuu', '--overwrite', '*'], {ignoreReturnCode: true});
       changeGroup('Killing remaining tasks...');
       await exec.exec('taskkill', ['/F', '/FI', 'MODULES eq msys-2.0.dll']);
       changeGroup('Final system upgrade...');
-      await pacman(['-Suu'], {});
+      await pacman(['-Suu', '--overwrite', '*'], {});
       core.endGroup();
     }
 
     if (input.install.length) {
       core.startGroup('Installing additional packages...');
-      await pacman(['-S', '--needed'].concat(input.install), {});
+      await pacman(['-S', '--needed', '--overwrite', '*'].concat(input.install), {});
       core.endGroup();
     }
 
