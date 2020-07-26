@@ -22,9 +22,12 @@ jobs:
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v2
-    - run: |
+    - name: build action
+      shell: bash
+      run: |
         npm ci
         npm run pkg
+        rm -rf node_modules
     - uses: actions/upload-artifact@v2
       with:
         name: action
