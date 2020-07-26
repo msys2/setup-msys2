@@ -247,6 +247,9 @@ async function run() {
       await runMsys(['sed', '-i', 's/^CheckSpace/#CheckSpace/g', '/etc/pacman.conf']);
       changeGroup('Updating packages...');
       await pacman(['-Syuu', '--overwrite', '*'], {ignoreReturnCode: true});
+      // We have changed /etc/pacman.conf above which means on a pacman upgrade
+      // pacman.conf will be installed as pacman.conf.pacnew
+      await runMsys(['mv', '-f', '/etc/pacman.conf.pacnew', '/etc/pacman.conf'], {ignoreReturnCode: true, silent: true});
       changeGroup('Killing remaining tasks...');
       await exec.exec('taskkill', ['/F', '/FI', 'MODULES eq msys-2.0.dll']);
       changeGroup('Final system upgrade...');
