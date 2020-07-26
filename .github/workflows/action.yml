@@ -13,17 +13,22 @@ jobs:
     - run: |
         npm ci
         npm run lint
+    - uses: actions/upload-artifact@v2
+      with:
+        name: action
+        path: index.js
 
   cache:
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v2
-    - name: build action
-      shell: bash
-      run: |
+    - run: |
         npm ci
         npm run pkg
-        rm -rf node_modules
+    - uses: actions/upload-artifact@v2
+      with:
+        name: action
+        path: index.js
     - name: run action
       uses: ./
       with:
@@ -38,12 +43,9 @@ jobs:
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v2
-    - name: build action
-      shell: bash
-      run: |
-        npm ci
-        npm run pkg
-        rm -rf node_modules
+    - uses: actions/download-artifact@v2
+      with:
+        name: action
     - name: run action
       uses: ./
     - name: test MSYS
@@ -64,12 +66,9 @@ jobs:
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v2
-    - name: build action
-      shell: bash
-      run: |
-        npm ci
-        npm run pkg
-        rm -rf node_modules
+    - uses: actions/download-artifact@v2
+      with:
+        name: action
     - name: run action
       uses: ./
     - name: test MSYS
@@ -93,12 +92,9 @@ jobs:
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v2
-    - name: build action
-      shell: bash
-      run: |
-        npm ci
-        npm run pkg
-        rm -rf node_modules
+    - uses: actions/download-artifact@v2
+      with:
+        name: action
     - name: run action
       uses: ./
     - name: test MSYS
@@ -119,12 +115,9 @@ jobs:
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v2
-    - name: build action
-      shell: bash
-      run: |
-        npm ci
-        npm run pkg
-        rm -rf node_modules
+    - uses: actions/download-artifact@v2
+      with:
+        name: action
     - name: run action
       uses: ./
     - shell: msys2 {0}
@@ -139,12 +132,9 @@ jobs:
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v2
-    - name: build action
-      shell: bash
-      run: |
-        npm ci
-        npm run pkg
-        rm -rf node_modules
+    - uses: actions/download-artifact@v2
+      with:
+        name: action
     - name: run action
       uses: ./
       with:
@@ -161,12 +151,9 @@ jobs:
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v2
-    - name: build action
-      shell: bash
-      run: |
-        npm ci
-        npm run pkg
-        rm -rf node_modules
+    - uses: actions/download-artifact@v2
+      with:
+        name: action
     - name: run action
       uses: ./
       with:
@@ -180,12 +167,9 @@ jobs:
     steps:
     - uses: actions/setup-go@v1
     - uses: actions/checkout@v2
-    - name: build action
-      shell: bash
-      run: |
-        npm ci
-        npm run pkg
-        rm -rf node_modules
+    - uses: actions/download-artifact@v2
+      with:
+        name: action
     - name: run action
       uses: ./
     - run: msys2 -c "go env"
@@ -198,12 +182,9 @@ jobs:
     steps:
     - uses: actions/setup-go@v1
     - uses: actions/checkout@v2
-    - name: build action
-      shell: bash
-      run: |
-        npm ci
-        npm run pkg
-        rm -rf node_modules
+    - uses: actions/download-artifact@v2
+      with:
+        name: action
     - name: run action
       uses: ./
       with:
@@ -220,12 +201,9 @@ jobs:
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v2
-    - name: build action
-      shell: bash
-      run: |
-        npm ci
-        npm run pkg
-        rm -rf node_modules
+    - uses: actions/download-artifact@v2
+      with:
+        name: action
     - name: run action
       uses: ./
       with:
@@ -246,12 +224,9 @@ jobs:
     - uses: actions/checkout@v2
       with:
         fetch-depth: 0
-    - name: build action
-      shell: bash
-      run: |
-        npm ci
-        npm run pkg
-        rm -rf node_modules
+    - uses: actions/download-artifact@v2
+      with:
+        name: action
     - name: run action
       uses: ./
       with:
@@ -269,12 +244,9 @@ jobs:
     - uses: actions/checkout@v2
       with:
         fetch-depth: 0
-    - name: build action
-      shell: bash
-      run: |
-        npm ci
-        npm run pkg
-        rm -rf node_modules
+    - uses: actions/download-artifact@v2
+      with:
+        name: action
     - name: run action
       uses: ./
       with:
@@ -287,12 +259,9 @@ jobs:
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v2
-    - name: build action
-      shell: bash
-      run: |
-        npm ci
-        npm run pkg
-        rm -rf node_modules
+    - uses: actions/download-artifact@v2
+      with:
+        name: action
     - name: run action
       uses: ./
     - shell: msys2 {0}
@@ -305,12 +274,9 @@ jobs:
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v2
-    - name: build action
-      shell: bash
-      run: |
-        npm ci
-        npm run pkg
-        rm -rf node_modules
+    - uses: actions/download-artifact@v2
+      with:
+        name: action
     - name: run action
       uses: ./
     - shell: msys2 {0}
@@ -325,12 +291,9 @@ jobs:
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v2
-    - name: build action
-      shell: bash
-      run: |
-        npm ci
-        npm run pkg
-        rm -rf node_modules
+    - uses: actions/download-artifact@v2
+      with:
+        name: action
     - name: run action
       uses: ./
       with:
