@@ -2,7 +2,22 @@
 
 ## [Unreleased](https://github.com/msys2/setup-msys2/compare/0908a2926547f3a4fa10a13a11156a09e3cdd8a4...HEAD)
 
-*None*
+### Added
+
+- `eslint` support (`.eslintrc.json`).
+- Create `dependabot.yml`.
+
+### Changed
+
+- Refactor code into multiple functions. [#53](https://github.com/msys2/setup-msys2/pull/53)
+- Cache the whole installation when possible. [#54](https://github.com/msys2/setup-msys2/pull/54)
+- `pacman`:
+  - Always pass `--overwrite '*'`. [#55](https://github.com/msys2/setup-msys2/pull/55)
+  - Handle upgrade creating `.pacnew` files. [#56](https://github.com/msys2/setup-msys2/pull/56)
+- CI: only build the action once. [#57](https://github.com/msys2/setup-msys2/pull/57)
+- Dependencies:
+  - Bump @actions/cache to v1.0.1
+  - Fix: @actions/tool-cache should not be pinned
 
 ## [v2.0.0](https://github.com/msys2/setup-msys2/compare/05abb8d585d071301cc19e6177945011875d9479...0908a2926547f3a4fa10a13a11156a09e3cdd8a4)
 
@@ -94,7 +109,7 @@
 
 ### Changed
 
-- Do not update pacman separatedly.
+- Do not update `pacman` separatedly.
 
 ## [0.1.1](https://github.com/msys2/setup-msys2/compare/db03b1e38ae651b71bff93b00e794eb89303ddf7...fb70b5f428b0a20d604299c6fe2df3a5252866dc) - 2020/05/20
 
