@@ -27,7 +27,7 @@
     "@actions/cache": "^1.0.1",
     "@actions/core": "^1.2.4",
     "@actions/exec": "^1.0.4",
-    "@actions/tool-cache": "1.6.0",
+    "@actions/tool-cache": "^1.6.0",
     "folder-hash": "^3.3.2"
   },
   "devDependencies": {
