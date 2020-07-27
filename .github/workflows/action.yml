@@ -13,10 +13,6 @@ jobs:
     - run: |
         npm ci
         npm run lint
-    - uses: actions/upload-artifact@v2
-      with:
-        name: action
-        path: index.js
 
   cache:
     runs-on: windows-latest
