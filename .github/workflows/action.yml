@@ -69,6 +69,7 @@ jobs:
       with:
         name: action
     - name: run action
+      id: msys2
       uses: ./
     - name: test MSYS
       shell: cmd
@@ -85,6 +86,12 @@ jobs:
       run: |
         set MSYSTEM=MINGW32
         msys2 ./test.sh MINGW32
+    - name: test output
+      shell: cmd
+      run: |
+        set MSYSTEM=MSYS
+        echo ${{ steps.msys2.outputs.msysRootDir }}
+        call ${{ steps.msys2.outputs.msysRootDir }}\autorebase.bat
 
   env:
     needs: [cache]

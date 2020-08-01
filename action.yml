@@ -24,6 +24,9 @@ inputs:
     description: 'Install packages after installation through pacman'
     required: false
     default: false
+outputs:
+  msysRootDir:
+    description: 'Path to the MSYS root'
 runs:
   using: 'node12'
   main: 'index.js'
