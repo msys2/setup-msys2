@@ -11,6 +11,8 @@ const { hashElement } = require('folder-hash');
 
 const inst_url = 'https://github.com/msys2/msys2-installer/releases/download/2020-07-19/msys2-base-x86_64-20200719.sfx.exe';
 const checksum = '7abf59641c8216baf9be192a2072c041fffafc41328bac68f13f0e87c0baa1d3';
+// see https://github.com/msys2/setup-msys2/issues/61
+const INSTALL_CACHE_ENABLED = false;
 
 function changeGroup(str) {
   core.endGroup();
@@ -205,10 +207,12 @@ async function run() {
       // Use upstream package instead of the default installation in the virtual environment.
       msysRootDir = path.join(dest, 'msys64');
 
-      instCache = new InstallCache(msysRootDir, input);
-      core.startGroup('Restoring environment...');
-      cachedInstall = await instCache.restore();
-      core.endGroup();
+      if (INSTALL_CACHE_ENABLED) {
+        instCache = new InstallCache(msysRootDir, input);
+        core.startGroup('Restoring environment...');
+        cachedInstall = await instCache.restore();
+        core.endGroup();
+      }
 
       if (!cachedInstall) {
         core.startGroup('Downloading MSYS2...');
@@ -271,8 +275,7 @@ async function run() {
       core.endGroup();
     }
 
-    if (input.release) {
-      assert.ok(instCache);
+    if (instCache !== null) {
       core.startGroup('Saving environment...');
       await packageCache.clear();
       await instCache.save();
