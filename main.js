@@ -101,7 +101,7 @@ class PackageCache {
     // We want a cache key that is ideally always the same for the same kind of job.
     // So that mingw32 and ming64 jobs, and jobs with different install packages have different caches.
     let shasum = crypto.createHash('sha1');
-    shasum.update([input.release, input.update, input.pathtype, input.msystem, input.install].toString());
+    shasum.update([input.release, input.update, input.pathtype, input.msystem, input.install].toString() + checksum);
     this.jobCacheKey = this.fallbackCacheKey + '-conf:' + shasum.digest('hex').slice(0, 8);
 
     this.restoreKey = undefined;
