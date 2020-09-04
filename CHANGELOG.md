@@ -9,7 +9,7 @@
 ### Changed
 
 - Update base distribution to [20200903](https://github.com/msys2/msys2-installer/releases/tag/2020-09-03). [[#66](https://github.com/msys2/setup-msys2/pull/66)]
-- Conditionally disable the install cache, unset by default. [#63](https://github.com/msys2/setup-msys2/pull/63)
+- Conditionally disable the install cache, unset by default. [[#63](https://github.com/msys2/setup-msys2/pull/63)]
 - Switch dependabot interval from 'daily' to 'weekly'.
 - Bump dependencies:
   - @actions/cache to v1.0.2
@@ -25,12 +25,12 @@
 
 ### Changed
 
-- Refactor code into multiple functions. [#53](https://github.com/msys2/setup-msys2/pull/53)
-- Cache the whole installation when possible. [#54](https://github.com/msys2/setup-msys2/pull/54)
+- Refactor code into multiple functions. [[#53](https://github.com/msys2/setup-msys2/pull/53)]
+- Cache the whole installation when possible. [[#54](https://github.com/msys2/setup-msys2/pull/54)]
 - `pacman`:
-  - Always pass `--overwrite '*'`. [#55](https://github.com/msys2/setup-msys2/pull/55)
-  - Handle upgrade creating `.pacnew` files. [#56](https://github.com/msys2/setup-msys2/pull/56)
-- CI: only build the action once. [#57](https://github.com/msys2/setup-msys2/pull/57)
+  - Always pass `--overwrite '*'`. [[#55](https://github.com/msys2/setup-msys2/pull/55)]
+  - Handle upgrade creating `.pacnew` files. [[#56](https://github.com/msys2/setup-msys2/pull/56)]
+- CI: only build the action once. [[#57](https://github.com/msys2/setup-msys2/pull/57)]
 - Dependencies:
   - Bump @actions/cache to v1.0.1
   - Fix: @actions/tool-cache should not be pinned
