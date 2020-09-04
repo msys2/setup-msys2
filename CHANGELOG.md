@@ -2,7 +2,15 @@
 
 ## [Unreleased](https://github.com/msys2/setup-msys2/compare/654f62ffd14ab50887ad19e09b1ae277fc1f538c...HEAD)
 
-*None*
+### Changed
+
+- Update base distribution to [20200903](https://github.com/msys2/msys2-installer/releases/tag/2020-09-03). [[#66](https://github.com/msys2/setup-msys2/pull/66)]
+- Conditionally disable the install cache, unset by default. [#63](https://github.com/msys2/setup-msys2/pull/63)
+- Switch dependabot interval from 'daily' to 'weekly'.
+- Bump dependencies:
+  - @actions/cache to v1.0.2
+  - @actions/core to v1.2.5
+  - eslint to v7.7.0
 
 ## [2.0.1](https://github.com/msys2/setup-msys2/compare/0908a2926547f3a4fa10a13a11156a09e3cdd8a4...654f62ffd14ab50887ad19e09b1ae277fc1f538c) - 2020/07/27
 
