@@ -28,7 +28,7 @@
     "@actions/core": "^1.2.5",
     "@actions/exec": "^1.0.4",
     "@actions/tool-cache": "^1.6.0",
-    "folder-hash": "^3.3.2"
+    "folder-hash": "^3.3.3"
   },
   "devDependencies": {
     "@zeit/ncc": "^0.22.3",
