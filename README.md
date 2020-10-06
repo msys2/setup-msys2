@@ -76,7 +76,7 @@ Find further details at [#40](https://github.com/msys2/setup-msys2/issues/40).
 
 #### msystem
 
-By default, `MSYSTEM` is set to `MINGW64`. However, an optional parameter named `msystem` is supported, which expects `MSYS`, `MINGW64` or `MING32`. For example:
+By default, `MSYSTEM` is set to `MINGW64`. However, an optional parameter named `msystem` is supported, which expects `MSYS`, `MINGW64` or `MINGW32`. For example:
 
 ```yaml
   - uses: msys2/setup-msys2@v2
