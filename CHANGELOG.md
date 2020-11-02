@@ -5,7 +5,8 @@
 ### Changed
 
 - Bump dependencies:
-  - eslint to v7.11.0
+  - eslint to v7.12.1
+  - folder-hash to v4.0.0
 
 ## [2.1.1](https://github.com/msys2/setup-msys2/compare/72120a5f5986349f2babced564e027a96001c99a...46faddb10578f4ed77e9db446a5077f6c980041a) - 2020/10/05
 
