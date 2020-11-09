@@ -24,7 +24,7 @@
   },
   "homepage": "https://github.com/msys2/setup-msys2",
   "dependencies": {
-    "@actions/cache": "^1.0.3",
+    "@actions/cache": "^1.0.4",
     "@actions/core": "^1.2.6",
     "@actions/exec": "^1.0.4",
     "@actions/tool-cache": "^1.6.0",
