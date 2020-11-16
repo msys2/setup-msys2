@@ -2,7 +2,10 @@
 
 ## [Unreleased](https://github.com/msys2/setup-msys2/compare/bd0bdf22fe90699697c5c2b4bc1cc842bd4e1a5f...HEAD)
 
-*None*
+### Changed
+
+- Bump dependencies:
+  - @actions/tool-cache to v1.6.1
 
 ## [2.1.1](https://github.com/msys2/setup-msys2/compare/46faddb10578f4ed77e9db446a5077f6c980041a...bd0bdf22fe90699697c5c2b4bc1cc842bd4e1a5f) - 2020/11/14
 
