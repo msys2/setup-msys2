@@ -66,7 +66,9 @@ In order to reduce verbosity, it is possible to set `msys2` as the default shell
   - uses: msys2/setup-msys2@v2
     with:
       update: true
-      install: base-devel git
+      install: >-
+        base-devel
+        git
   #- run: git config --global core.autocrlf input
   #  shell: bash
   - uses: actions/checkout@v2
@@ -155,7 +157,9 @@ Installing additional packages after updating the system is supported through op
   - uses: msys2/setup-msys2@v2
     with:
       update: true
-      install: 'git base-devel'
+      install: >-
+        git
+        base-devel
 ```
 
 ## Development
