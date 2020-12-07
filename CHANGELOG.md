@@ -8,7 +8,7 @@
   - @actions/tool-cache to v1.6.1
   - eslint to v7.15.0
 
-## [2.1.1](https://github.com/msys2/setup-msys2/compare/46faddb10578f4ed77e9db446a5077f6c980041a...bd0bdf22fe90699697c5c2b4bc1cc842bd4e1a5f) - 2020/11/14
+## [2.1.2](https://github.com/msys2/setup-msys2/compare/46faddb10578f4ed77e9db446a5077f6c980041a...bd0bdf22fe90699697c5c2b4bc1cc842bd4e1a5f) - 2020/11/14
 
 ### Changed
 
