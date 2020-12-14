@@ -5,6 +5,7 @@
 ### Changed
 
 - Bump dependencies:
+  - @actions/cache to v1.0.5
   - @actions/tool-cache to v1.6.1
   - eslint to v7.15.0
 
