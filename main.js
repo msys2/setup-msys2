@@ -13,6 +13,7 @@ const inst_url = 'https://github.com/msys2/msys2-installer/releases/download/202
 const checksum = '70729e44685316291a37f7b8c1cc2d46a3a5594ebc4a7285278f8d160f927438';
 // see https://github.com/msys2/setup-msys2/issues/61
 const INSTALL_CACHE_ENABLED = false;
+const CACHE_FLUSH_COUNTER = 0;
 
 function changeGroup(str) {
   core.endGroup();
@@ -101,7 +102,7 @@ class PackageCache {
     // We want a cache key that is ideally always the same for the same kind of job.
     // So that mingw32 and ming64 jobs, and jobs with different install packages have different caches.
     let shasum = crypto.createHash('sha1');
-    shasum.update([input.release, input.update, input.pathtype, input.msystem, input.install].toString() + checksum);
+    shasum.update([CACHE_FLUSH_COUNTER, input.release, input.update, input.pathtype, input.msystem, input.install].toString() + checksum);
     this.jobCacheKey = this.fallbackCacheKey + '-conf:' + shasum.digest('hex').slice(0, 8);
 
     this.restoreKey = undefined;
