@@ -10,11 +10,23 @@
 
 # Setup MSYS2
 
-[MSYS2](https://www.msys2.org/) is available by default in [windows-latest](https://github.com/actions/virtual-environments/blob/master/images/win/Windows2019-Readme.md#msys2) virtual environment for GitHub Actions. However, the default installation is updated every ~10 days, and it includes some pre-installed packages. As a result, startup time can be up to 10 min. Moreover, MSYS2/MINGW are neither added to the PATH nor available as a custom `shell` option.
+**setup-msys2** is a JavaScript GitHub Action (GHA) to setup an [MSYS2](https://www.msys2.org/) environment (i.e. MSYS, MINGW32 and/or MINGW64 shells) using the GHA [toolkit](https://github.com/actions/toolkit) for automatic caching.
 
-**setup-msys2** is a JavaScript GitHub Action (GHA) to optionally setup an up-to-date and stable [MSYS2](https://www.msys2.org/) environment in a temporal location, using the GHA [toolkit](https://github.com/actions/toolkit). Moreover, it provides a custom entrypoint.
+## Context
 
-If option `release` is `false`, the default installation is used. Otherwise (by default), the latest tarball available at [repo.msys2.org/distrib/x86_64](http://repo.msys2.org/distrib/x86_64/) is downloaded and extracted.
+[MSYS2](https://www.msys2.org/) is available by default in [windows-latest](https://github.com/actions/virtual-environments/blob/master/images/win/Windows2019-Readme.md#msys2) [virtual environment](https://github.com/actions/virtual-environments) for GitHub Actions, located at `C:\msys64`. Moreover, there is work in progress for making `bash` default to MSYS2 (see [actions/virtual-environments#1525](https://github.com/actions/virtual-environments/issues/1525)). However, the default installation has some caveats at the moment (see [actions/virtual-environments#1572](https://github.com/actions/virtual-environments/issues/1572)):
+
+- It is updated every ~10 days.
+- It includes a non-negligible set of pre-installed packages. As a result, update time can be up to 10 min.
+- Caching of installation packages is not supported.
+- MSYS2/MINGW are neither added to the PATH nor available as a custom `shell` option.
+
+**setup-msys2** works around those constraints:
+
+- Using option `release: false`, the default installation is used, but automatic caching is supported and a custom entrypoint is provided.
+- By default (`release: true`), **setup-msys2** downloads and extracts the latest tarball available at [repo.msys2.org/distrib/x86_64](http://repo.msys2.org/distrib/x86_64/), a clean and up-to-date environment is set up in a temporary location, and a custom entrypoint (`msys2`) is provided. Hence, the overhead of updating pre-installed but unnecessary packages is avoided.
+
+Therefore, usage of this Action is recommended to all MSYS2 users of GitHub Actions, since caching and the custom entrypoint are provided regardless of option `release`.
 
 ## Usage
 
@@ -54,7 +66,9 @@ In order to reduce verbosity, it is possible to set `msys2` as the default shell
   - uses: msys2/setup-msys2@v2
     with:
       update: true
-      install: base-devel git
+      install: >-
+        base-devel
+        git
   #- run: git config --global core.autocrlf input
   #  shell: bash
   - uses: actions/checkout@v2
@@ -143,39 +157,7 @@ Installing additional packages after updating the system is supported through op
   - uses: msys2/setup-msys2@v2
     with:
       update: true
-      install: 'git base-devel'
+      install: >-
+        git
+        base-devel
 ```
-
-## Development
-
-The steps to publish a new release are the following:
-
-```sh
-# Remove/clean dir 'dist'
-rm -rf dist
-
-# Package the action with ncc
-yarn pkg
-
-# - Copy release artifacts to subdir dir
-# - Create a new orphan branch in a new empty repo
-# - Push the branch
-./release.sh v2.x.x
-
-# Fetch the new branch and checkout it
-git fetch --all
-git checkout -b tmp origin/v2.x.x
-
-# Reset the 'rolling' tag to the just released branch
-git tag -d v2
-git tag v2
-git push origin +v2
-
-# Remove the temporal branch
-git checkout master
-git branch -D tmp
-```
-
-> NOTE: although it feels unidiomatic having 'rolling' tags and/or storing release assets in specific branches, it is the recommended solution. Retrieving assets from GitHub Releases is not supported by GitHub Actions (yet). See [actions/javascript-action: Create a release branch](https://github.com/actions/javascript-action#create-a-release-branch), [actions/toolkit: docs/action-versioning.md](https://github.com/actions/toolkit/blob/master/docs/action-versioning.md) and [actions/toolkit#214](https://github.com/actions/toolkit/issues/214).
-
-> NOTE: tag `tag-for-git-describe` is used for testing `git describe --dirty --tags` in CI. See [actions/checkout#250](https://github.com/actions/checkout/issues/250).
