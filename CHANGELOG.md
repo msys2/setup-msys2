@@ -4,7 +4,8 @@
 
 ### Changed
 
-- Update base distribution to [20210105](https://github.com/msys2/msys2-installer/releases/tag/2021-01-05).
+- Add `CACHE_FLUSH_COUNTER` to CacheKey hash computation, for allowing flushing all the caches by bumping the Action. [[#99](https://github.com/msys2/setup-msys2/issues/99)]
+- Update base distribution to [20210105](https://github.com/msys2/msys2-installer/releases/tag/2021-01-05). [[#101](https://github.com/msys2/setup-msys2/pull/101)]
 - Bump dependencies:
   - @actions/cache to v1.0.5
   - @actions/tool-cache to v1.6.1
