@@ -84,7 +84,7 @@ It is common to test some package/tool on MINGW32 (32 bit) and MINGW64 (64 bit),
 - [msys2/MINGW-packages: .github/workflows/main.yml](https://github.com/msys2/MINGW-packages/blob/master/.github/workflows/main.yml).
 - [ghdl/ghdl: .github/workflows/push.yml](https://github.com/ghdl/ghdl/blob/99b542c849311c92e87e2c70d283de133c9d4093/.github/workflows/push.yml#L56-L102).
 
-Find further details at [#40](https://github.com/msys2/setup-msys2/issues/40).
+Find further details at [#40](https://github.com/msys2/setup-msys2/issues/40) and [#102](https://github.com/msys2/setup-msys2/issues/102).
 
 ### Options
 
