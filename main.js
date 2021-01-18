@@ -33,7 +33,7 @@ function parseInput() {
   }
   p_msystem = p_msystem.toUpperCase()
 
-  p_install = (p_install === 'false') ? [] : p_install.split(' ');
+  p_install = (p_install === 'false') ? [] : p_install.split(/\s+/);
 
   return {
     release: p_release,

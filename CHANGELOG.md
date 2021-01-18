@@ -4,6 +4,7 @@
 
 ### Changed
 
+- Fix splitting list of 'install' when items are separated by multiple spaces. [[#103](https://github.com/msys2/setup-msys2/issues/103)]
 - Dependencies:
   - Bump eslint to v7.18.0
   - @zeit/ncc is no longer maintained; @vercel/ncc v0.27.0 is used instead
