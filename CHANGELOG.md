@@ -1,6 +1,10 @@
 # Changelog
 
-## [Unreleased](https://github.com/msys2/setup-msys2/compare/4d3b22f79f56c4983da648b6b9bfa63815481610...HEAD)
+## [Unreleased](https://github.com/msys2/setup-msys2/compare/e7846a8b67444fb87744a711404045b782e7ff63...HEAD)
+
+*None*
+
+## [2.1.4](https://github.com/msys2/setup-msys2/compare/4d3b22f79f56c4983da648b6b9bfa63815481610...e7846a8b67444fb87744a711404045b782e7ff63) - 2021/02/15
 
 ### Changed
 
@@ -11,7 +15,7 @@
   - Bump eslint to v7.20.0
   - @zeit/ncc is no longer maintained; @vercel/ncc v0.27.0 is used instead
 
-## [2.1.3](https://github.com/msys2/setup-msys2/compare/bd0bdf22fe90699697c5c2b4bc1cc842bd4e1a5f...4d3b22f79f56c4983da648b6b9bfa63815481610) - 2020/01/06
+## [2.1.3](https://github.com/msys2/setup-msys2/compare/bd0bdf22fe90699697c5c2b4bc1cc842bd4e1a5f...4d3b22f79f56c4983da648b6b9bfa63815481610) - 2021/01/06
 
 ### Changed
 
