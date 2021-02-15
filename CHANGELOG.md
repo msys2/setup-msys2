@@ -5,6 +5,7 @@
 ### Changed
 
 - Fix splitting list of 'install' when items are separated by multiple spaces. [[#103](https://github.com/msys2/setup-msys2/issues/103)]
+- Update base distribution to [20210215](https://github.com/msys2/msys2-installer/releases/tag/2021-02-15). [[#112](https://github.com/msys2/setup-msys2/pull/112)]
 - Dependencies:
   - Bump @actions/cache to v1.0.6
   - Bump eslint to v7.20.0
