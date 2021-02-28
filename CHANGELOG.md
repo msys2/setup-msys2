@@ -2,7 +2,9 @@
 
 ## [Unreleased](https://github.com/msys2/setup-msys2/compare/e7846a8b67444fb87744a711404045b782e7ff63...HEAD)
 
-*None*
+### Changed
+
+- Update base distribution to [20210228](https://github.com/msys2/msys2-installer/releases/tag/2021-02-28). [[#114](https://github.com/msys2/setup-msys2/pull/114)]
 
 ## [2.1.4](https://github.com/msys2/setup-msys2/compare/4d3b22f79f56c4983da648b6b9bfa63815481610...e7846a8b67444fb87744a711404045b782e7ff63) - 2021/02/15
 
