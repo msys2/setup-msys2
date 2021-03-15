@@ -28,7 +28,7 @@
     "@actions/core": "^1.2.6",
     "@actions/exec": "^1.0.4",
     "@actions/tool-cache": "^1.6.1",
-    "folder-hash": "^4.0.0"
+    "folder-hash": "^4.0.1"
   },
   "devDependencies": {
     "@vercel/ncc": "^0.27.0",
