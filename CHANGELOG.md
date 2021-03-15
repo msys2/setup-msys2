@@ -2,7 +2,11 @@
 
 ## [Unreleased](https://github.com/msys2/setup-msys2/compare/42cc92da65286e00a692258fd5d7bb4624eb5b05...HEAD)
 
-*None*
+### Changed
+
+- Bump dependencies:
+  - eslint to v7.22.0
+  - folder-hash to v4.0.1
 
 ## [2.1.5](https://github.com/msys2/setup-msys2/compare/e7846a8b67444fb87744a711404045b782e7ff63...42cc92da65286e00a692258fd5d7bb4624eb5b05) - 2021/02/28
 
