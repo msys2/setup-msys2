@@ -258,7 +258,7 @@ async function run() {
       changeGroup('Killing remaining tasks...');
       await exec.exec('taskkill', ['/F', '/FI', 'MODULES eq msys-2.0.dll']);
       changeGroup('Final system upgrade...');
-      await pacman(['-Suu', '--overwrite', '*'], {});
+      await pacman(['-Syuu', '--overwrite', '*'], {});
       core.endGroup();
     }
 
