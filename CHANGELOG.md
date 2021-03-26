@@ -4,6 +4,7 @@
 
 ### Changed
 
+- Refresh the DBs before the final upgrade [[#119](https://github.com/msys2/setup-msys2/pull/119), [#120](https://github.com/msys2/setup-msys2/pull/120)]
 - Bump dependencies:
   - eslint to v7.22.0
   - folder-hash to v4.0.1
