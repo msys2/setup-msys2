@@ -16,7 +16,8 @@
     "MSYS2",
     "MINGW64",
     "MINGW32",
-    "MSYS"
+    "MSYS",
+    "UCRT64"
   ],
   "license": "MIT",
   "bugs": {
