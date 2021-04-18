@@ -1,10 +1,13 @@
 name: 'action'
+
 on:
   push:
   pull_request:
   schedule:
     - cron: '0 0 * * 3,6'
+
 jobs:
+
 
   eslint:
     runs-on: windows-latest
@@ -59,6 +62,11 @@ jobs:
       run: |
         $env:MSYSTEM = 'MINGW32'
         msys2 ./test.sh MINGW32
+    - name: test UCRT64
+      run: |
+        $env:MSYSTEM = 'UCRT64'
+        msys2 ./test.sh UCRT64
+
 
   cmd:
     needs: [cache]
@@ -85,6 +93,12 @@ jobs:
       run: |
         set MSYSTEM=MINGW32
         msys2 ./test.sh MINGW32
+    - name: test UCRT64
+      shell: cmd
+      run: |
+        set MSYSTEM=UCRT64
+        msys2 ./test.sh UCRT64
+
 
   env:
     needs: [cache]
@@ -108,6 +122,11 @@ jobs:
       run: msys2 ./test.sh MINGW32
       env:
         MSYSTEM: MINGW32
+    - name: test UCRT64
+      run: msys2 ./test.sh UCRT64
+      env:
+        MSYSTEM: UCRT64
+
 
   shell:
     needs: [cache]
@@ -127,7 +146,7 @@ jobs:
     needs: [cache]
     strategy:
       matrix:
-        task: [ MSYS, MINGW64, MINGW32 ]
+        task: [ MSYS, MINGW64, MINGW32, UCRT64 ]
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v2
@@ -140,13 +159,14 @@ jobs:
         msystem: ${{ matrix.task }}
     - run: msys2 ./test.sh ${{ matrix.task }}
 
+
   update:
     needs: [cache]
     strategy:
       fail-fast: false
       max-parallel: 3
       matrix:
-        msystem: [ MSYS, MINGW64, MINGW32 ]
+        msystem: [ MSYS, MINGW64, MINGW32, UCRT64 ]
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v2
@@ -159,6 +179,7 @@ jobs:
         update: true
         msystem: ${{ matrix.msystem }}
     - run: msys2 ./test.sh ${{ matrix.msystem }}
+
 
   MSYS2_PATH_TYPE:
     needs: [cache]
@@ -175,6 +196,7 @@ jobs:
       env:
         MSYS2_PATH_TYPE: inherit
 
+
   path-type:
     needs: [cache]
     runs-on: windows-latest
@@ -189,6 +211,7 @@ jobs:
       with:
         path-type: inherit
     - run: msys2 -c "go env"
+
 
   install:
     needs: [cache]
@@ -210,6 +233,7 @@ jobs:
         install: ${{ matrix.install }}
         msystem: MINGW64
     - run: msys2 ./test.sh MINGW64
+
 
   defaultclean:
     needs: [cache]
@@ -233,6 +257,7 @@ jobs:
         install: base-devel git
     - run: git describe --dirty --tags
 
+
   defaultdirty:
     needs: [cache]
     runs-on: windows-latest
@@ -253,6 +278,7 @@ jobs:
         install: base-devel git
     - run: git describe --dirty --tags
 
+
   errorhandling:
     needs: [cache]
     runs-on: windows-latest
@@ -267,6 +293,7 @@ jobs:
       run: |
         (! false | true) || exit 1; # make sure "-o pipefail" is active  by default
         [[ "$-" =~ 'e' ]] || exit 1; # make sure "set -e" is active by default
+
 
   workingdir:
     needs: [cache]
@@ -284,6 +311,7 @@ jobs:
         dir="$(pwd)"
         cd "$GITHUB_WORKSPACE"
         [[ "$dir" == "$(pwd)" ]]
+
 
   norelease:
     needs: [cache]
