@@ -31,7 +31,7 @@
     "folder-hash": "^4.0.1"
   },
   "devDependencies": {
-    "@vercel/ncc": "^0.28.2",
+    "@vercel/ncc": "^0.28.3",
     "eslint": "^7.24.0"
   }
 }
