@@ -2,8 +2,13 @@
 
 ## [Unreleased](https://github.com/msys2/setup-msys2/compare/c59fdfa7c5bcce581e57856d9ad73804c6786f2e...HEAD)
 
+### Added
+
+- Support UCRT64 system too. [[#130](https://github.com/msys2/setup-msys2/pull/130)]
+
 ### Changed
 
+- Update base distribution to [20210419](https://github.com/msys2/msys2-installer/releases/tag/2021-04-19). [[#129](https://github.com/msys2/setup-msys2/pull/129)]
 - Bump dependencies:
   - @actions/core to v1.2.7
   - @actions/cache to v1.0.7
@@ -14,7 +19,7 @@
 
 ### Changed
 
-- Refresh the DBs before the final upgrade [[#119](https://github.com/msys2/setup-msys2/pull/119), [#120](https://github.com/msys2/setup-msys2/pull/120)]
+- Refresh the DBs before the final upgrade. [[#119](https://github.com/msys2/setup-msys2/pull/119), [#120](https://github.com/msys2/setup-msys2/pull/120)]
 - Bump dependencies:
   - eslint to v7.22.0
   - folder-hash to v4.0.1
