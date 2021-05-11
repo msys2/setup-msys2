@@ -27,7 +27,7 @@ function parseInput() {
   let p_msystem = core.getInput('msystem');
   let p_install = core.getInput('install');
 
-  const msystem_allowed = ['MSYS', 'MINGW32', 'MINGW64', 'UCRT64'];
+  const msystem_allowed = ['MSYS', 'MINGW32', 'MINGW64', 'UCRT64', 'CLANG64'];
   if (!msystem_allowed.includes(p_msystem.toUpperCase())) {
     throw new Error(`'msystem' needs to be one of ${ msystem_allowed.join(', ') }, got ${p_msystem}`);
   }

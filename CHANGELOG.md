@@ -2,6 +2,10 @@
 
 ## [Unreleased](https://github.com/msys2/setup-msys2/compare/78d2b743f702aad2fd3040417b6747b3f342eb66...HEAD)
 
+### Added
+
+- Support CLANG64 system too. [[#135](https://github.com/msys2/setup-msys2/issues/135)]
+
 ### Changed
 
 - Bump dependencies:

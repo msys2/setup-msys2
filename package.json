@@ -17,7 +17,8 @@
     "MINGW64",
     "MINGW32",
     "MSYS",
-    "UCRT64"
+    "UCRT64",
+    "CLANG64"
   ],
   "license": "MIT",
   "bugs": {
