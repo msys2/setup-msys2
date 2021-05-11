@@ -5,7 +5,7 @@ branding:
   icon: terminal
 inputs:
   msystem:
-    description: 'Variant of the environment to set by default: MSYS, MINGW32, MINGW64 or UCRT64'
+    description: 'Variant of the environment to set by default: MSYS, MINGW32, MINGW64, UCRT64 or CLANG64'
     required: false
     default: 'MINGW64'
   path-type:
