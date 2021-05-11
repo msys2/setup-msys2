@@ -5,7 +5,7 @@
 ### Changed
 
 - Bump dependencies:
-  - eslint to v7.25.0
+  - eslint to v7.26.0
 
 ## [2.2.0](https://github.com/msys2/setup-msys2/compare/c59fdfa7c5bcce581e57856d9ad73804c6786f2e...78d2b743f702aad2fd3040417b6747b3f342eb66) - 2021/04/20
 
