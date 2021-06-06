@@ -9,8 +9,8 @@ const crypto = require('crypto');
 const assert = require('assert').strict;
 const { hashElement } = require('folder-hash');
 
-const inst_url = 'https://github.com/msys2/msys2-installer/releases/download/2021-04-19/msys2-base-x86_64-20210419.sfx.exe';
-const checksum = '1f2cfd8e13b0382096e53ead6fd52d0b656a1f81e1b5d82f44cb4ce8ab68755e';
+const inst_url = 'https://github.com/msys2/msys2-installer/releases/download/2021-06-04/msys2-base-x86_64-20210604.sfx.exe';
+const checksum = '2d7bdb926239ec2afaca8f9b506b34638c3cd5d18ee0f5d8cd6525bf80fcab5d';
 // see https://github.com/msys2/setup-msys2/issues/61
 const INSTALL_CACHE_ENABLED = false;
 const CACHE_FLUSH_COUNTER = 0;
