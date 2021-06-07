@@ -2,21 +2,20 @@
 
 ## [Unreleased](https://github.com/msys2/setup-msys2/compare/1dffee870e9df3fac027dfa450c30a6ee18d7a80...HEAD)
 
-*None*
+### Changed
+
+- Update base distribution to [20210604](https://github.com/msys2/msys2-installer/releases/tag/2021-06-04). [[#141](https://github.com/msys2/setup-msys2/pull/141)]
+- Bump dependencies:
+  - @actions/core to v1.3.0
+  - @actions/tool-cache to v1.7.0
+  - @vercel/ncc to v0.28.6
+  - eslint to v7.27.0
 
 ## [2.3.0](https://github.com/msys2/setup-msys2/compare/78d2b743f702aad2fd3040417b6747b3f342eb66...1dffee870e9df3fac027dfa450c30a6ee18d7a80) - 2021/05/11
 
 ### Added
 
 - Support CLANG64 system too. [[#135](https://github.com/msys2/setup-msys2/issues/135)]
-
-### Changed
-
-- Bump dependencies:
-  - @actions/core to v1.3.0
-  - @actions/tool-cache to v1.7.0
-  - @vercel/ncc to v0.28.6
-  - eslint to v7.27.0
 
 ## [2.2.0](https://github.com/msys2/setup-msys2/compare/c59fdfa7c5bcce581e57856d9ad73804c6786f2e...78d2b743f702aad2fd3040417b6747b3f342eb66) - 2021/04/20
 
