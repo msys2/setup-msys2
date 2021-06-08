@@ -2,7 +2,10 @@
 
 ## [Unreleased](https://github.com/msys2/setup-msys2/compare/28da3da2173118160b7ebf24f4f170f30f00cc5e...HEAD)
 
-*None*
+### Changed
+
+- Bump dependencies:
+  - eslint to v7.28.0
 
 ## [2.3.1](https://github.com/msys2/setup-msys2/compare/1dffee870e9df3fac027dfa450c30a6ee18d7a80...28da3da2173118160b7ebf24f4f170f30f00cc5e) - 2021/06/07
 
