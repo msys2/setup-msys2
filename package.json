@@ -18,6 +18,7 @@
     "MINGW32",
     "MSYS",
     "UCRT64",
+    "CLANG32",
     "CLANG64"
   ],
   "license": "MIT",

@@ -66,6 +66,10 @@ jobs:
       run: |
         $env:MSYSTEM = 'UCRT64'
         msys2 ./test.sh UCRT64
+    - name: test CLANG32
+      run: |
+        $env:MSYSTEM = 'CLANG32'
+        msys2 ./test.sh CLANG32
     - name: test CLANG64
       run: |
         $env:MSYSTEM = 'CLANG64'
@@ -102,6 +106,11 @@ jobs:
       run: |
         set MSYSTEM=UCRT64
         msys2 ./test.sh UCRT64
+    - name: test CLANG32
+      shell: cmd
+      run: |
+        set MSYSTEM=CLANG32
+        msys2 ./test.sh CLANG32
     - name: test CLANG64
       shell: cmd
       run: |
@@ -135,6 +144,10 @@ jobs:
       run: msys2 ./test.sh UCRT64
       env:
         MSYSTEM: UCRT64
+    - name: test CLANG32
+      run: msys2 ./test.sh CLANG32
+      env:
+        MSYSTEM: CLANG32
     - name: test CLANG64
       run: msys2 ./test.sh CLANG64
       env:
@@ -160,7 +173,7 @@ jobs:
     needs: [cache]
     strategy:
       matrix:
-        task: [ MSYS, MINGW64, MINGW32, UCRT64, CLANG64 ]
+        task: [ MSYS, MINGW64, MINGW32, UCRT64, CLANG32, CLANG64 ]
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v2
@@ -180,7 +193,7 @@ jobs:
       fail-fast: false
       max-parallel: 3
       matrix:
-        msystem: [ MSYS, MINGW64, MINGW32, UCRT64, CLANG64 ]
+        msystem: [ MSYS, MINGW64, MINGW32, UCRT64, CLANG32, CLANG64 ]
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v2
