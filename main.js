@@ -9,7 +9,8 @@ const crypto = require('crypto');
 const assert = require('assert').strict;
 const { hashElement } = require('folder-hash');
 
-const inst_url = 'https://github.com/msys2/msys2-installer/releases/download/2021-06-04/msys2-base-x86_64-20210604.sfx.exe';
+const inst_version = '2021-06-04';
+const inst_url = `https://github.com/msys2/msys2-installer/releases/download/${inst_version}/msys2-base-x86_64-${inst_version.replace(/-/g, '')}.sfx.exe`;
 const checksum = '2d7bdb926239ec2afaca8f9b506b34638c3cd5d18ee0f5d8cd6525bf80fcab5d';
 // see https://github.com/msys2/setup-msys2/issues/61
 const INSTALL_CACHE_ENABLED = false;
@@ -44,13 +45,15 @@ function parseInput() {
   }
 }
 
-async function downloadInstaller(destination) {
-  await tc.downloadTool(inst_url, destination);
+async function downloadInstaller() {
+  const inst_path = tc.find('msys2-installer', inst_version, 'x64');
+  const destination = inst_path ? path.join(inst_path, 'base.exe') : await tc.downloadTool(inst_url);
   let computedChecksum = '';
   await exec.exec(`powershell.exe`, [`(Get-FileHash ${destination} -Algorithm SHA256)[0].Hash`], {listeners: {stdout: (data) => { computedChecksum += data.toString(); }}});
   if (computedChecksum.slice(0, -2).toUpperCase() !== checksum.toUpperCase()) {
     throw new Error(`The SHA256 of the installer does not match! expected ${checksum} got ${computedChecksum}`);
   }
+  return path.join(inst_path || await tc.cacheFile(destination, 'base.exe', 'msys2-installer', inst_version, 'x64'), 'base.exe');
 }
 
 async function disableKeyRefresh(msysRootDir) {
@@ -217,8 +220,7 @@ async function run() {
 
       if (!cachedInstall) {
         core.startGroup('Downloading MSYS2...');
-        let inst_dest = path.join(tmp_dir, 'base.exe');
-        await downloadInstaller(inst_dest);
+        let inst_dest = await downloadInstaller();
 
         changeGroup('Extracting MSYS2...');
         await exec.exec(inst_dest, ['-y'], {cwd: dest});
