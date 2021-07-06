@@ -46,14 +46,15 @@ function parseInput() {
 }
 
 async function downloadInstaller() {
-  const inst_path = tc.find('msys2-installer', inst_version, 'x64');
+  const version = `0.0.${inst_version.replace(/-/g, '')}`
+  const inst_path = tc.find('msys2-installer', version, 'x64');
   const destination = inst_path ? path.join(inst_path, 'base.exe') : await tc.downloadTool(inst_url);
   let computedChecksum = '';
   await exec.exec(`powershell.exe`, [`(Get-FileHash ${destination} -Algorithm SHA256)[0].Hash`], {listeners: {stdout: (data) => { computedChecksum += data.toString(); }}});
   if (computedChecksum.slice(0, -2).toUpperCase() !== checksum.toUpperCase()) {
     throw new Error(`The SHA256 of the installer does not match! expected ${checksum} got ${computedChecksum}`);
   }
-  return path.join(inst_path || await tc.cacheFile(destination, 'base.exe', 'msys2-installer', inst_version, 'x64'), 'base.exe');
+  return path.join(inst_path || await tc.cacheFile(destination, 'base.exe', 'msys2-installer', version, 'x64'), 'base.exe');
 }
 
 async function disableKeyRefresh(msysRootDir) {
