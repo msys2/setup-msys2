@@ -2,6 +2,10 @@
 
 ## [Unreleased](https://github.com/msys2/setup-msys2/compare/c381b3e3bb2726b3263ecb5a7204b2ba19f3fc10...HEAD)
 
+### Added
+
+- Cache installer in the tool cache [[#147](https://github.com/msys2/setup-msys2/pull/147)]
+
 ### Changed
 
 - Bump dependencies:
