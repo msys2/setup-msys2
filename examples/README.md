@@ -14,3 +14,7 @@ Instead, use either of:
 
 - Use relative paths (the run commands start out with `${{github.workspace}}` as the current working directory anyway).
 - Use `cygwin -u` to convert the backslashed into forward slashes.
+
+## PKGBUILD
+
+[pkgbuild.yml](pkgbuild.yml) shows how to build and test a package using a PKGBUILD recipe.
