@@ -90,15 +90,32 @@ See [actions/checkout#250](https://github.com/actions/checkout/issues/250).
 
 ### Build matrix
 
-It is common to test some package/tool on MINGW32 (32 bit) and MINGW64 (64 bit), which typically requires installing
-different sets of packages through option `install`.
+It is common to test some package/tool on multiple environments, which typically requires installing different sets of
+packages through option `install`.
 GitHub Actions' `strategy` and `matrix` fields allow to do so, as explained in [docs.github.com: Configuring a build matrix](https://docs.github.com/en/actions/configuring-and-managing-workflows/configuring-a-workflow#configuring-a-build-matrix)
 and [docs.github.com: `jobs.<job_id>.strategy.matrix`](https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions#jobsjob_idstrategymatrix).
-See, for example:
+See, for instance:
 
+```yml
+  strategy:
+    matrix:
+      include:
+        - { sys: mingw64, env: x86_64 }
+        - { sys: mingw32, env: i686 }
+        - { sys: ucrt64,  env: ucrt-x86_64 }  # Experimental!
+        - { sys: clang64, env: clang-x86_64 } # Experimental!
+  steps:
+    - uses: msys2/setup-msys2@v2
+      with:
+        msystem: ${{matrix.sys}}
+        install: mingw-w64-${{matrix.env}}-toolchain
+```
+
+Find similar patterms in the following workflows:
+
+- [examples/cmake](examples/cmake.yml).
 - [msys2/MINGW-packages: .github/workflows/main.yml](https://github.com/msys2/MINGW-packages/blob/master/.github/workflows/main.yml).
 - [ghdl/ghdl: .github/workflows/push.yml](https://github.com/ghdl/ghdl/blob/99b542c849311c92e87e2c70d283de133c9d4093/.github/workflows/push.yml#L56-L102).
-- The [CMake example](#example-for-building-code-with-cmake) below.
 
 Find further details at [#40](https://github.com/msys2/setup-msys2/issues/40) and [#102](https://github.com/msys2/setup-msys2/issues/102).
 
@@ -188,62 +205,3 @@ The package or list of packages are installed through `pacman --noconfirm -S --n
         git
         base-devel
 ```
-
-## Examples
-
-### Example for building code with CMake
-
-```yaml
-    runs-on: windows-latest
-    defaults:
-      run:
-        shell: msys2 {0}
-    strategy:
-      matrix:
-        include: [
-          { msystem: mingw64, prefix: mingw-w64-x86_64 },
-          { msystem: mingw32, prefix: mingw-w64-i686 },
-          { msystem: ucrt64, prefix: mingw-w64-ucrt-x86_64 },
-          { msystem: clang64, prefix: mingw-w64-clang-x86_64 },
-        ]
-    steps:
-      - uses: msys2/setup-msys2@v2
-        with:
-          msystem: ${{matrix.msystem}}
-          update: true
-          install: >-
-            git
-            make
-            ${{matrix.prefix}}-toolchain
-            ${{matrix.prefix}}-cmake
-            ${{matrix.prefix}}-make
-            ${{matrix.prefix}}-ninja
-      - uses: actions/checkout@v2
-      - run: |
-          cmake -G Ninja -B build -DCMAKE_BUILD_TYPE=Release
-          cmake --build build
-```
-
-This shows how to install the relevant toolchain package for each msystem
-choice. See [the MSYS2 documentation](https://www.msys2.org/docs/environments/)
-for explanations on the different msystem options available.
-
-When building for mingw with CMake, one has to take care to install the mingw
-version, not msys version, of CMake, i.e. the one prefixed with e.g.
-`mingw-w64-x86_64` (but the prefix is different for each of the msystem
-variants).
-
-Compared to the GitHub Actions CMake examples/templates, there's a few changes:
-
-* Don't use the `${{github.workspace}}` for specifying an absolute path; it's
-  spelled out with backslashes, which don't work as intended when interpreted
-  by the bash shell. Instead use relative paths (the run commands start out
-  with `${{github.workspace}}` as the current working directory anyway).
-
-* When building with CMake on Windows for mingw targets, one has to set a
-  a choice of generator with `-G`; the default is NMake, which looks for
-  the installed MSVC compilers instead. You can choose between `Ninja`
-  (install `${{matrix.prefix}}-ninja`; the build uses the command `ninja`),
-  `MinGW Makefiles` (install `${{matrix.prefix}}-make`, the build uses
-  `mingw32-make`) or `MSYS Makefiles` (install `make`, and the build uses
-  the plain `make` command).
