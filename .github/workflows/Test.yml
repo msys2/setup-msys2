@@ -1,4 +1,4 @@
-name: 'action'
+name: Test
 
 on:
   push:
