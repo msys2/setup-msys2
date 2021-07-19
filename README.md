@@ -3,9 +3,14 @@
   -->
   <a title="Join the chat at https://gitter.im/msys2/msys2" href="https://gitter.im/msys2/msys2"><img src="https://img.shields.io/badge/chat-on%20gitter-4db797.svg?longCache=true&style=flat-square&logo=gitter&logoColor=e8ecef"></a><!--
   -->
-  <a title="'Test' workflow Status" href="https://github.com/msys2/setup-msys2/actions?query=workflow%3ATest"><img alt="'Test' workflow Status" src="https://img.shields.io/github/workflow/status/msys2/setup-msys2/Test?longCache=true&style=flat-square&label=Test&logo=github"></a><!--
-  -->
   <a title="Dependency Status" href="https://david-dm.org/msys2/setup-msys2"><img src="https://img.shields.io/david/msys2/setup-msys2.svg?longCache=true&style=flat-square&label=deps&logo=npm"></a>
+</p>
+
+<p align="center">
+  <a title="'Test' workflow Status" href="https://github.com/msys2/setup-msys2/actions/workflows/Test.yml"><img alt="'Test' workflow Status" src="https://img.shields.io/github/workflow/status/msys2/setup-msys2/Test?longCache=true&style=flat-square&label=Test&logo=github"></a><!--
+  -->
+  <a title="'Example PKGBUILD' workflow Status" href="https://github.com/msys2/setup-msys2/actions/workflows/pkgbuild.yml"><img alt="'Example PKGBUILD' workflow Status" src="https://img.shields.io/github/workflow/status/msys2/setup-msys2/Test?longCache=true&style=flat-square&label=Example%20PKGBUILD&logo=github"></a><!--
+  -->
 </p>
 
 # Setup MSYS2
