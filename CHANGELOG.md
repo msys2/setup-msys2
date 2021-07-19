@@ -2,7 +2,11 @@
 
 ## [Unreleased](https://github.com/msys2/setup-msys2/compare/2ffbfd30567f4031016002fcb5a6e6e7c0de067a...HEAD)
 
-*None*
+### Changed
+
+- Bump dependencies:
+  - @vercel/ncc to v0.29.0
+  - eslint to v7.31.0
 
 ## [2.4.1](https://github.com/msys2/setup-msys2/compare/c381b3e3bb2726b3263ecb5a7204b2ba19f3fc10...2ffbfd30567f4031016002fcb5a6e6e7c0de067a) - 2021/07/06
 
