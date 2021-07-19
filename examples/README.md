@@ -6,6 +6,8 @@
 See [the MSYS2 documentation](https://www.msys2.org/docs/environments/) for explanations on the different msystem
 options available.
 
+See [msys2/msys2.github.io#144](https://github.com/msys2/msys2.github.io/issues/144).
+
 Compared to the GitHub Actions CMake examples/templates
 (see [actions/starter-workflows: ci/cmake.yml](https://github.com/actions/starter-workflows/blob/main/ci/cmake.yml)),
 `${{github.workspace}}` cannot be used directly for specifying an absolute path.
