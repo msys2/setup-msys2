@@ -17,4 +17,4 @@ Instead, use either of:
 
 ## PKGBUILD
 
-[pkgbuild.yml](pkgbuild.yml) shows how to build and test a package using a PKGBUILD recipe.
+[pkgbuild.yml](../.github/workflows/pkgbuild.yml) shows how to build and test a package using the examples PKGBUILD recipe and the TOOL in [pkgbuild](pkgbuild).

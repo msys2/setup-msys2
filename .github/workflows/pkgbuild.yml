@@ -50,20 +50,20 @@ jobs:
 
     - name: '🚧 Build package'
       run: |
-        cd msys2
+        cd examples/pkgbuild
         makepkg-mingw --noconfirm --noprogressbar -sCLf
 
     - name: '📤 Upload artifact: package'
       uses: actions/upload-artifact@v2
       with:
         name: ${{ matrix.sys }}-TOOL
-        path: msys2/*${{ matrix.env }}*.zst
+        path: examples/pkgbuild/*${{ matrix.env }}*.zst
 
     - name: '🔍 Show package content'
       run: |
         mkdir tmp
         cd tmp
-        tar -xf ../scripts/msys2/*.zst
+        tar -xf ../examples/pkgbuild/*.zst
         tree .
 
 
@@ -93,10 +93,11 @@ jobs:
     - name: '📥 Download artifact: package'
       uses: actions/download-artifact@v2
       with:
+        path: .
         name: ${{ matrix.sys }}-TOOL
 
     - name: '🛠️ Install package'
       run: pacman -U --noconfirm --noprogressbar *.zst
 
     - name: '🚦 Test package'
-      run: TOOL --help
+      run: TOOL

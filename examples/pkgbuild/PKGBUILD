@@ -1,0 +1,21 @@
+_realname=TOOL
+pkgbase=mingw-w64-${_realname}
+pkgname=("${MINGW_PACKAGE_PREFIX}-${_realname}")
+pkgver=ci
+pkgrel=1
+pkgdesc="Demo recipe for TOOL (mingw-w64)"
+arch=('any')
+pkgname=("${MINGW_PACKAGE_PREFIX}-${_realname}")
+
+source=('TOOL')
+sha256sums=('18773261f8931adb11297544267335ab036c58216073715edb1956b5bbe4935a')
+
+build() {
+  cd "${srcdir}"
+  ls -lah
+}
+
+package() {
+  cd "${srcdir}"
+  install -D TOOL "${pkgdir}${MINGW_PREFIX}"/bin/TOOL
+}
