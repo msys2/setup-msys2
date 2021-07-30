@@ -4,6 +4,9 @@
 
 ### Changed
 
+- Update base distribution to [20210725](https://github.com/msys2/msys2-installer/releases/tag/2021-07-25). [[#154](https://github.com/msys2/setup-msys2/pull/154)]
+- Force date into a semver-compliant version. [[#148](https://github.com/msys2/setup-msys2/pull/148)]
+- Add examples. [[#149](https://github.com/msys2/setup-msys2/pull/149)]
 - Bump dependencies:
   - @vercel/ncc to v0.29.0
   - eslint to v7.31.0
