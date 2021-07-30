@@ -3,9 +3,14 @@
   -->
   <a title="Join the chat at https://gitter.im/msys2/msys2" href="https://gitter.im/msys2/msys2"><img src="https://img.shields.io/badge/chat-on%20gitter-4db797.svg?longCache=true&style=flat-square&logo=gitter&logoColor=e8ecef"></a><!--
   -->
-  <a title="'action' workflow Status" href="https://github.com/msys2/setup-msys2/actions?query=workflow%3Aaction"><img alt="'action' workflow Status" src="https://img.shields.io/github/workflow/status/msys2/setup-msys2/action?longCache=true&style=flat-square&label=action&logo=github"></a><!--
-  -->
   <a title="Dependency Status" href="https://david-dm.org/msys2/setup-msys2"><img src="https://img.shields.io/david/msys2/setup-msys2.svg?longCache=true&style=flat-square&label=deps&logo=npm"></a>
+</p>
+
+<p align="center">
+  <a title="'Test' workflow Status" href="https://github.com/msys2/setup-msys2/actions/workflows/Test.yml"><img alt="'Test' workflow Status" src="https://img.shields.io/github/workflow/status/msys2/setup-msys2/Test?longCache=true&style=flat-square&label=Test&logo=github"></a><!--
+  -->
+  <a title="'Example PKGBUILD' workflow Status" href="https://github.com/msys2/setup-msys2/actions/workflows/pkgbuild.yml"><img alt="'Example PKGBUILD' workflow Status" src="https://img.shields.io/github/workflow/status/msys2/setup-msys2/Test?longCache=true&style=flat-square&label=Example%20PKGBUILD&logo=github"></a><!--
+  -->
 </p>
 
 # Setup MSYS2
@@ -90,14 +95,33 @@ See [actions/checkout#250](https://github.com/actions/checkout/issues/250).
 
 ### Build matrix
 
-It is common to test some package/tool on MINGW32 (32 bit) and MINGW64 (64 bit), which typically requires installing
-different sets of packages through option `install`.
+It is common to test some package/tool on multiple environments, which typically requires installing different sets of
+packages through option `install`.
 GitHub Actions' `strategy` and `matrix` fields allow to do so, as explained in [docs.github.com: Configuring a build matrix](https://docs.github.com/en/actions/configuring-and-managing-workflows/configuring-a-workflow#configuring-a-build-matrix)
 and [docs.github.com: `jobs.<job_id>.strategy.matrix`](https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions#jobsjob_idstrategymatrix).
-See, for example:
+See, for instance:
 
-- [msys2/MINGW-packages: .github/workflows/main.yml](https://github.com/msys2/MINGW-packages/blob/master/.github/workflows/main.yml).
-- [ghdl/ghdl: .github/workflows/push.yml](https://github.com/ghdl/ghdl/blob/99b542c849311c92e87e2c70d283de133c9d4093/.github/workflows/push.yml#L56-L102).
+```yml
+  strategy:
+    matrix:
+      include:
+        - { sys: mingw64, env: x86_64 }
+        - { sys: mingw32, env: i686 }
+        - { sys: ucrt64,  env: ucrt-x86_64 }  # Experimental!
+        - { sys: clang64, env: clang-x86_64 } # Experimental!
+  steps:
+    - uses: msys2/setup-msys2@v2
+      with:
+        msystem: ${{matrix.sys}}
+        install: mingw-w64-${{matrix.env}}-toolchain
+```
+
+Find similar patterms in the following workflows:
+
+- [.github/workflows/pkgbuild.yml](.github/workflows/pkgbuild.yml)
+- [examples/cmake.yml](examples/cmake.yml)
+- [msys2/MINGW-packages: .github/workflows/main.yml](https://github.com/msys2/MINGW-packages/blob/master/.github/workflows/main.yml)
+- [ghdl/ghdl: .github/workflows/push.yml](https://github.com/ghdl/ghdl/blob/99b542c849311c92e87e2c70d283de133c9d4093/.github/workflows/push.yml#L56-L102)
 
 Find further details at [#40](https://github.com/msys2/setup-msys2/issues/40) and [#102](https://github.com/msys2/setup-msys2/issues/102).
 
