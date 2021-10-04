@@ -5,6 +5,7 @@
 ### Changed
 
 - Bump dependencies:
+  - @actions/core to v1.6.0
   - @vercel/ncc to v0.31.0
   - eslint to v7.32.0
 
