@@ -4,6 +4,7 @@
 
 ### Changed
 
+- Try to shorten the release install path a bit [[#163](https://github.com/msys2/setup-msys2/pull/163)]
 - Bump dependencies:
   - @actions/core to v1.6.0
   - @vercel/ncc to v0.31.0
