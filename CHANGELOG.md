@@ -1,10 +1,14 @@
 # Changelog
 
-## [Unreleased](https://github.com/msys2/setup-msys2/compare/5f027e0ad12b5d8cf6e794847cec272f9d59825c...HEAD)
+## [Unreleased](https://github.com/msys2/setup-msys2/compare/a3cc4d82700448fea6cb3bcfc9cbb23f916762c4...HEAD)
+
+*None*
+
+## [2.5.0](https://github.com/msys2/setup-msys2/compare/5f027e0ad12b5d8cf6e794847cec272f9d59825c...a3cc4d82700448fea6cb3bcfc9cbb23f916762c4) - 2021/10/13
 
 ### Changed
 
-- Try to shorten the release install path a bit [[#163](https://github.com/msys2/setup-msys2/pull/163)]
+- Try to shorten the release install path a bit. [[#163](https://github.com/msys2/setup-msys2/pull/163)]
 - Bump dependencies:
   - @actions/core to v1.6.0
   - @vercel/ncc to v0.31.0
