@@ -260,6 +260,53 @@ jobs:
         msystem: MINGW64
     - run: msys2 ./test.sh MINGW64
 
+  install-and-pacboy:
+    needs: [cache]
+    runs-on: windows-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        msystem: [ MINGW64, MINGW32, UCRT64, CLANG64 ]
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/download-artifact@v2
+      with:
+        name: action
+    - name: run action
+      uses: ./
+      with:
+        msystem: ${{ matrix.msystem }}
+        update: true
+        install: git
+        pacboy: openssl:p
+    - shell: msys2 {0}
+      run: |
+        uname -a
+        openssl help
+
+  pacboy:
+    needs: [cache]
+    runs-on: windows-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        msystem: [ MINGW64, MINGW32, UCRT64, CLANG64 ]
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/download-artifact@v2
+      with:
+        name: action
+    - name: run action
+      uses: ./
+      with:
+        msystem: ${{ matrix.msystem }}
+        update: true
+        pacboy: openssl:p
+    - shell: msys2 {0}
+      run: |
+        uname -a
+        openssl help
+
 
   defaultclean:
     needs: [cache]
@@ -375,6 +422,7 @@ jobs:
       with:
         platform-check-severity: warn
 
+
   location:
     needs: [cache]
     runs-on: windows-latest
@@ -391,4 +439,3 @@ jobs:
     - shell: msys2 {0}
       run: |
         cygpath -m /
-

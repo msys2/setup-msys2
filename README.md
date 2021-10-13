@@ -113,7 +113,24 @@ See, for instance:
     - uses: msys2/setup-msys2@v2
       with:
         msystem: ${{matrix.sys}}
-        install: mingw-w64-${{matrix.env}}-toolchain
+        install: mingw-w64-${{matrix.env}}-openssl
+```
+
+Alternatively, option `pacboy` allows using a single matrix variable:
+
+```yml
+  strategy:
+    matrix:
+      sys:
+        - mingw64
+        - mingw32
+        - ucrt64  # Experimental!
+        - clang64 # Experimental!
+  steps:
+    - uses: msys2/setup-msys2@v2
+      with:
+        msystem: ${{matrix.sys}}
+        pacboy: openssl:p
 ```
 
 Find similar patterms in the following workflows:
@@ -190,7 +207,7 @@ By setting option `update` to `true`, the action will try to update the runtime 
 #### install
 
 Installing additional packages after updating the system is supported through option `install`.
-The package or list of packages are installed through `pacman --noconfirm -S --needed`.
+The package or list of packages are installed through `pacman --noconfirm -S --needed --overwrite *`.
 
 ```yaml
   - uses: msys2/setup-msys2@v2
@@ -199,6 +216,27 @@ The package or list of packages are installed through `pacman --noconfirm -S --n
       install: >-
         git
         base-devel
+```
+
+#### pacboy
+
+Installing additional packages with [pacboy](https://www.msys2.org/docs/package-management/#avoiding-writing-long-package-names) after updating the system is supported through option `pacboy`.
+The package or list of packages are installed through `pacboy --noconfirm -S --needed`.
+
+```yaml
+  strategy:
+    fail-fast: false
+    matrix:
+      sys: [ MINGW64, MINGW32, UCRT64, CLANG64 ]
+  steps:
+  - uses: msys2/setup-msys2@v2
+    with:
+      msystem: ${{matrix.sys}}
+      install: >-
+        git
+        base-devel
+      pacboy: >-
+        openssl:p
 ```
 
 #### release

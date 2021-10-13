@@ -27,6 +27,7 @@ function parseInput() {
   let p_pathtype = core.getInput('path-type');
   let p_msystem = core.getInput('msystem');
   let p_install = core.getInput('install');
+  let p_pacboy = core.getInput('pacboy');
   let p_platformcheckseverity = core.getInput('platform-check-severity');
   let p_location = core.getInput('location');
 
@@ -37,6 +38,7 @@ function parseInput() {
   p_msystem = p_msystem.toUpperCase()
 
   p_install = (p_install === 'false') ? [] : p_install.split(/\s+/);
+  p_pacboy = (p_pacboy === 'false') ? [] : p_pacboy.split(/\s+/);
 
   const platformcheckseverity_allowed = ['fatal', 'warn'];
   if (!platformcheckseverity_allowed.includes(p_platformcheckseverity)) {
@@ -55,6 +57,7 @@ function parseInput() {
     pathtype: p_pathtype,
     msystem: p_msystem,
     install: p_install,
+    pacboy: p_pacboy,
     platformcheckseverity: p_platformcheckseverity,
     location: (p_location == "RUNNER_TEMP") ? process.env['RUNNER_TEMP'] : p_location,
   }
@@ -199,8 +202,8 @@ async function runMsys(args, opts) {
   await exec.exec('cmd', ['/D', '/S', '/C', cmd].concat(['-c', quotedArgs.join(' ')]), opts);
 }
 
-async function pacman(args, opts) {
-  await runMsys(['pacman', '--noconfirm'].concat(args), opts);
+async function pacman(args, opts, cmd) {
+  await runMsys([cmd ? cmd : 'pacman', '--noconfirm'].concat(args), opts);
 }
 
 async function run() {
@@ -287,8 +290,22 @@ async function run() {
     }
 
     if (input.install.length) {
-      core.startGroup('Installing additional packages...');
-      await pacman(['-S', '--needed', '--overwrite', '*'].concat(input.install), {});
+      core.startGroup('Installing additional packages through pacman...');
+      await pacman(['-S', '--needed', '--overwrite', '*'].concat(
+        (input.pacboy.length) ? input.install.concat(['pactoys']) : input.install
+      ), {});
+      core.endGroup();
+    } else {
+      if (input.pacboy.length) {
+        core.startGroup('Installing pacboy...');
+        await pacman(['-S', '--needed', '--overwrite', '*', 'pactoys'], {});
+        core.endGroup();
+      }
+    }
+
+    if (input.pacboy.length) {
+      core.startGroup('Installing additional packages through pacboy...');
+      await pacman(['-S', '--needed'].concat(input.pacboy), {}, 'pacboy');
       core.endGroup();
     }
 

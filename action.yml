@@ -17,7 +17,11 @@ inputs:
     required: false
     default: false
   install:
-    description: 'Install additional packages through pacman, after installation and/or update'
+    description: 'After installation and/or update, install additional packages through pacman'
+    required: false
+    default: false
+  pacboy:
+    description: 'After installation and/or update, install additional packages through pacboy'
     required: false
     default: false
   release:
