@@ -28,6 +28,7 @@ function parseInput() {
   let p_msystem = core.getInput('msystem');
   let p_install = core.getInput('install');
   let p_platformcheckseverity = core.getInput('platform-check-severity');
+  let p_location = core.getInput('location');
 
   const msystem_allowed = ['MSYS', 'MINGW32', 'MINGW64', 'UCRT64', 'CLANG32', 'CLANG64'];
   if (!msystem_allowed.includes(p_msystem.toUpperCase())) {
@@ -42,6 +43,12 @@ function parseInput() {
     throw new Error(`'platform-check-severity' needs to be one of ${ platformcheckseverity_allowed.join(', ') }, got ${p_platformcheckseverity}`);
   }
 
+  if ( process.platform === 'win32' && (p_location === 'C:\\' || p_location === 'C:') ) {
+    throw new Error(`'location' cannot be 'C:' because that contains the built-in MSYS2 installation
+      in GitHub Actions environments. See option 'release', in order to use that installation:
+      https://github.com/msys2/setup-msys2#release`);
+  }
+
   return {
     release: p_release,
     update: p_update,
@@ -49,6 +56,7 @@ function parseInput() {
     msystem: p_msystem,
     install: p_install,
     platformcheckseverity: p_platformcheckseverity,
+    location: (p_location == "RUNNER_TEMP") ? process.env['RUNNER_TEMP'] : p_location,
   }
 }
 
@@ -220,7 +228,8 @@ async function run() {
     let msysRootDir = path.join('C:', 'msys64');
     if (input.release) {
       // Use upstream package instead of the default installation in the virtual environment.
-      msysRootDir = path.join(tmp_dir, 'msys64');
+      let dest = (input.location) ? input.location : tmp_dir;
+      msysRootDir = path.join(dest, 'msys64');
 
       if (INSTALL_CACHE_ENABLED) {
         instCache = new InstallCache(msysRootDir, input);
@@ -234,7 +243,7 @@ async function run() {
         let inst_dest = await downloadInstaller();
 
         changeGroup('Extracting MSYS2...');
-        await exec.exec(inst_dest, ['-y'], {cwd: tmp_dir});
+        await exec.exec(inst_dest, ['-y'], {cwd: dest});
 
         changeGroup('Disable Key Refresh...');
         await disableKeyRefresh(msysRootDir);

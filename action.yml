@@ -28,6 +28,10 @@ inputs:
     description: 'What to do when run on an incompatible runner: fatal, warn'
     required: false
     default: 'fatal'
+  location:
+    description: 'Where to install msys2'
+    required: false
+    default: 'RUNNER_TEMP'
 runs:
   using: 'node12'
   main: 'index.js'
