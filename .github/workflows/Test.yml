@@ -356,3 +356,21 @@ jobs:
     - shell: msys2 {0}
       run: |
         uname -a
+
+
+  platformchecks:
+    needs: [cache]
+    strategy:
+      fail-fast: false
+      matrix:
+        platform: [ macos, ubuntu ]
+    runs-on: ${{ matrix.platform }}-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/download-artifact@v2
+      with:
+        name: action
+    - name: run action
+      uses: ./
+      with:
+        platform-check-severity: warn

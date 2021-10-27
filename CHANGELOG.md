@@ -2,6 +2,10 @@
 
 ## [Unreleased](https://github.com/msys2/setup-msys2/compare/a3cc4d82700448fea6cb3bcfc9cbb23f916762c4...HEAD)
 
+### Added
+
+- Option: `platform-check-severity`. [[msys2/setup-msys2](https://github.com/msys2/setup-msys2/pull/172)]
+
 ### Changed
 
 - Bump dependencies:

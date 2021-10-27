@@ -24,6 +24,10 @@ inputs:
     description: 'Install packages after installation through pacman'
     required: false
     default: false
+  platform-check-severity:
+    description: 'What to do when run on an incompatible runner: fatal, warn'
+    required: false
+    default: 'fatal'
 runs:
   using: 'node12'
   main: 'index.js'

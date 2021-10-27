@@ -27,6 +27,7 @@ function parseInput() {
   let p_pathtype = core.getInput('path-type');
   let p_msystem = core.getInput('msystem');
   let p_install = core.getInput('install');
+  let p_platformcheckseverity = core.getInput('platform-check-severity');
 
   const msystem_allowed = ['MSYS', 'MINGW32', 'MINGW64', 'UCRT64', 'CLANG32', 'CLANG64'];
   if (!msystem_allowed.includes(p_msystem.toUpperCase())) {
@@ -36,12 +37,18 @@ function parseInput() {
 
   p_install = (p_install === 'false') ? [] : p_install.split(/\s+/);
 
+  const platformcheckseverity_allowed = ['fatal', 'warn'];
+  if (!platformcheckseverity_allowed.includes(p_platformcheckseverity)) {
+    throw new Error(`'platform-check-severity' needs to be one of ${ platformcheckseverity_allowed.join(', ') }, got ${p_platformcheckseverity}`);
+  }
+
   return {
     release: p_release,
     update: p_update,
     pathtype: p_pathtype,
     msystem: p_msystem,
     install: p_install,
+    platformcheckseverity: p_platformcheckseverity,
   }
 }
 
@@ -190,8 +197,15 @@ async function pacman(args, opts) {
 
 async function run() {
   try {
+    const input = parseInput();
+
     if (process.platform !== 'win32') {
-      console.log("MSYS2 does not work on non-windows platforms; please check the 'runs-on' field of the job");
+      const msg = "MSYS2 does not work on non-windows platforms; please check the 'runs-on' field of the job"
+      if (input.platformcheckseverity === 'fatal') {
+        core.setFailed(msg);
+      } else {
+        console.log(msg);
+      }
       return;
     }
 
@@ -200,8 +214,6 @@ async function run() {
       core.setFailed('environment variable RUNNER_TEMP is undefined');
       return;
     }
-
-    const input = parseInput();
 
     let cachedInstall = false;
     let instCache = null;
