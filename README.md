@@ -211,3 +211,13 @@ The package or list of packages are installed through `pacman --noconfirm -S --n
         git
         base-devel
 ```
+#### platform-check-severity
+
+By default (`fatal`), throw an error if the runner OS is not Windows.
+If set to `warn`, simply log a message and skip the rest:
+
+```yaml
+  - uses: msys2/setup-msys2@v2
+    with:
+      platform-check-severity: warn
+```
