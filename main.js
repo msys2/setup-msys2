@@ -191,7 +191,7 @@ async function pacman(args, opts) {
 async function run() {
   try {
     if (process.platform !== 'win32') {
-      core.setFailed("MSYS2 does not work on non-windows platforms; please check the 'runs-on' field of the job");
+      console.log("MSYS2 does not work on non-windows platforms; please check the 'runs-on' field of the job");
       return;
     }
 
