@@ -172,6 +172,7 @@ jobs:
   msystem:
     needs: [cache]
     strategy:
+      fail-fast: false
       matrix:
         task: [ MSYS, MINGW64, MINGW32, UCRT64, CLANG32, CLANG64 ]
     runs-on: windows-latest
@@ -191,7 +192,6 @@ jobs:
     needs: [cache]
     strategy:
       fail-fast: false
-      max-parallel: 3
       matrix:
         msystem: [ MSYS, MINGW64, MINGW32, UCRT64, CLANG32, CLANG64 ]
     runs-on: windows-latest
@@ -244,7 +244,6 @@ jobs:
     needs: [cache]
     strategy:
       fail-fast: false
-      max-parallel: 3
       matrix:
         install: [ false, git, 'base-devel git' ]
     runs-on: windows-latest
