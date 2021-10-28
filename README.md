@@ -176,17 +176,6 @@ This option corresponds to the `MSYS2_PATH_TYPE` setting in MSYS2; hence it can 
 See [msys2/MSYS2-packages: filesystem/profile](https://github.com/msys2/MSYS2-packages/blob/915946a637e1f2b7e26e32782f3af322009293db/filesystem/profile#L28-L45)
 for further details about the configuration of each option.
 
-#### release
-
-By default (`true`), retrieve and extract base installation from upstream GitHub Releases.
-If set to `false`, the installation available in the virtual environment is used:
-
-```yaml
-  - uses: msys2/setup-msys2@v2
-    with:
-      release: false
-```
-
 #### update
 
 By default, the installation is not updated; hence package versions are those of the installation tarball.
@@ -212,15 +201,15 @@ The package or list of packages are installed through `pacman --noconfirm -S --n
         base-devel
 ```
 
-#### platform-check-severity
+#### release
 
-By default (`fatal`), throw an error if the runner OS is not Windows.
-If set to `warn`, simply log a message and skip the rest:
+By default (`true`), retrieve and extract base installation from upstream GitHub Releases.
+If set to `false`, the installation available in the virtual environment is used:
 
 ```yaml
   - uses: msys2/setup-msys2@v2
     with:
-      platform-check-severity: warn
+      release: false
 ```
 
 #### location
@@ -231,4 +220,15 @@ Specify the location where to install msys2:
   - uses: msys2/setup-msys2@v2
     with:
       location: D:\
+```
+
+#### platform-check-severity
+
+By default (`fatal`), throw an error if the runner OS is not Windows.
+If set to `warn`, simply log a message and skip the rest:
+
+```yaml
+  - uses: msys2/setup-msys2@v2
+    with:
+      platform-check-severity: warn
 ```
