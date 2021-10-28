@@ -12,26 +12,26 @@ inputs:
     description: 'Default value for MSYS2_PATH_TYPE environment variable: strict, inherit or minimal'
     required: false
     default: 'minimal'
-  release:
-    description: 'Retrieve and extract base installation from upstream GitHub Releases'
-    required: false
-    default: true
   update:
     description: 'Update MSYS2 installation through pacman'
     required: false
     default: false
   install:
-    description: 'Install packages after installation through pacman'
+    description: 'Install additional packages through pacman, after installation and/or update'
     required: false
     default: false
+  release:
+    description: 'Retrieve and extract base installation from upstream GitHub Releases'
+    required: false
+    default: true
+  location:
+    description: 'Where to install MSYS2'
+    required: false
+    default: 'RUNNER_TEMP'
   platform-check-severity:
     description: 'What to do when run on an incompatible runner: fatal, warn'
     required: false
     default: 'fatal'
-  location:
-    description: 'Where to install msys2'
-    required: false
-    default: 'RUNNER_TEMP'
 runs:
   using: 'node12'
   main: 'index.js'
