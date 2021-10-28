@@ -4,7 +4,9 @@
 
 ### Added
 
-- Option: `platform-check-severity`. [[msys2/setup-msys2](https://github.com/msys2/setup-msys2/pull/172)]
+- Options:
+  - `platform-check-severity`. [[#172](https://github.com/msys2/setup-msys2/pull/172)]
+  - `location`. [[#173](https://github.com/msys2/setup-msys2/pull/173)]
 
 ### Changed
 
