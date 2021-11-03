@@ -426,6 +426,12 @@ jobs:
   location:
     needs: [cache]
     runs-on: windows-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        location:
+        - D:\
+        - D:\some\arbitrary
     steps:
     - uses: actions/checkout@v2
     - uses: actions/download-artifact@v2
@@ -434,7 +440,7 @@ jobs:
     - name: run action
       uses: ./
       with:
-        location: 'D:\'
+        location: ${{ matrix.location }}
         update: false
     - shell: msys2 {0}
       run: |
