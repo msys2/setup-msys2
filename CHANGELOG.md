@@ -7,6 +7,7 @@
 - Options:
   - `platform-check-severity`. [[#172](https://github.com/msys2/setup-msys2/pull/172)]
   - `location`. [[#173](https://github.com/msys2/setup-msys2/pull/173)]
+  - `pacboy`. [[#166](https://github.com/msys2/setup-msys2/pull/166)]
 
 ### Changed
 
