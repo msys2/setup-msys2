@@ -113,7 +113,24 @@ See, for instance:
     - uses: msys2/setup-msys2@v2
       with:
         msystem: ${{matrix.sys}}
-        install: mingw-w64-${{matrix.env}}-toolchain
+        install: mingw-w64-${{matrix.env}}-openssl
+```
+
+Alternatively, option `pacboy` allows using a single matrix variable:
+
+```yml
+  strategy:
+    matrix:
+      sys:
+        - mingw64
+        - mingw32
+        - ucrt64  # Experimental!
+        - clang64 # Experimental!
+  steps:
+    - uses: msys2/setup-msys2@v2
+      with:
+        msystem: ${{matrix.sys}}
+        pacboy: openssl:p
 ```
 
 Find similar patterms in the following workflows:
@@ -176,17 +193,6 @@ This option corresponds to the `MSYS2_PATH_TYPE` setting in MSYS2; hence it can 
 See [msys2/MSYS2-packages: filesystem/profile](https://github.com/msys2/MSYS2-packages/blob/915946a637e1f2b7e26e32782f3af322009293db/filesystem/profile#L28-L45)
 for further details about the configuration of each option.
 
-#### release
-
-By default (`true`), retrieve and extract base installation from upstream GitHub Releases.
-If set to `false`, the installation available in the virtual environment is used:
-
-```yaml
-  - uses: msys2/setup-msys2@v2
-    with:
-      release: false
-```
-
 #### update
 
 By default, the installation is not updated; hence package versions are those of the installation tarball.
@@ -201,7 +207,7 @@ By setting option `update` to `true`, the action will try to update the runtime 
 #### install
 
 Installing additional packages after updating the system is supported through option `install`.
-The package or list of packages are installed through `pacman --noconfirm -S --needed`.
+The package or list of packages are installed through `pacman --noconfirm -S --needed --overwrite *`.
 
 ```yaml
   - uses: msys2/setup-msys2@v2
@@ -210,4 +216,57 @@ The package or list of packages are installed through `pacman --noconfirm -S --n
       install: >-
         git
         base-devel
+```
+
+#### pacboy
+
+Installing additional packages with [pacboy](https://www.msys2.org/docs/package-management/#avoiding-writing-long-package-names) after updating the system is supported through option `pacboy`.
+The package or list of packages are installed through `pacboy --noconfirm -S --needed`.
+
+```yaml
+  strategy:
+    fail-fast: false
+    matrix:
+      sys: [ MINGW64, MINGW32, UCRT64, CLANG64 ]
+  steps:
+  - uses: msys2/setup-msys2@v2
+    with:
+      msystem: ${{matrix.sys}}
+      install: >-
+        git
+        base-devel
+      pacboy: >-
+        openssl:p
+```
+
+#### release
+
+By default (`true`), retrieve and extract base installation from upstream GitHub Releases.
+If set to `false`, the installation available in the virtual environment is used:
+
+```yaml
+  - uses: msys2/setup-msys2@v2
+    with:
+      release: false
+```
+
+#### location
+
+Specify the location where to install msys2:
+
+```yaml
+  - uses: msys2/setup-msys2@v2
+    with:
+      location: D:\
+```
+
+#### platform-check-severity
+
+By default (`fatal`), throw an error if the runner OS is not Windows.
+If set to `warn`, simply log a message and skip the rest:
+
+```yaml
+  - uses: msys2/setup-msys2@v2
+    with:
+      platform-check-severity: warn
 ```
