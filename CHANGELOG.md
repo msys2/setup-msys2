@@ -5,7 +5,9 @@
 ### Changed
 
 - Bump dependencies:
-  - eslint to v8.2.0
+  - @actions/cache to v1.0.8
+  - @vercel/ncc to v0.32.0
+  - eslint to v8.3.0
 
 ## [2.6.1](https://github.com/msys2/setup-msys2/compare/d7eeada078b00988a612156b15f6bb92c8f29e6c...a5dfcea55d4fe86ab2bdc6289102ba2da5a74744) - 2021/11/03
 
