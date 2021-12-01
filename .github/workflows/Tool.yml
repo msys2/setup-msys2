@@ -1,0 +1,21 @@
+name: Tool
+
+on:
+  push:
+  pull_request:
+  schedule:
+    - cron: '0 0 * * 3'
+  workflow_dispatch:
+
+jobs:
+
+  msys2:
+    uses: msys2/setup-msys2/.github/workflows/PKGBUILD.yml@reusable-workflow
+    with:
+      systems: >-
+        mingw32
+        mingw64
+        ucrt64
+        clang64
+      path: examples/pkgbuild
+      test: TOOL
