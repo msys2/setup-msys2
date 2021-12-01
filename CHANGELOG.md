@@ -4,6 +4,7 @@
 
 ### Changed
 
+- Update base distribution to [20211130](https://github.com/msys2/msys2-installer/releases/tag/2021-11-30). [[#179](https://github.com/msys2/setup-msys2/pull/179)]
 - Bump dependencies:
   - @actions/cache to v1.0.8
   - @vercel/ncc to v0.32.0
