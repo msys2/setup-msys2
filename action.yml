@@ -1,0 +1,41 @@
+name: 'Setup MSYS2'
+description: 'Setup an MSYS2 environment'
+branding:
+  color: purple
+  icon: terminal
+inputs:
+  msystem:
+    description: 'Variant of the environment to set by default: MSYS, MINGW32, MINGW64, UCRT64, CLANG32 or CLANG64'
+    required: false
+    default: 'MINGW64'
+  path-type:
+    description: 'Default value for MSYS2_PATH_TYPE environment variable: strict, inherit or minimal'
+    required: false
+    default: 'minimal'
+  update:
+    description: 'Update MSYS2 installation through pacman'
+    required: false
+    default: false
+  install:
+    description: 'After installation and/or update, install additional packages through pacman'
+    required: false
+    default: false
+  pacboy:
+    description: 'After installation and/or update, install additional packages through pacboy'
+    required: false
+    default: false
+  release:
+    description: 'Retrieve and extract base installation from upstream GitHub Releases'
+    required: false
+    default: true
+  location:
+    description: 'Where to install MSYS2'
+    required: false
+    default: 'RUNNER_TEMP'
+  platform-check-severity:
+    description: 'What to do when run on an incompatible runner: fatal, warn'
+    required: false
+    default: 'fatal'
+runs:
+  using: 'node12'
+  main: 'index.js'
