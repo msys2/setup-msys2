@@ -170,76 +170,6 @@ jobs:
         uname -a
 
 
-  win-jobs:
-    name: ⬜ Generate lists of MSYS2 jobs
-    runs-on: ubuntu-latest
-    outputs:
-      jobs: ${{ steps.jobs.outputs.jobs }}
-      min: ${{ steps.jobs.outputs.min }}
-    steps:
-    - name: Generate lists of jobs
-      shell: python
-      id: jobs
-      run: |
-        jobs = [
-          { 'icon': '⬛', 'sys': 'mingw32' },
-          { 'icon': '🟦', 'sys': 'mingw64' },
-          { 'icon': '🟨', 'sys': 'ucrt64'  }, # Experimental!
-          { 'icon': '🟧', 'sys': 'clang64' }, # Experimental!
-        ]
-        print(f"::set-output name=min::{jobs!s}")
-        jobs += [
-          { 'icon': '🟪', 'sys': 'msys'    },
-          { 'icon': '🟫', 'sys': 'clang32' }, # Experimental!
-        ]
-        print(f"::set-output name=jobs::{jobs!s}")
-
-
-  msystem:
-    name: ${{ matrix.icon }} ${{ matrix.sys }} | msystem
-    needs:
-      - cache
-      - win-jobs
-    strategy:
-      fail-fast: false
-      matrix:
-        include: ${{ fromJson(needs.win-jobs.outputs.jobs) }}
-    runs-on: windows-latest
-    steps:
-    - uses: actions/checkout@v2
-    - uses: actions/download-artifact@v2
-      with:
-        name: action
-    - name: run action
-      uses: ./
-      with:
-        msystem: ${{ matrix.sys }}
-    - run: msys2 ./test.sh ${{ matrix.sys }}
-
-
-  update:
-    name: ${{ matrix.icon }} ${{ matrix.sys }} | update
-    needs:
-      - cache
-      - win-jobs
-    strategy:
-      fail-fast: false
-      matrix:
-        include: ${{ fromJson(needs.win-jobs.outputs.jobs) }}
-    runs-on: windows-latest
-    steps:
-    - uses: actions/checkout@v2
-    - uses: actions/download-artifact@v2
-      with:
-        name: action
-    - name: run action
-      uses: ./
-      with:
-        update: true
-        msystem: ${{ matrix.sys }}
-    - run: msys2 ./test.sh ${{ matrix.sys }}
-
-
   MSYS2_PATH_TYPE:
     needs: [cache]
     runs-on: windows-latest
@@ -291,59 +221,6 @@ jobs:
         install: ${{ matrix.install }}
         msystem: MINGW64
     - run: msys2 ./test.sh MINGW64
-
-  install-and-pacboy:
-    name: ${{ matrix.icon }} ${{ matrix.sys }} | install-and-pacboy
-    needs:
-      - cache
-      - win-jobs
-    runs-on: windows-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        include: ${{ fromJson(needs.win-jobs.outputs.min) }}
-    steps:
-    - uses: actions/checkout@v2
-    - uses: actions/download-artifact@v2
-      with:
-        name: action
-    - name: run action
-      uses: ./
-      with:
-        msystem: ${{ matrix.sys }}
-        update: true
-        install: git
-        pacboy: openssl:p
-    - shell: msys2 {0}
-      run: |
-        uname -a
-        openssl help
-
-  pacboy:
-    name: ${{ matrix.icon }} ${{ matrix.sys }} | pacboy
-    needs:
-      - cache
-      - win-jobs
-    runs-on: windows-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        include: ${{ fromJson(needs.win-jobs.outputs.min) }}
-    steps:
-    - uses: actions/checkout@v2
-    - uses: actions/download-artifact@v2
-      with:
-        name: action
-    - name: run action
-      uses: ./
-      with:
-        msystem: ${{ matrix.sys }}
-        update: true
-        pacboy: openssl:p
-    - shell: msys2 {0}
-      run: |
-        uname -a
-        openssl help
 
 
   defaultclean:
@@ -483,3 +360,120 @@ jobs:
     - shell: msys2 {0}
       run: |
         cygpath -m /
+
+
+  win-jobs:
+    needs: cache
+    name: ⬜ Generate lists of MSYS2 jobs
+    runs-on: ubuntu-latest
+    outputs:
+      jobs: ${{ steps.jobs.outputs.jobs }}
+      min: ${{ steps.jobs.outputs.min }}
+    steps:
+    - name: Generate lists of jobs
+      shell: python
+      id: jobs
+      run: |
+        jobs = [
+          { 'icon': '⬛', 'sys': 'mingw32' },
+          { 'icon': '🟦', 'sys': 'mingw64' },
+          { 'icon': '🟨', 'sys': 'ucrt64'  }, # Experimental!
+          { 'icon': '🟧', 'sys': 'clang64' }, # Experimental!
+        ]
+        print(f"::set-output name=min::{jobs!s}")
+        jobs += [
+          { 'icon': '🟪', 'sys': 'msys'    },
+          { 'icon': '🟫', 'sys': 'clang32' }, # Experimental!
+        ]
+        print(f"::set-output name=jobs::{jobs!s}")
+
+
+  msystem:
+    name: ${{ matrix.icon }} ${{ matrix.sys }} | msystem
+    needs: win-jobs
+    strategy:
+      fail-fast: false
+      matrix:
+        include: ${{ fromJson(needs.win-jobs.outputs.jobs) }}
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/download-artifact@v2
+      with:
+        name: action
+    - name: run action
+      uses: ./
+      with:
+        msystem: ${{ matrix.sys }}
+    - run: msys2 ./test.sh ${{ matrix.sys }}
+
+
+  update:
+    name: ${{ matrix.icon }} ${{ matrix.sys }} | update
+    needs: win-jobs
+    strategy:
+      fail-fast: false
+      matrix:
+        include: ${{ fromJson(needs.win-jobs.outputs.jobs) }}
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/download-artifact@v2
+      with:
+        name: action
+    - name: run action
+      uses: ./
+      with:
+        update: true
+        msystem: ${{ matrix.sys }}
+    - run: msys2 ./test.sh ${{ matrix.sys }}
+
+
+  install-and-pacboy:
+    name: ${{ matrix.icon }} ${{ matrix.sys }} | install-and-pacboy
+    needs: win-jobs
+    runs-on: windows-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include: ${{ fromJson(needs.win-jobs.outputs.min) }}
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/download-artifact@v2
+      with:
+        name: action
+    - name: run action
+      uses: ./
+      with:
+        msystem: ${{ matrix.sys }}
+        update: true
+        install: git
+        pacboy: openssl:p
+    - shell: msys2 {0}
+      run: |
+        uname -a
+        openssl help
+
+  pacboy:
+    name: ${{ matrix.icon }} ${{ matrix.sys }} | pacboy
+    needs: win-jobs
+    runs-on: windows-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include: ${{ fromJson(needs.win-jobs.outputs.min) }}
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/download-artifact@v2
+      with:
+        name: action
+    - name: run action
+      uses: ./
+      with:
+        msystem: ${{ matrix.sys }}
+        update: true
+        pacboy: openssl:p
+    - shell: msys2 {0}
+      run: |
+        uname -a
+        openssl help
