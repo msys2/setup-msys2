@@ -362,39 +362,31 @@ jobs:
         cygpath -m /
 
 
-  win-jobs:
+  matrix:
     needs: cache
-    name: ⬜ Generate lists of MSYS2 jobs
+    name: ⬜ Generate lists of jobs
     runs-on: ubuntu-latest
     outputs:
-      jobs: ${{ steps.jobs.outputs.jobs }}
-      min: ${{ steps.jobs.outputs.min }}
+      jobs: ${{ steps.all.outputs.jobs }}
+      min: ${{ steps.min.outputs.jobs }}
     steps:
-    - name: Generate lists of jobs
-      shell: python
-      id: jobs
-      run: |
-        jobs = [
-          { 'icon': '⬛', 'sys': 'mingw32' },
-          { 'icon': '🟦', 'sys': 'mingw64' },
-          { 'icon': '🟨', 'sys': 'ucrt64'  }, # Experimental!
-          { 'icon': '🟧', 'sys': 'clang64' }, # Experimental!
-        ]
-        print(f"::set-output name=min::{jobs!s}")
-        jobs += [
-          { 'icon': '🟪', 'sys': 'msys'    },
-          { 'icon': '🟫', 'sys': 'clang32' }, # Experimental!
-        ]
-        print(f"::set-output name=jobs::{jobs!s}")
+    - name: 🧰 Checkout
+      uses: actions/checkout@v2
+    - id: all
+      uses: ./matrix
+    - id: min
+      uses: ./matrix
+      with:
+        systems: 'mingw32 mingw64 ucrt64 clang64'
 
 
   msystem:
     name: ${{ matrix.icon }} ${{ matrix.sys }} | msystem
-    needs: win-jobs
+    needs: matrix
     strategy:
       fail-fast: false
       matrix:
-        include: ${{ fromJson(needs.win-jobs.outputs.jobs) }}
+        include: ${{ fromJson(needs.matrix.outputs.jobs) }}
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v2
@@ -410,11 +402,11 @@ jobs:
 
   update:
     name: ${{ matrix.icon }} ${{ matrix.sys }} | update
-    needs: win-jobs
+    needs: matrix
     strategy:
       fail-fast: false
       matrix:
-        include: ${{ fromJson(needs.win-jobs.outputs.jobs) }}
+        include: ${{ fromJson(needs.matrix.outputs.jobs) }}
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v2
@@ -431,12 +423,12 @@ jobs:
 
   install-and-pacboy:
     name: ${{ matrix.icon }} ${{ matrix.sys }} | install-and-pacboy
-    needs: win-jobs
+    needs: matrix
     runs-on: windows-latest
     strategy:
       fail-fast: false
       matrix:
-        include: ${{ fromJson(needs.win-jobs.outputs.min) }}
+        include: ${{ fromJson(needs.matrix.outputs.min) }}
     steps:
     - uses: actions/checkout@v2
     - uses: actions/download-artifact@v2
@@ -456,12 +448,12 @@ jobs:
 
   pacboy:
     name: ${{ matrix.icon }} ${{ matrix.sys }} | pacboy
-    needs: win-jobs
+    needs: matrix
     runs-on: windows-latest
     strategy:
       fail-fast: false
       matrix:
-        include: ${{ fromJson(needs.win-jobs.outputs.min) }}
+        include: ${{ fromJson(needs.matrix.outputs.min) }}
     steps:
     - uses: actions/checkout@v2
     - uses: actions/download-artifact@v2

@@ -1,0 +1,33 @@
+name: Matrix
+
+inputs:
+  systems:
+    description: 'Space separated list of systems to build and test the tool on.'
+    required: false
+    type: string
+    default: 'msys mingw32 mingw64 ucrt64 clang32 clang64'
+outputs:
+  jobs:
+    description: "List of MSYS2 systems to be used in the matrix of other jobs."
+    value: ${{ steps.jobs.outputs.jobs }}
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Generate list of jobs
+      shell: python
+      id: jobs
+      run: |
+        icons = {
+          'msys':    '🟪',
+          'mingw32': '⬛',
+          'mingw64': '🟦',
+          'ucrt64':  '🟨', # Experimental!
+          'clang32': '🟫', # Experimental!
+          'clang64': '🟧', # Experimental!
+        }
+        jobs = [
+            {'sys': sys.lower(), 'icon': icons[sys.lower()]}
+            for sys in '${{ inputs.systems }}'.split(' ')
+        ]
+        print(f"::set-output name=jobs::{jobs!s}")

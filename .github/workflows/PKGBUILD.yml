@@ -3,6 +3,10 @@ name: PKGBUILD
 on:
   workflow_call:
     inputs:
+      matrix:
+        description: 'JSON list of systems to build and test the tool on.'
+        required: true
+        type: string
       path:
         description: 'Location of the PKGBUILD recipe, relative to the root of the repository.'
         required: true
@@ -11,47 +15,16 @@ on:
         description: 'Commands to test the tool after installing the package.'
         required: true
         type: string
-      systems:
-        description: 'Space separated list of systems to build and test the tool on.'
-        required: false
-        type: string
-        default: 'msys mingw32 mingw64 ucrt64 clang32 clang64'
 
 jobs:
 
 
-  win-jobs:
-    name: ⬜ Generate list of MSYS2 jobs
-    runs-on: ubuntu-latest
-    outputs:
-      jobs: ${{ steps.jobs.outputs.jobs }}
-    steps:
-    - name: Generate list of jobs
-      shell: python
-      id: jobs
-      run: |
-        icons = {
-          'msys':    '🟪',
-          'mingw32': '⬛',
-          'mingw64': '🟦',
-          'ucrt64':  '🟨', # Experimental!
-          'clang32': '🟫',
-          'clang64': '🟧', # Experimental!
-        }
-        jobs = [
-            {'sys': sys.lower(), 'icon': icons[sys.lower()]}
-            for sys in '${{ inputs.systems }}'.split(' ')
-        ]
-        print(f"::set-output name=jobs::{jobs!s}")
-
-
   win-makepkg:
-    needs: win-jobs
     runs-on: windows-latest
     strategy:
       fail-fast: false
       matrix:
-        include: ${{ fromJson(needs.win-jobs.outputs.jobs) }}
+        include: ${{ fromJson(inputs.matrix) }}
     name: 🚧${{ matrix.icon }} ${{ matrix.sys }} | makepkg
     defaults:
       run:
@@ -97,14 +70,12 @@ jobs:
 
 
   win-test:
-    needs:
-      - win-jobs
-      - win-makepkg
+    needs: win-makepkg
     runs-on: windows-latest
     strategy:
       fail-fast: false
       matrix:
-        include: ${{ fromJson(needs.win-jobs.outputs.jobs) }}
+        include: ${{ fromJson(inputs.matrix) }}
     name: 🚦${{ matrix.icon }} ${{ matrix.sys }} | test
     defaults:
       run:

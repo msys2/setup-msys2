@@ -19,6 +19,7 @@ Instead, use either of:
 
 ## PKGBUILD
 
-[PKGBUILD.yml](../.github/workflows/PKGBUILD.yml) is a [Reusable Workflow](https://docs.github.com/en/actions/learn-github-actions/reusing-workflows) to build and test a package in GitHub Actions using a PKGBUILD recipe.
+[PKGBUILD.yml](../.github/workflows/PKGBUILD.yml) is a [Reusable Workflow](https://docs.github.com/en/actions/learn-github-actions/reusing-workflows)
+to build and test a package in GitHub Actions using a PKGBUILD recipe.
 [Tool.yml](../.github/workflows/Tool.yml) shows how to use it from any repo.
-As an example, the dummy TOOL in the [pkgbuild](pkgbuild) subdir of this repo is built and tested.
+As an example, the dummy TOOL in subdir [pkgbuild](pkgbuild) is built and tested.

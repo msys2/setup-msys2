@@ -133,9 +133,13 @@ Alternatively, option `pacboy` allows using a single matrix variable:
         pacboy: openssl:p
 ```
 
+Furthermore, [.github/workflows/PKGBUILD.yml](.github/workflows/PKGBUILD.yml) is a [Reusable Workflow](https://docs.github.com/en/actions/learn-github-actions/reusing-workflows)
+to build and test a package in GitHub Actions using a PKGBUILD recipe.
+It can be used along with [matrix](./matrix) (a [Composite Action](https://docs.github.com/en/actions/creating-actions/creating-a-composite-action)),
+as shown in [.github/workflows/Tool.yml](.github/workflows/Tool.yml).
+
 Find similar patterms in the following workflows:
 
-- [.github/workflows/pkgbuild.yml](.github/workflows/pkgbuild.yml)
 - [examples/cmake.yml](examples/cmake.yml)
 - [msys2/MINGW-packages: .github/workflows/main.yml](https://github.com/msys2/MINGW-packages/blob/master/.github/workflows/main.yml)
 

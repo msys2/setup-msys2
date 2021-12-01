@@ -9,13 +9,28 @@ on:
 
 jobs:
 
+  matrix:
+    name: ⬜ Generate list of jobs
+    runs-on: ubuntu-latest
+    outputs:
+      jobs: ${{ steps.matrix.outputs.jobs }}
+    steps:
+    - id: matrix
+      uses: msys2/setup-msys2/matrix@main
+      with:
+        systems: >-
+          mingw32
+          mingw64
+          ucrt64
+          clang64
+
   msys2:
-    uses: msys2/setup-msys2/.github/workflows/PKGBUILD.yml@reusable-workflow
+    needs: matrix
+    uses: msys2/setup-msys2/.github/workflows/PKGBUILD.yml@main
     with:
-      systems: >-
-        mingw32
-        mingw64
-        ucrt64
-        clang64
+      matrix: ${{ needs.matrix.outputs.jobs }}
       path: examples/pkgbuild
-      test: TOOL
+      test: |
+        uname -a
+        which TOOL
+        TOOL
