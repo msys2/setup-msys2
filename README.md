@@ -138,7 +138,6 @@ Find similar patterms in the following workflows:
 - [.github/workflows/pkgbuild.yml](.github/workflows/pkgbuild.yml)
 - [examples/cmake.yml](examples/cmake.yml)
 - [msys2/MINGW-packages: .github/workflows/main.yml](https://github.com/msys2/MINGW-packages/blob/master/.github/workflows/main.yml)
-- [ghdl/ghdl: .github/workflows/push.yml](https://github.com/ghdl/ghdl/blob/99b542c849311c92e87e2c70d283de133c9d4093/.github/workflows/push.yml#L56-L102)
 
 Find further details at [#171](https://github.com/msys2/setup-msys2/issues/171#issuecomment-961458598) and [#102](https://github.com/msys2/setup-msys2/issues/102).
 
