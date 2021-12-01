@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 ANSI_RED="\033[31m"
 ANSI_CYAN="\033[36;1m"
@@ -15,11 +15,11 @@ run_cmd uname -a
 
 env | run_cmd grep MSYSTEM
 
-if [ "x$MSYSTEM" != "xMSYS" ]; then
+if [ "x${MSYSTEM,,}" != "xmsys" ]; then
   env | run_cmd grep MINGW
 fi
 
-if [ "x$MSYSTEM" != "x$1" ]; then
+if [ "x${MSYSTEM,,}" != "x${1,,}" ]; then
   printf "${ANSI_RED}Error MSYSTEM: '$MSYSTEM' != '$1'${ANSI_NOCOLOR}\n"
   exit 1
 fi
