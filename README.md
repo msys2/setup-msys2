@@ -21,7 +21,7 @@ automatic caching.
 
 ## Context
 
-[MSYS2](https://www.msys2.org/) is available by default in [windows-latest](https://github.com/actions/virtual-environments/blob/master/images/win/Windows2019-Readme.md#msys2)
+[MSYS2](https://www.msys2.org/) is available by default in [windows-latest](https://github.com/actions/virtual-environments/blob/main/images/win/Windows2019-Readme.md#msys2)
 [virtual environment](https://github.com/actions/virtual-environments) for GitHub Actions, located at `C:\msys64`.
 Moreover, there is work in progress for making `bash` default to MSYS2 (see [actions/virtual-environments#1525](https://github.com/actions/virtual-environments/issues/1525)).
 However, the default installation has some caveats at the moment (see [actions/virtual-environments#1572](https://github.com/actions/virtual-environments/issues/1572)):
