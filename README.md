@@ -7,9 +7,9 @@
 </p>
 
 <p align="center">
-  <a title="'Test' workflow Status" href="https://github.com/msys2/setup-msys2/actions/workflows/Test.yml"><img alt="'Test' workflow Status" src="https://img.shields.io/github/workflow/status/msys2/setup-msys2/Test?longCache=true&style=flat-square&label=Test&logo=github"></a><!--
+  <a title="'Test' workflow Status" href="https://github.com/msys2/setup-msys2/actions/workflows/Test.yml"><img alt="'Test' workflow Status" src="https://img.shields.io/github/workflow/status/msys2/setup-msys2/Test/main?longCache=true&style=flat-square&label=Test&logo=github"></a><!--
   -->
-  <a title="'Example PKGBUILD' workflow Status" href="https://github.com/msys2/setup-msys2/actions/workflows/Tool.yml"><img alt="'Example PKGBUILD' workflow Status" src="https://img.shields.io/github/workflow/status/msys2/setup-msys2/Tool?longCache=true&style=flat-square&label=Example%20PKGBUILD&logo=github"></a><!--
+  <a title="'Example PKGBUILD' workflow Status" href="https://github.com/msys2/setup-msys2/actions/workflows/Tool.yml"><img alt="'Example PKGBUILD' workflow Status" src="https://img.shields.io/github/workflow/status/msys2/setup-msys2/Tool/main?longCache=true&style=flat-square&label=Example%20PKGBUILD&logo=github"></a><!--
   -->
 </p>
 
