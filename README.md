@@ -21,15 +21,14 @@ automatic caching.
 
 ## Context
 
-[MSYS2](https://www.msys2.org/) is available by default in [windows-latest](https://github.com/actions/virtual-environments/blob/main/images/win/Windows2019-Readme.md#msys2)
+[MSYS2](https://www.msys2.org/) is available by default on the [windows-latest](https://github.com/actions/virtual-environments/blob/main/images/win/Windows2019-Readme.md#msys2)
 [virtual environment](https://github.com/actions/virtual-environments) for GitHub Actions, located at `C:\msys64`.
-Moreover, there is work in progress for making `bash` default to MSYS2 (see [actions/virtual-environments#1525](https://github.com/actions/virtual-environments/issues/1525)).
-However, the default installation has some caveats at the moment (see [actions/virtual-environments#1572](https://github.com/actions/virtual-environments/issues/1572)):
+However, there are some caveats with using the default installation as-is:
 
 - It is updated every ~10 days.
-- It includes a non-negligible set of pre-installed packages. As a result, update time can be up to 10 min.
 - Caching of installation packages is not supported.
 - MSYS2/MINGW are neither added to the PATH nor available as a custom `shell` option.
+- On versions older than `windows-2022`, it includes a non-negligible set of pre-installed packages. As a result, update time can be up to 10 min (see [actions/virtual-environments#1572](https://github.com/actions/virtual-environments/issues/1572)).
 
 **setup-msys2** works around those constraints:
 
@@ -41,6 +40,8 @@ Hence, the overhead of updating pre-installed but unnecessary packages is avoide
 
 Therefore, usage of this Action is recommended to all MSYS2 users of GitHub Actions, since caching and the custom
 entrypoint are provided regardless of option `release`.
+
+NOTE: in the future, `bash` might default to MSYS2 (see [actions/virtual-environments#1525](https://github.com/actions/virtual-environments/issues/1525)).
 
 ## Usage
 
