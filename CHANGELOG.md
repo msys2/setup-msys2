@@ -13,6 +13,9 @@
 - Examples:
   - Update cmake example workflow to use option `pacboy`.
   - Convert `PKGBUILD.yml` into a [Reusable Workflow](https://docs.github.com/en/actions/learn-github-actions/reusing-workflows). Add workflow `Tool.yml`, which uses it.
+- Bump dependencies:
+  - @vercel/ncc to v0.33.0
+  - eslint to v8.4.0
 
 ## [2.7.0](https://github.com/msys2/setup-msys2/compare/a5dfcea55d4fe86ab2bdc6289102ba2da5a74744...3b0f3eb45312eb0a404c4d67de7696b833170b5f) - 2021/12/01
 
