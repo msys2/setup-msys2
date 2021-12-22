@@ -139,7 +139,13 @@ to build and test a package in GitHub Actions using a PKGBUILD recipe.
 It can be used along with [matrix](./matrix) (a [Composite Action](https://docs.github.com/en/actions/creating-actions/creating-a-composite-action)),
 as shown in [.github/workflows/Tool.yml](.github/workflows/Tool.yml).
 
-Find similar patterms in the following workflows:
+Note: By default, GitHub Actions terminates any running jobs if any job in matrix
+fails. This default behavior can be disabled by setting `fail-fast: false` in
+strategy section. See
+[docs.github.com: `jobs.<job_id>.strategy.fail-fast`](https://docs.github.com/en/actions/learn-github-actions/workflow-syntax-for-github-actions#jobsjob_idstrategyfail-fast)
+for more details.
+
+Find similar patterns in the following workflows:
 
 - [examples/cmake.yml](examples/cmake.yml)
 - [msys2/MINGW-packages: .github/workflows/main.yml](https://github.com/msys2/MINGW-packages/blob/master/.github/workflows/main.yml)
