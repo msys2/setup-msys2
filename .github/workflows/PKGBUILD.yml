@@ -59,7 +59,7 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: ${{ matrix.sys }}-TOOL
-        path: examples/pkgbuild/*.zst
+        path: ${{ inputs.path }}/*.zst
 
     - name: '🔍 Show package content'
       run: |
