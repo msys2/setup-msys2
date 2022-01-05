@@ -7,9 +7,9 @@
 </p>
 
 <p align="center">
-  <a title="'Test' workflow Status" href="https://github.com/msys2/setup-msys2/actions/workflows/Test.yml"><img alt="'Test' workflow Status" src="https://img.shields.io/github/workflow/status/msys2/setup-msys2/Test?longCache=true&style=flat-square&label=Test&logo=github"></a><!--
+  <a title="'Test' workflow Status" href="https://github.com/msys2/setup-msys2/actions/workflows/Test.yml"><img alt="'Test' workflow Status" src="https://img.shields.io/github/workflow/status/msys2/setup-msys2/Test/main?longCache=true&style=flat-square&label=Test&logo=github"></a><!--
   -->
-  <a title="'Example PKGBUILD' workflow Status" href="https://github.com/msys2/setup-msys2/actions/workflows/pkgbuild.yml"><img alt="'Example PKGBUILD' workflow Status" src="https://img.shields.io/github/workflow/status/msys2/setup-msys2/Test?longCache=true&style=flat-square&label=Example%20PKGBUILD&logo=github"></a><!--
+  <a title="'Example PKGBUILD' workflow Status" href="https://github.com/msys2/setup-msys2/actions/workflows/Tool.yml"><img alt="'Example PKGBUILD' workflow Status" src="https://img.shields.io/github/workflow/status/msys2/setup-msys2/Tool/main?longCache=true&style=flat-square&label=Example%20PKGBUILD&logo=github"></a><!--
   -->
 </p>
 
@@ -21,15 +21,14 @@ automatic caching.
 
 ## Context
 
-[MSYS2](https://www.msys2.org/) is available by default in [windows-latest](https://github.com/actions/virtual-environments/blob/master/images/win/Windows2019-Readme.md#msys2)
+[MSYS2](https://www.msys2.org/) is available by default on the [windows-latest](https://github.com/actions/virtual-environments/blob/main/images/win/Windows2019-Readme.md#msys2)
 [virtual environment](https://github.com/actions/virtual-environments) for GitHub Actions, located at `C:\msys64`.
-Moreover, there is work in progress for making `bash` default to MSYS2 (see [actions/virtual-environments#1525](https://github.com/actions/virtual-environments/issues/1525)).
-However, the default installation has some caveats at the moment (see [actions/virtual-environments#1572](https://github.com/actions/virtual-environments/issues/1572)):
+However, there are some caveats with using the default installation as-is:
 
 - It is updated every ~10 days.
-- It includes a non-negligible set of pre-installed packages. As a result, update time can be up to 10 min.
 - Caching of installation packages is not supported.
 - MSYS2/MINGW are neither added to the PATH nor available as a custom `shell` option.
+- On versions older than `windows-2022`, it includes a non-negligible set of pre-installed packages. As a result, update time can be up to 10 min (see [actions/virtual-environments#1572](https://github.com/actions/virtual-environments/issues/1572)).
 
 **setup-msys2** works around those constraints:
 
@@ -41,6 +40,8 @@ Hence, the overhead of updating pre-installed but unnecessary packages is avoide
 
 Therefore, usage of this Action is recommended to all MSYS2 users of GitHub Actions, since caching and the custom
 entrypoint are provided regardless of option `release`.
+
+NOTE: in the future, `bash` might default to MSYS2 (see [actions/virtual-environments#1525](https://github.com/actions/virtual-environments/issues/1525)).
 
 ## Usage
 
@@ -133,12 +134,21 @@ Alternatively, option `pacboy` allows using a single matrix variable:
         pacboy: openssl:p
 ```
 
-Find similar patterms in the following workflows:
+Furthermore, [.github/workflows/PKGBUILD.yml](.github/workflows/PKGBUILD.yml) is a [Reusable Workflow](https://docs.github.com/en/actions/learn-github-actions/reusing-workflows)
+to build and test a package in GitHub Actions using a PKGBUILD recipe.
+It can be used along with [matrix](./matrix) (a [Composite Action](https://docs.github.com/en/actions/creating-actions/creating-a-composite-action)),
+as shown in [.github/workflows/Tool.yml](.github/workflows/Tool.yml).
 
-- [.github/workflows/pkgbuild.yml](.github/workflows/pkgbuild.yml)
+Note: By default, GitHub Actions terminates any running jobs if any job in matrix
+fails. This default behavior can be disabled by setting `fail-fast: false` in
+strategy section. See
+[docs.github.com: `jobs.<job_id>.strategy.fail-fast`](https://docs.github.com/en/actions/learn-github-actions/workflow-syntax-for-github-actions#jobsjob_idstrategyfail-fast)
+for more details.
+
+Find similar patterns in the following workflows:
+
 - [examples/cmake.yml](examples/cmake.yml)
 - [msys2/MINGW-packages: .github/workflows/main.yml](https://github.com/msys2/MINGW-packages/blob/master/.github/workflows/main.yml)
-- [ghdl/ghdl: .github/workflows/push.yml](https://github.com/ghdl/ghdl/blob/99b542c849311c92e87e2c70d283de133c9d4093/.github/workflows/push.yml#L56-L102)
 
 Find further details at [#171](https://github.com/msys2/setup-msys2/issues/171#issuecomment-961458598) and [#102](https://github.com/msys2/setup-msys2/issues/102).
 
