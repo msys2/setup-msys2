@@ -3,6 +3,10 @@ name: PKGBUILD
 on:
   workflow_call:
     inputs:
+      name:
+        description: 'Name of the package/tool, to be appended to artifact names.'
+        required: true
+        type: string
       matrix:
         description: 'JSON list of systems to build and test the tool on.'
         required: true
@@ -58,7 +62,7 @@ jobs:
     - name: '📤 Upload artifact: package'
       uses: actions/upload-artifact@v2
       with:
-        name: ${{ matrix.sys }}-TOOL
+        name: ${{ matrix.sys }}-${{ matrix.name }}
         path: ${{ inputs.path }}/*.zst
 
     - name: '🔍 Show package content'
@@ -92,7 +96,7 @@ jobs:
       uses: actions/download-artifact@v2
       with:
         path: .
-        name: ${{ matrix.sys }}-TOOL
+        name: ${{ matrix.sys }}-${{ matrix.name }}
 
     - name: '🛠️ Install package'
       run: pacman -U --noconfirm --noprogressbar *.zst

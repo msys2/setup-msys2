@@ -28,6 +28,7 @@ jobs:
     needs: matrix
     uses: msys2/setup-msys2/.github/workflows/PKGBUILD.yml@main
     with:
+      name: TOOL
       matrix: ${{ needs.matrix.outputs.jobs }}
       path: examples/pkgbuild
       test: |
