@@ -62,7 +62,7 @@ jobs:
     - name: '📤 Upload artifact: package'
       uses: actions/upload-artifact@v2
       with:
-        name: ${{ matrix.sys }}-${{ matrix.name }}
+        name: ${{ matrix.sys }}-${{ inputs.name }}
         path: ${{ inputs.path }}/*.zst
 
     - name: '🔍 Show package content'
@@ -96,7 +96,7 @@ jobs:
       uses: actions/download-artifact@v2
       with:
         path: .
-        name: ${{ matrix.sys }}-${{ matrix.name }}
+        name: ${{ matrix.sys }}-${{ inputs.name }}
 
     - name: '🛠️ Install package'
       run: pacman -U --noconfirm --noprogressbar *.zst
