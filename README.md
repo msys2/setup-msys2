@@ -226,7 +226,7 @@ The package or list of packages are installed through `pacman --noconfirm -S --n
 
 #### pacboy
 
-Installing additional packages with [pacboy](https://www.msys2.org/docs/package-management/#avoiding-writing-long-package-names) after updating the system is supported through option `pacboy`.
+Installing additional packages with [pacboy](https://www.msys2.org/docs/package-naming/#avoiding-writing-long-package-names) after updating the system is supported through option `pacboy`.
 The package or list of packages are installed through `pacboy --noconfirm -S --needed`.
 
 ```yaml
