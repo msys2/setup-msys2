@@ -13,7 +13,7 @@ jobs:
     runs-on: windows-latest
     steps:
     - name: 🧰 Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
     - run: |
         npm ci
         npm run lint
@@ -22,7 +22,7 @@ jobs:
     runs-on: windows-latest
     steps:
     - name: 🧰 Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
     - name: 🚧 build action
       shell: bash
       run: |
@@ -30,7 +30,7 @@ jobs:
         npm run pkg
         rm -rf node_modules
     - name: 📤 Upload artifact
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: action
         path: index.js
@@ -50,9 +50,9 @@ jobs:
     runs-on: windows-latest
     steps:
     - name: 🧰 Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
     - name: 📥 Download artifact
-      uses: actions/download-artifact@v2
+      uses: actions/download-artifact@v3
       with:
         name: action
     - name: 🚧 run action
@@ -88,9 +88,9 @@ jobs:
     runs-on: windows-latest
     steps:
     - name: 🧰 Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
     - name: 📥 Download artifact
-      uses: actions/download-artifact@v2
+      uses: actions/download-artifact@v3
       with:
         name: action
     - name: 🚧 run action
@@ -132,9 +132,9 @@ jobs:
     runs-on: windows-latest
     steps:
     - name: 🧰 Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
     - name: 📥 Download artifact
-      uses: actions/download-artifact@v2
+      uses: actions/download-artifact@v3
       with:
         name: action
     - name: 🚧 run action
@@ -170,9 +170,9 @@ jobs:
     runs-on: windows-latest
     steps:
     - name: 🧰 Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
     - name: 📥 Download artifact
-      uses: actions/download-artifact@v2
+      uses: actions/download-artifact@v3
       with:
         name: action
     - name: 🚧 run action
