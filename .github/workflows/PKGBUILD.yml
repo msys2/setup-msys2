@@ -42,7 +42,7 @@ jobs:
       shell: bash
 
     - name: '🧰 Checkout'
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
       with:
         fetch-depth: 0
 
@@ -60,7 +60,7 @@ jobs:
         makepkg-mingw --noconfirm --noprogressbar -sCLf
 
     - name: '📤 Upload artifact: package'
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: ${{ matrix.sys }}-${{ inputs.name }}
         path: ${{ inputs.path }}/*.zst
@@ -93,7 +93,7 @@ jobs:
         update: true
 
     - name: '📥 Download artifact: package'
-      uses: actions/download-artifact@v2
+      uses: actions/download-artifact@v3
       with:
         path: .
         name: ${{ matrix.sys }}-${{ inputs.name }}
