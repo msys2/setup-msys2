@@ -5,6 +5,7 @@
 ### Changed
 
 - Update base distribution to [20220128](https://github.com/msys2/msys2-installer/releases/tag/2022-01-28).
+- Switch to nodejs v16 [[#201](https://github.com/msys2/setup-msys2/pull/201)]
 - Bump dependencies:
   - @actions/cache to v1.0.9
   - eslint to v8.11.0
