@@ -7,7 +7,7 @@
 - Update base distribution to [20220128](https://github.com/msys2/msys2-installer/releases/tag/2022-01-28).
 - Bump dependencies:
   - @actions/cache to v1.0.9
-  - eslint to v8.10.0
+  - eslint to v8.11.0
 
 ## [2.8.1](https://github.com/msys2/setup-msys2/compare/15654cd818544c9006b12959f1a948fed7828850...ccd141b53295291b51f22fa27a10deedc0d86f44) - 2022/01/19
 
