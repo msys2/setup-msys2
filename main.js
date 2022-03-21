@@ -69,7 +69,7 @@ async function downloadInstaller() {
   const inst_path = tc.find('msys2-installer', version, 'x64');
   const destination = inst_path ? path.join(inst_path, 'base.exe') : await tc.downloadTool(inst_url);
   let computedChecksum = '';
-  await exec.exec(`powershell.exe`, [`(Get-FileHash ${destination} -Algorithm SHA256)[0].Hash`], {listeners: {stdout: (data) => { computedChecksum += data.toString(); }}});
+  await exec.exec(`powershell.exe`, [`(Get-FileHash '${destination}' -Algorithm SHA256)[0].Hash`], {listeners: {stdout: (data) => { computedChecksum += data.toString(); }}});
   if (computedChecksum.slice(0, -2).toUpperCase() !== checksum.toUpperCase()) {
     throw new Error(`The SHA256 of the installer does not match! expected ${checksum} got ${computedChecksum}`);
   }
