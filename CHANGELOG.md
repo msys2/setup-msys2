@@ -5,6 +5,7 @@
 ### Changed
 
 - Update base distribution to [20220319](https://github.com/msys2/msys2-installer/releases/tag/2022-03-19). [[#205](https://github.com/msys2/setup-msys2/pull/205)]
+- Quote 'destination' when calling Get-FileHash. [[#203](https://github.com/msys2/setup-msys2/issues/203)]
 - Bump dependencies:
   - @actions/cache to v1.0.10
   - @actions/exec to v1.1.1
