@@ -253,6 +253,14 @@ async function run() {
         await disableKeyRefresh(msysRootDir);
         core.endGroup();
       }
+
+      fs.appendFileSync(path.join(msysRootDir, 'etc', 'pacman.conf'), `
+
+[clang32]
+Include = /etc/pacman.d/mirrorlist.clang32
+
+`);
+
     }
 
     const pathDir = path.join(tmp_dir, 'setup-msys2');

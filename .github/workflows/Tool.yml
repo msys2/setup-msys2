@@ -22,11 +22,12 @@ jobs:
           mingw32
           mingw64
           ucrt64
+          clang32
           clang64
 
   msys2:
     needs: matrix
-    uses: msys2/setup-msys2/.github/workflows/PKGBUILD.yml@main
+    uses: ./.github/workflows/PKGBUILD.yml
     with:
       name: TOOL
       matrix: ${{ needs.matrix.outputs.jobs }}

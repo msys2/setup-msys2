@@ -4,6 +4,7 @@
 
 ### Changed
 
+- Enable CLANG32 when `release` is `true`.
 - Bump dependencies:
   - @actions/cache to v2.0.2
   - @vercel/ncc to v0.33.4
