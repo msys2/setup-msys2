@@ -2,7 +2,10 @@
 
 ## [Unreleased](https://github.com/msys2/setup-msys2/compare/f501cd73399eab7b5442a4ce4ced5cb538cd7751...HEAD)
 
-*None*
+### Changed
+
+- Use mingw mirrorlist for CLANG32.
+- Require 'update: true' to install packages on CLANG32.
 
 ## [2.10.1](https://github.com/msys2/setup-msys2/compare/ded8116e9f153e66965b1ed147c3c15c0b60fce3...f501cd73399eab7b5442a4ce4ced5cb538cd7751) - 2022/05/01
 

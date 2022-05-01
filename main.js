@@ -254,13 +254,14 @@ async function run() {
         core.endGroup();
       }
 
-      fs.appendFileSync(path.join(msysRootDir, 'etc', 'pacman.conf'), `
+      if (input.update) {
+        fs.appendFileSync(path.join(msysRootDir, 'etc', 'pacman.conf'), `
 
 [clang32]
 Include = /etc/pacman.d/mirrorlist.mingw
 
 `);
-
+      }
     }
 
     const pathDir = path.join(tmp_dir, 'setup-msys2');
