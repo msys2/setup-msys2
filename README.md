@@ -224,6 +224,8 @@ The package or list of packages are installed through `pacman --noconfirm -S --n
         base-devel
 ```
 
+NOTE: installing packages on CLANG32 requires `update: true`.
+
 #### pacboy
 
 Installing additional packages with [pacboy](https://www.msys2.org/docs/package-naming/#avoiding-writing-long-package-names) after updating the system is supported through option `pacboy`.
@@ -244,6 +246,8 @@ The package or list of packages are installed through `pacboy --noconfirm -S --n
       pacboy: >-
         openssl:p
 ```
+
+NOTE: installing packages on CLANG32 requires `update: true`.
 
 #### release
 
