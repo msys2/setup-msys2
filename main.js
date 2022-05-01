@@ -257,7 +257,7 @@ async function run() {
       fs.appendFileSync(path.join(msysRootDir, 'etc', 'pacman.conf'), `
 
 [clang32]
-Include = /etc/pacman.d/mirrorlist.clang32
+Include = /etc/pacman.d/mirrorlist.mingw
 
 `);
 
