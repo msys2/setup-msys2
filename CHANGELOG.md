@@ -4,6 +4,7 @@
 
 ### Changed
 
+- CLANG32 is enabled by default in latest pacman.
 - Bump dependencies:
   - @actions/core to v1.7.0
 

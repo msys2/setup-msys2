@@ -234,14 +234,12 @@ async function run() {
       let dest = (input.location) ? input.location : tmp_dir;
       msysRootDir = path.join(dest, 'msys64');
       await io.mkdirP(msysRootDir);
-
       if (INSTALL_CACHE_ENABLED) {
         instCache = new InstallCache(msysRootDir, input);
         core.startGroup('Restoring environment...');
         cachedInstall = await instCache.restore();
         core.endGroup();
       }
-
       if (!cachedInstall) {
         core.startGroup('Downloading MSYS2...');
         let inst_dest = await downloadInstaller();
@@ -252,15 +250,6 @@ async function run() {
         changeGroup('Disable Key Refresh...');
         await disableKeyRefresh(msysRootDir);
         core.endGroup();
-      }
-
-      if (input.update) {
-        fs.appendFileSync(path.join(msysRootDir, 'etc', 'pacman.conf'), `
-
-[clang32]
-Include = /etc/pacman.d/mirrorlist.mingw
-
-`);
       }
     }
 
