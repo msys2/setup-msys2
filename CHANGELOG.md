@@ -1,6 +1,10 @@
 # Changelog
 
-## [Unreleased](https://github.com/msys2/setup-msys2/compare/019417bff62dcc533ad9f4caee190aa3487fe97a...HEAD)
+## [Unreleased](https://github.com/msys2/setup-msys2/compare/08026e284f453584d7bfb47c2af42855734d6d1e...HEAD)
+
+*None*
+
+## [2.11.0](https://github.com/msys2/setup-msys2/compare/019417bff62dcc533ad9f4caee190aa3487fe97a...08026e284f453584d7bfb47c2af42855734d6d1e) - 2022/05/03
 
 ### Changed
 
