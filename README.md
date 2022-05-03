@@ -245,8 +245,6 @@ The package or list of packages are installed through `pacboy --noconfirm -S --n
         openssl:p
 ```
 
-NOTE: installing packages on CLANG32 requires `update: true`.
-
 #### release
 
 By default (`true`), retrieve and extract base installation from upstream GitHub Releases.
