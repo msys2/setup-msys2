@@ -259,6 +259,7 @@ async function run() {
     core.addPath(pathDir);
 
     core.exportVariable('MSYSTEM', input.msystem);
+    core.exportVariable('MSYS2_ROOT', msysRootDir);
 
     const packageCache = new PackageCache(msysRootDir, input);
 

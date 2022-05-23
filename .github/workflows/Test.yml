@@ -397,6 +397,9 @@ jobs:
     - shell: msys2 {0}
       run: |
         cygpath -m /
+    - name: MSYS2_ROOT
+      run: |
+        $Env:MSYS2_ROOT
 
 
   matrix:
