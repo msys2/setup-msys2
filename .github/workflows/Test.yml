@@ -397,6 +397,10 @@ jobs:
     - shell: msys2 {0}
       run: |
         cygpath -m /
+    - shell: pwsh
+      run: |
+        $Env:MSYS2_ROOT = msys2 -c 'cygpath -m /'
+        $Env:MSYS2_ROOT
 
 
   matrix:
