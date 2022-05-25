@@ -400,6 +400,15 @@ jobs:
     - name: MSYS2_ROOT
       run: |
         $Env:MSYS2_ROOT
+    - shell: pwsh
+      run: |
+        $Env:MSYS2_ROOT = msys2 -c 'cygpath -m /'
+        $Env:MSYS2_ROOT
+    - shell: python
+      run: |
+        from subprocess import check_output
+        MSYS2_ROOT = check_output(['msys2', '-c', 'cygpath -m /'], shell=True).decode('utf-8')
+        print(MSYS2_ROOT)
 
 
   matrix:
