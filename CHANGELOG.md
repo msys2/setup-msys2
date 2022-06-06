@@ -4,6 +4,7 @@
 
 ### Changed
 
+- Update base distribution to [20220603](https://github.com/msys2/msys2-installer/releases/tag/2022-06-03). [[#233](https://github.com/msys2/setup-msys2/pull/233)]
 - Bump dependencies:
   - @actions/cache to v2.0.5
   - @actions/core to v1.8.2
