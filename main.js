@@ -272,10 +272,11 @@ async function run() {
       core.endGroup();
     }
 
+    core.startGroup('Disable CheckSpace...');
+    // Reduce time required to install packages by disabling pacman's disk space checking
+    await runMsys(['sed', '-i', 's/^CheckSpace/#CheckSpace/g', '/etc/pacman.conf']);
+
     if (input.update) {
-      core.startGroup('Disable CheckSpace...');
-      // Reduce time required to install packages by disabling pacman's disk space checking
-      await runMsys(['sed', '-i', 's/^CheckSpace/#CheckSpace/g', '/etc/pacman.conf']);
       changeGroup('Updating packages...');
       await pacman(['-Syuu', '--overwrite', '*'], {ignoreReturnCode: true});
       // We have changed /etc/pacman.conf above which means on a pacman upgrade
