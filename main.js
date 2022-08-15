@@ -275,6 +275,7 @@ async function run() {
     core.startGroup('Disable CheckSpace...');
     // Reduce time required to install packages by disabling pacman's disk space checking
     await runMsys(['sed', '-i', 's/^CheckSpace/#CheckSpace/g', '/etc/pacman.conf']);
+    core.endGroup();
 
     if (input.update) {
       changeGroup('Updating packages...');
