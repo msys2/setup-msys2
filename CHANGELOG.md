@@ -1,6 +1,9 @@
 # Changelog
 
-## [Unreleased](https://github.com/msys2/setup-msys2/compare/2e083bbad7fe8c91e321ac59a20c1b7ea88c449d...HEAD)
+## [Unreleased](https://github.com/msys2/setup-msys2/compare/9426ebb2048a2428ebfda0c5686251bfb6ae41dd...HEAD)
+
+
+## [2.13.0](https://github.com/msys2/setup-msys2/compare/2e083bbad7fe8c91e321ac59a20c1b7ea88c449d...9426ebb2048a2428ebfda0c5686251bfb6ae41dd) - 2022/09/04
 
 - Update base distribution to [20220904](https://github.com/msys2/msys2-installer/releases/tag/2022-09-04). [[#250](https://github.com/msys2/setup-msys2/pull/250)]
 - Disable pacman's disk space checking also when not updating [[#242](https://github.com/msys2/setup-msys2/pull/242)]
