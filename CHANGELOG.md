@@ -2,6 +2,9 @@
 
 ## [Unreleased](https://github.com/msys2/setup-msys2/compare/2e083bbad7fe8c91e321ac59a20c1b7ea88c449d...HEAD)
 
+- Update base distribution to [20220904](https://github.com/msys2/msys2-installer/releases/tag/2022-09-04). [[#250](https://github.com/msys2/setup-msys2/pull/250)]
+- Disable pacman's disk space checking also when not updating [[#242](https://github.com/msys2/setup-msys2/pull/242)]
+- Add github-actions to dependabot.yml [[#240](https://github.com/msys2/setup-msys2/pull/240)]
 - Bump dependencies:
   - @actions/cache to v3.0.4
   - @actions/core to v1.9.1
