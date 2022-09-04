@@ -3,11 +3,12 @@
 The steps to publish a new release are the following:
 
 ```sh
-# Remove/clean dir 'dist'
-rm -rf dist
+# Remove/clean everything
+git clean -xfd
 
-# Package the action with ncc
-yarn pkg
+# Install dependencies and package the action with ncc
+npm ci
+npm run pkg
 
 # - Copy release artifacts to subdir dir
 # - Create a new orphan branch in a new empty repo

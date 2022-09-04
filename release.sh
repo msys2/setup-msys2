@@ -4,9 +4,6 @@ set -e
 
 cd $(dirname $0)
 
-#npm ci
-#npm run build
-
 if [ "x$1" = "x" ]; then
   echo "a release/branch name is required!"
   exit 1
