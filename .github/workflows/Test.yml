@@ -188,9 +188,9 @@ jobs:
     steps:
     - uses: actions/setup-go@v3
     - name: 🧰 Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
     - name: 📥 Download artifact
-      uses: actions/download-artifact@v2
+      uses: actions/download-artifact@v3
       with:
         name: action
     - name: 🚧 run action
@@ -206,9 +206,9 @@ jobs:
     steps:
     - uses: actions/setup-go@v3
     - name: 🧰 Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
     - name: 📥 Download artifact
-      uses: actions/download-artifact@v2
+      uses: actions/download-artifact@v3
       with:
         name: action
     - name: 🚧 run action
@@ -228,9 +228,9 @@ jobs:
     runs-on: windows-latest
     steps:
     - name: 🧰 Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
     - name: 📥 Download artifact
-      uses: actions/download-artifact@v2
+      uses: actions/download-artifact@v3
       with:
         name: action
     - name: 🚧 run action
@@ -252,11 +252,11 @@ jobs:
     - run: git config --global core.autocrlf input
       shell: bash
     - name: 🧰 Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
       with:
         fetch-depth: 0
     - name: 📥 Download artifact
-      uses: actions/download-artifact@v2
+      uses: actions/download-artifact@v3
       with:
         name: action
     - name: 🚧 run action
@@ -275,11 +275,11 @@ jobs:
         shell: msys2 {0}
     steps:
     - name: 🧰 Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
       with:
         fetch-depth: 0
     - name: 📥 Download artifact
-      uses: actions/download-artifact@v2
+      uses: actions/download-artifact@v3
       with:
         name: action
     - name: 🚧 run action
@@ -295,9 +295,9 @@ jobs:
     runs-on: windows-latest
     steps:
     - name: 🧰 Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
     - name: 📥 Download artifact
-      uses: actions/download-artifact@v2
+      uses: actions/download-artifact@v3
       with:
         name: action
     - name: 🚧 run action
@@ -313,9 +313,9 @@ jobs:
     runs-on: windows-latest
     steps:
     - name: 🧰 Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
     - name: 📥 Download artifact
-      uses: actions/download-artifact@v2
+      uses: actions/download-artifact@v3
       with:
         name: action
     - name: 🚧 run action
@@ -333,9 +333,9 @@ jobs:
     runs-on: windows-latest
     steps:
     - name: 🧰 Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
     - name: 📥 Download artifact
-      uses: actions/download-artifact@v2
+      uses: actions/download-artifact@v3
       with:
         name: action
     - name: 🚧 run action
@@ -361,9 +361,9 @@ jobs:
     runs-on: ${{ matrix.platform }}-latest
     steps:
     - name: 🧰 Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
     - name: 📥 Download artifact
-      uses: actions/download-artifact@v2
+      uses: actions/download-artifact@v3
       with:
         name: action
     - name: 🚧 run action
@@ -384,9 +384,9 @@ jobs:
         - D:\some\arbitrary
     steps:
     - name: 🧰 Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
     - name: 📥 Download artifact
-      uses: actions/download-artifact@v2
+      uses: actions/download-artifact@v3
       with:
         name: action
     - name: 🚧 run action
@@ -417,7 +417,7 @@ jobs:
       min: ${{ steps.min.outputs.jobs }}
     steps:
     - name: 🧰 Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
     - id: all
       uses: ./matrix
     - id: min
@@ -436,9 +436,9 @@ jobs:
     runs-on: windows-latest
     steps:
     - name: 🧰 Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
     - name: 📥 Download artifact
-      uses: actions/download-artifact@v2
+      uses: actions/download-artifact@v3
       with:
         name: action
     - name: 🚧 run action
@@ -458,9 +458,9 @@ jobs:
     runs-on: windows-latest
     steps:
     - name: 🧰 Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
     - name: 📥 Download artifact
-      uses: actions/download-artifact@v2
+      uses: actions/download-artifact@v3
       with:
         name: action
     - name: 🚧 run action
@@ -481,9 +481,9 @@ jobs:
         include: ${{ fromJson(needs.matrix.outputs.min) }}
     steps:
     - name: 🧰 Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
     - name: 📥 Download artifact
-      uses: actions/download-artifact@v2
+      uses: actions/download-artifact@v3
       with:
         name: action
     - name: 🚧 run action
@@ -508,9 +508,9 @@ jobs:
         include: ${{ fromJson(needs.matrix.outputs.min) }}
     steps:
     - name: 🧰 Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
     - name: 📥 Download artifact
-      uses: actions/download-artifact@v2
+      uses: actions/download-artifact@v3
       with:
         name: action
     - name: 🚧 run action

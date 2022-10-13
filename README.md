@@ -83,7 +83,7 @@ In order to reduce verbosity, it is possible to set `msys2` as the default shell
         git
   #- run: git config --global core.autocrlf input
   #  shell: bash
-  - uses: actions/checkout@v2
+  - uses: actions/checkout@v3
   - run: git describe --dirty
 ```
 
