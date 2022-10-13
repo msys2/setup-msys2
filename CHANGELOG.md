@@ -6,7 +6,7 @@
 
 - Bump dependencies:
   - @actions/core to v1.10.0
-  - eslint to v8.24.0
+  - eslint to v8.25.0
 
 ## [2.13.0](https://github.com/msys2/setup-msys2/compare/2e083bbad7fe8c91e321ac59a20c1b7ea88c449d...9426ebb2048a2428ebfda0c5686251bfb6ae41dd) - 2022/09/04
 
