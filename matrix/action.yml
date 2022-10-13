@@ -18,6 +18,7 @@ runs:
       shell: python
       id: jobs
       run: |
+        import os
         icons = {
           'msys':    '🟪',
           'mingw32': '⬛',
@@ -30,4 +31,5 @@ runs:
             {'sys': sys.lower(), 'icon': icons[sys.lower()]}
             for sys in '${{ inputs.systems }}'.split(' ')
         ]
-        print(f"::set-output name=jobs::{jobs!s}")
+        with open(os.environ['GITHUB_OUTPUT'], 'a', encoding='utf-8') as h:
+          h.write(f"jobs={jobs!s}\n")
