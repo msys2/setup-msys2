@@ -6,8 +6,9 @@
     "type": "git",
     "url": "git+https://github.com/msys2/setup-msys2.git"
   },
+  "type": "module",
   "scripts": {
-    "pkg": "ncc build main.js -m -o ./",
+    "pkg": "ncc build main.js --minify --out dist",
     "lint": "eslint ."
   },
   "keywords": [
