@@ -33,9 +33,9 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: action
-        path: index.js
+        path: dist
     - name: 🚧 run action
-      uses: ./
+      uses: ./dist
       with:
         update: true
         install: base-devel git

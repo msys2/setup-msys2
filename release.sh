@@ -14,8 +14,6 @@ GIT_EMAIL="$(git config user.email)"
 GIT_SHA="$(git rev-parse HEAD)"
 GIT_ORIGIN="$(git config --get remote.origin.url)"
 
-mkdir dist
-cp README.md action.yml index.js dist
 cd dist
 git init
 git checkout --orphan "$1"

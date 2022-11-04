@@ -1,13 +1,20 @@
-const cache = require('@actions/cache');
-const core = require('@actions/core');
-const io = require('@actions/io');
-const exec = require('@actions/exec');
-const tc = require('@actions/tool-cache');
-const path = require('path');
-const fs = require('fs');
-const crypto = require('crypto');
-const assert = require('assert').strict;
-const { hashElement } = require('folder-hash');
+import cache from '@actions/cache';
+import core from '@actions/core';
+import io from '@actions/io';
+import exec from '@actions/exec';
+import tc from '@actions/tool-cache';
+import path from 'node:path';
+import fs from 'node:fs';
+import crypto from 'node:crypto';
+import assert from 'node:assert/strict';
+import process from 'node:process';
+import { hashElement } from 'folder-hash';
+
+// XXX: hack to make ncc copy those files to dist
+// eslint-disable-next-line
+function dummy() {
+    return [__dirname + '/action.yml', __dirname + '/README.md'];
+}
 
 const inst_version = '2022-10-28';
 const inst_url = `https://github.com/msys2/msys2-installer/releases/download/${inst_version}/msys2-base-x86_64-${inst_version.replace(/-/g, '')}.sfx.exe`;
