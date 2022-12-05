@@ -6,7 +6,7 @@
 
 - Port to ES modules. [[#260](https://github.com/msys2/setup-msys2/pull/260)]
 - Bump dependencies:
-  - eslint to v8.28.0
+  - eslint to v8.29.0
 
 ## [2.14.0](https://github.com/msys2/setup-msys2/compare/9426ebb2048a2428ebfda0c5686251bfb6ae41dd...b2b99bf1b1555a6d130258fe0e4c80f275f665e2) - 2022/11/01
 
