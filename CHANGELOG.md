@@ -4,6 +4,7 @@
 
 ### Changed
 
+- Update base distribution to [20221216](https://github.com/msys2/msys2-installer/releases/tag/2022-12-16). [[#268](https://github.com/msys2/setup-msys2/pull/268)]
 - Port to ES modules. [[#260](https://github.com/msys2/setup-msys2/pull/260)]
 - Bump dependencies:
   - @actions/cache to v3.1.2
