@@ -4,6 +4,9 @@
 
 ### Changed
 
+- Downgrade @actions/cache to v3.0.6 as it breaks caching on self hosted runners and leaks MSYS related env vars.
+  See https://github.com/actions/toolkit/issues/1311
+
 ## [2.15.0](https://github.com/msys2/setup-msys2/compare/b2b99bf1b1555a6d130258fe0e4c80f275f665e2...f24c3cf0a0a43ccba2eacfd674bc51dc5d783471)
 
 ### Changed
