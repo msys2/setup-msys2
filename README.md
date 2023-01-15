@@ -153,13 +153,13 @@ Find further details at [#171](https://github.com/msys2/setup-msys2/issues/171#i
 #### msystem
 
 By default, `MSYSTEM` is set to `MINGW64`. However, an optional parameter named `msystem` is supported, which expects
-`MSYS`, `MINGW64`, `MINGW32`, `UCRT64`, `CLANG32` or `CLANG64`.
+`MSYS`, `MINGW64`, `MINGW32`, `UCRT64`, `CLANG32` or `CLANG64`. MSYS2 recommends `UCRT64` nowadays as the default instead of `MINGW64`.
 For example:
 
 ```yaml
   - uses: msys2/setup-msys2@v2
     with:
-      msystem: MSYS
+      msystem: UCRT64
 ```
 
 Furthermore, the environment variable can be overridden.
@@ -175,7 +175,7 @@ For example, in order to build a PKGBUILD file and then test the installed artif
       makepkg-mingw -sCLfc --noconfirm --noprogressbar
       pacman --noconfirm -U mingw-w64-*-any.pkg.tar.xz
   - run: |
-      set MSYSTEM=MINGW64
+      set MSYSTEM=UCRT64
       msys2 -c '<command to test the package>'
 ```
 
