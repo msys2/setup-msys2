@@ -23,9 +23,9 @@ runs:
           'msys':    '🟪',
           'mingw32': '⬛',
           'mingw64': '🟦',
-          'ucrt64':  '🟨', # Experimental!
-          'clang32': '🟫', # Experimental!
-          'clang64': '🟧', # Experimental!
+          'ucrt64':  '🟨',
+          'clang32': '🟫',
+          'clang64': '🟧',
         }
         jobs = [
             {'sys': sys.lower(), 'icon': icons[sys.lower()]}

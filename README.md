@@ -104,8 +104,8 @@ See, for instance:
       include:
         - { sys: mingw64, env: x86_64 }
         - { sys: mingw32, env: i686 }
-        - { sys: ucrt64,  env: ucrt-x86_64 }  # Experimental!
-        - { sys: clang64, env: clang-x86_64 } # Experimental!
+        - { sys: ucrt64,  env: ucrt-x86_64 }
+        - { sys: clang64, env: clang-x86_64 }
   steps:
     - uses: msys2/setup-msys2@v2
       with:
@@ -121,8 +121,8 @@ Alternatively, option `pacboy` allows using a single matrix variable:
       sys:
         - mingw64
         - mingw32
-        - ucrt64  # Experimental!
-        - clang64 # Experimental!
+        - ucrt64
+        - clang64
   steps:
     - uses: msys2/setup-msys2@v2
       with:
