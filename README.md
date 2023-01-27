@@ -3,16 +3,16 @@
   -->
   <a title="Join the chat at https://gitter.im/msys2/msys2" href="https://gitter.im/msys2/msys2"><img src="https://img.shields.io/badge/chat-on%20gitter-4db797.svg?longCache=true&style=flat-square&logo=gitter&logoColor=e8ecef&label=Chat"></a><!--
   -->
-  <a title="'Test' workflow Status" href="https://github.com/msys2/setup-msys2/actions/workflows/Test.yml"><img alt="'Test' workflow Status" src="https://img.shields.io/github/workflow/status/msys2/setup-msys2/Test/main?longCache=true&style=flat-square&label=Test&logo=github"></a><!--
+  <a title="'Test' workflow Status" href="https://github.com/msys2/setup-msys2/actions/workflows/Test.yml"><img alt="'Test' workflow Status" src="https://img.shields.io/github/actions/workflow/status/msys2/setup-msys2/Test.yml?branch=main&longCache=true&style=flat-square&label=Test&logo=github"></a><!--
   -->
-  <a title="'Example PKGBUILD' workflow Status" href="https://github.com/msys2/setup-msys2/actions/workflows/Tool.yml"><img alt="'Example PKGBUILD' workflow Status" src="https://img.shields.io/github/workflow/status/msys2/setup-msys2/Tool/main?longCache=true&style=flat-square&label=Example%20PKGBUILD&logo=github"></a><!--
+  <a title="'Example PKGBUILD' workflow Status" href="https://github.com/msys2/setup-msys2/actions/workflows/Tool.yml"><img alt="'Example PKGBUILD' workflow Status" src="https://img.shields.io/github/actions/workflow/status/msys2/setup-msys2/Tool.yml?branch=main&longCache=true&style=flat-square&label=Example%20PKGBUILD&logo=github"></a><!--
   -->
 </p>
 
 # Setup MSYS2
 
 **setup-msys2** is a JavaScript GitHub Action (GHA) to setup an [MSYS2](https://www.msys2.org/) environment (i.e. MSYS,
-MINGW32, MINGW64, UCRT64, CLANG32, and/or CLANG64 shells) using the GHA [toolkit](https://github.com/actions/toolkit) for
+MINGW32, MINGW64, UCRT64, CLANG32, CLANG64 and/or CLANGARM64 shells) using the GHA [toolkit](https://github.com/actions/toolkit) for
 automatic caching.
 
 ## Context
@@ -104,8 +104,8 @@ See, for instance:
       include:
         - { sys: mingw64, env: x86_64 }
         - { sys: mingw32, env: i686 }
-        - { sys: ucrt64,  env: ucrt-x86_64 }  # Experimental!
-        - { sys: clang64, env: clang-x86_64 } # Experimental!
+        - { sys: ucrt64,  env: ucrt-x86_64 }
+        - { sys: clang64, env: clang-x86_64 }
   steps:
     - uses: msys2/setup-msys2@v2
       with:
@@ -121,8 +121,8 @@ Alternatively, option `pacboy` allows using a single matrix variable:
       sys:
         - mingw64
         - mingw32
-        - ucrt64  # Experimental!
-        - clang64 # Experimental!
+        - ucrt64
+        - clang64
   steps:
     - uses: msys2/setup-msys2@v2
       with:
@@ -153,13 +153,13 @@ Find further details at [#171](https://github.com/msys2/setup-msys2/issues/171#i
 #### msystem
 
 By default, `MSYSTEM` is set to `MINGW64`. However, an optional parameter named `msystem` is supported, which expects
-`MSYS`, `MINGW64`, `MINGW32`, `UCRT64`, `CLANG32` or `CLANG64`.
+`MSYS`, `MINGW64`, `MINGW32`, `UCRT64`, `CLANG32`, `CLANG64` or `CLANGARM64`. MSYS2 recommends `UCRT64` nowadays as the default instead of `MINGW64`.
 For example:
 
 ```yaml
   - uses: msys2/setup-msys2@v2
     with:
-      msystem: MSYS
+      msystem: UCRT64
 ```
 
 Furthermore, the environment variable can be overridden.
@@ -175,7 +175,7 @@ For example, in order to build a PKGBUILD file and then test the installed artif
       makepkg-mingw -sCLfc --noconfirm --noprogressbar
       pacman --noconfirm -U mingw-w64-*-any.pkg.tar.xz
   - run: |
-      set MSYSTEM=MINGW64
+      set MSYSTEM=UCRT64
       msys2 -c '<command to test the package>'
 ```
 
