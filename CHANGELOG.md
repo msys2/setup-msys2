@@ -2,6 +2,10 @@
 
 ## [Unreleased](https://github.com/msys2/setup-msys2/compare/b2bddebfd2ddd377a6a2348a6ffb10c1db00c3f4...HEAD)
 
+- Update base distribution to [20230127](https://github.com/msys2/msys2-installer/releases/tag/2023-01-27). [[#280](https://github.com/msys2/setup-msys2/pull/280)]
+- Bump dependencies:
+  - eslint to v8.32.0
+
 ### Changed
 
 ## [2.15.1](https://github.com/msys2/setup-msys2/compare/f24c3cf0a0a43ccba2eacfd674bc51dc5d783471...b2bddebfd2ddd377a6a2348a6ffb10c1db00c3f4)
