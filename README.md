@@ -12,7 +12,7 @@
 # Setup MSYS2
 
 **setup-msys2** is a JavaScript GitHub Action (GHA) to setup an [MSYS2](https://www.msys2.org/) environment (i.e. MSYS,
-MINGW32, MINGW64, UCRT64, CLANG32, and/or CLANG64 shells) using the GHA [toolkit](https://github.com/actions/toolkit) for
+MINGW32, MINGW64, UCRT64, CLANG32, CLANG64 and/or CLANGARM64 shells) using the GHA [toolkit](https://github.com/actions/toolkit) for
 automatic caching.
 
 ## Context
@@ -153,7 +153,7 @@ Find further details at [#171](https://github.com/msys2/setup-msys2/issues/171#i
 #### msystem
 
 By default, `MSYSTEM` is set to `MINGW64`. However, an optional parameter named `msystem` is supported, which expects
-`MSYS`, `MINGW64`, `MINGW32`, `UCRT64`, `CLANG32` or `CLANG64`. MSYS2 recommends `UCRT64` nowadays as the default instead of `MINGW64`.
+`MSYS`, `MINGW64`, `MINGW32`, `UCRT64`, `CLANG32`, `CLANG64` or `CLANGARM64`. MSYS2 recommends `UCRT64` nowadays as the default instead of `MINGW64`.
 For example:
 
 ```yaml
