@@ -4,6 +4,10 @@
 
 ### Changed
 
+- Bump dependencies:
+  - eslint to v8.36.0
+  - @vercel/ncc to v0.36.1
+
 ## [2.16.0](https://github.com/msys2/setup-msys2/compare/b2bddebfd2ddd377a6a2348a6ffb10c1db00c3f4...399a23b7b6bdbce5da87f846bc294c0de56eb3b6)
 
 ### Changed
