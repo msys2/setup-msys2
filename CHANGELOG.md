@@ -1,9 +1,10 @@
 # Changelog
 
-## [Unreleased](https://github.com/msys2/setup-msys2/compare/399a23b7b6bdbce5da87f846bc294c0de56eb3b6...HEAD)
+## [2.17.0](https://github.com/msys2/setup-msys2/compare/399a23b7b6bdbce5da87f846bc294c0de56eb3b6...c34adc7e42e04d086ca8245b1e6f45633790566a)
 
 ### Changed
 
+- Update base distribution to [20230318](https://github.com/msys2/msys2-installer/releases/tag/2023-03-18). [[#289](https://github.com/msys2/setup-msys2/pull/289)]
 - Bump dependencies:
   - eslint to v8.36.0
   - @vercel/ncc to v0.36.1
