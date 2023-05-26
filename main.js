@@ -70,14 +70,30 @@ function parseInput() {
   }
 }
 
+async function computeChecksum(filePath) {
+  return new Promise((resolve, reject) => {
+    const hash = crypto.createHash('sha256');
+    const stream = fs.createReadStream(filePath);
+    stream.on('data', data => {
+      hash.update(data);
+    });
+    stream.on('end', () => {
+      const fileHash = hash.digest('hex');
+      resolve(fileHash);
+    });
+    stream.on('error', error => {
+      reject(error);
+    });
+  });
+}
+
 async function downloadInstaller() {
   // We use the last field only, so that each version is ensured semver incompatible with the previous one.
   const version = `0.0.${inst_version.replace(/-/g, '')}`
   const inst_path = tc.find('msys2-installer', version, 'x64');
   const destination = inst_path ? path.join(inst_path, 'base.exe') : await tc.downloadTool(inst_url);
-  let computedChecksum = '';
-  await exec.exec(`powershell.exe`, [`(Get-FileHash '${destination}' -Algorithm SHA256)[0].Hash`], {listeners: {stdout: (data) => { computedChecksum += data.toString(); }}});
-  if (computedChecksum.slice(0, -2).toUpperCase() !== checksum.toUpperCase()) {
+  let computedChecksum = await computeChecksum(destination);
+  if (computedChecksum.toUpperCase() !== checksum.toUpperCase()) {
     throw new Error(`The SHA256 of the installer does not match! expected ${checksum} got ${computedChecksum}`);
   }
   return path.join(inst_path || await tc.cacheFile(destination, 'base.exe', 'msys2-installer', version, 'x64'), 'base.exe');
