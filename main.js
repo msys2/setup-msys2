@@ -85,7 +85,9 @@ async function downloadInstaller() {
 
 async function disableKeyRefresh(msysRootDir) {
   const postFile = path.join(msysRootDir, 'etc\\post-install\\07-pacman-key.post');
-  await exec.exec(`powershell.exe`, [`((Get-Content -path ${postFile} -Raw) -replace '--refresh-keys', '--version') | Set-Content -Path ${postFile}`]);
+  const content = await fs.promises.readFile(postFile, 'utf8');
+  const newContent = content.replace('--refresh-keys', '--version');
+  await fs.promises.writeFile(postFile, newContent, 'utf8');
 }
 
 async function saveCacheMaybe(paths, restoreKey, saveKey) {
