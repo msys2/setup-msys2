@@ -1,5 +1,9 @@
 # Changelog
 
+## [Unreleased](https://github.com/msys2/setup-msys2/compare/86132ac62b5f7963e748fab1b1f14e5f76113434...HEAD)
+
+### Changed
+
 ## [2.18.0](https://github.com/msys2/setup-msys2/compare/b200fe9693ae23c5c6a9ebef9c925475f72cb457...86132ac62b5f7963e748fab1b1f14e5f76113434)
 
 ### Changed
