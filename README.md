@@ -14,29 +14,11 @@
 **setup-msys2** is a GitHub Action (GHA) to setup an [MSYS2](https://www.msys2.org/) environment (i.e. MSYS,
 MINGW32, MINGW64, UCRT64, CLANG32, CLANG64 and/or CLANGARM64 shells)
 
-## Context
+It provides:
 
-[MSYS2](https://www.msys2.org/) is available by default on the [windows-latest](https://github.com/actions/virtual-environments/blob/main/images/win/Windows2019-Readme.md#msys2)
-[virtual environment](https://github.com/actions/virtual-environments) for GitHub Actions, located at `C:\msys64`.
-However, there are some caveats with using the default installation as-is:
-
-- It is updated every ~10 days.
-- Caching of installation packages is not supported.
-- MSYS2/MINGW are neither added to the PATH nor available as a custom `shell` option.
-- On versions older than `windows-2022`, it includes a non-negligible set of pre-installed packages. As a result, update time can be up to 10 min (see [actions/virtual-environments#1572](https://github.com/actions/virtual-environments/issues/1572)).
-
-**setup-msys2** works around those constraints:
-
-- Using option `release: false`, the default installation is used, but automatic caching is supported and a custom
-entrypoint is provided.
-- By default (`release: true`), **setup-msys2** downloads and extracts the latest tarball available at [repo.msys2.org/distrib/x86_64](http://repo.msys2.org/distrib/x86_64/),
-a clean and up-to-date environment is set up in a temporary location, and a custom entrypoint (`msys2`) is provided.
-Hence, the overhead of updating pre-installed but unnecessary packages is avoided.
-
-Therefore, usage of this Action is recommended to all MSYS2 users of GitHub Actions, since caching and the custom
-entrypoint are provided regardless of option `release`.
-
-NOTE: in the future, `bash` might default to MSYS2 (see [actions/virtual-environments#1525](https://github.com/actions/virtual-environments/issues/1525)).
+* Easy installation and updates
+* Easy package installation including caching for faster re-runs
+* A shell helper for running your commands or your whole job in an MSYS2 environment
 
 ## Usage
 
@@ -80,14 +62,8 @@ In order to reduce verbosity, it is possible to set `msys2` as the default shell
       install: >-
         curl
         git
-  #- run: git config --global core.autocrlf input
-  #  shell: bash
   - uses: actions/checkout@v3
-  - run: git describe --dirty
 ```
-
-Note that setting `autocrlf` is required in specific use cases only.
-See [actions/checkout#250](https://github.com/actions/checkout/issues/250).
 
 ### Build matrix
 
@@ -151,8 +127,14 @@ Find further details at [#171](https://github.com/msys2/setup-msys2/issues/171#i
 
 #### msystem
 
-By default, `MSYSTEM` is set to `MINGW64`. However, an optional parameter named `msystem` is supported, which expects
-`MSYS`, `MINGW64`, `MINGW32`, `UCRT64`, `CLANG32`, `CLANG64` or `CLANGARM64`. MSYS2 recommends `UCRT64` nowadays as the default instead of `MINGW64`.
+* Type: `string`
+* Allowed values: `MSYS | MINGW64 | MINGW32 | UCRT64 | CLANG32 | CLANG64 | CLANGARM64`
+* Default: `MINGW64`
+
+The default [environment](https://www.msys2.org/docs/environments/) that is used in the `msys2` command/shell provided by this action.
+
+MSYS2 recommends `UCRT64` nowadays as the default instead of `MINGW64`.
+
 For example:
 
 ```yaml
@@ -161,7 +143,7 @@ For example:
       msystem: UCRT64
 ```
 
-Furthermore, the environment variable can be overridden.
+The environment can be later overridden using the `MSYSTEM` environment variable if needed.
 This is useful when multiple commands need to be executed in different contexts.
 For example, in order to build a PKGBUILD file and then test the installed artifact:
 
@@ -180,8 +162,11 @@ For example, in order to build a PKGBUILD file and then test the installed artif
 
 #### update
 
+* Type: `boolean`
+* Default: `false`
+
 By default, the installation is not updated; hence package versions are those of the installation tarball.
-By setting option `update` to `true`, the action will try to update the runtime and packages cleanly:
+By setting option `update` to `true`, the action will update the package database and all already installed packages.
 
 ```yaml
   - uses: msys2/setup-msys2@v2
@@ -190,6 +175,10 @@ By setting option `update` to `true`, the action will try to update the runtime 
 ```
 
 #### install
+
+* Type: `string`
+* Allowed values: a whitespace separated list of packages
+* Default: -
 
 Installing additional packages after updating the system is supported through option `install`.
 The package or list of packages are installed through `pacman --noconfirm -S --needed --overwrite *`.
@@ -204,6 +193,10 @@ The package or list of packages are installed through `pacman --noconfirm -S --n
 ```
 
 #### pacboy
+
+* Type: `string`
+* Allowed values: s whitespace separated list of packages
+* Default: -
 
 Installing additional packages with [pacboy](https://www.msys2.org/docs/package-naming/#avoiding-writing-long-package-names) after updating the system is supported through option `pacboy`.
 The package or list of packages are installed through `pacboy --noconfirm -S --needed`.
@@ -224,18 +217,11 @@ The package or list of packages are installed through `pacboy --noconfirm -S --n
         openssl:p
 ```
 
-#### release
-
-By default (`true`), retrieve and extract base installation from upstream GitHub Releases.
-If set to `false`, the installation available in the virtual environment is used:
-
-```yaml
-  - uses: msys2/setup-msys2@v2
-    with:
-      release: false
-```
-
 #### platform-check-severity
+
+* Type: `string`
+* Allowed values: `warn | fatal`
+* Default: `warn`
 
 By default (`fatal`), throw an error if the runner OS is not Windows.
 If set to `warn`, simply log a message and skip the rest:
@@ -252,6 +238,10 @@ These options are rarely needed and shouldn't be used unless there is a good rea
 
 #### path-type
 
+* Type: `string`
+* Allowed values: `minimal | strict | inherit`
+* Default: `minimal`
+
 Defines which parts of the Windows `$env:PATH` environment variable leak into the MSYS2 environment.
 Allowed values:
 
@@ -266,11 +256,14 @@ Allowed values:
       path-type: minimal
 ```
 
-This option corresponds to the `MSYS2_PATH_TYPE` setting in MSYS2; hence it can be set per step through `env`.
+This option corresponds to the `MSYS2_PATH_TYPE` setting in MSYS2; hence it can be overridden per step through `env`.
 See [msys2/MSYS2-packages: filesystem/profile](https://github.com/msys2/MSYS2-packages/blob/915946a637e1f2b7e26e32782f3af322009293db/filesystem/profile#L28-L45)
 for further details about the configuration of each option.
 
 #### cache
+
+* Type: `boolean`
+* Default: `true`
 
 By default (`true`), caches various things between runs to make repeated runs faster.
 
@@ -282,10 +275,41 @@ By default (`true`), caches various things between runs to make repeated runs fa
 
 #### location
 
-Specify an alternate location where to install msys2 to.
+* Type: `string`
+* Default: -
+
+Specify an alternate location where to install MSYS2 to.
 
 ```yaml
   - uses: msys2/setup-msys2@v2
     with:
       location: D:\
+```
+
+#### release
+
+* Type: `boolean`
+* Default: `true`
+
+If `true` (the default) it makes a fresh install of the latest MSYS2 installer release.
+If `false` it will try to re-use the [existing MSYS2 installation](https://github.com/actions/runner-images/blob/main/images/win/Windows2022-Readme.md#msys2) which is part of the official [GitHub Actions Runner Images](https://github.com/actions/runner-images).
+
+```yaml
+  - uses: msys2/setup-msys2@v2
+    with:
+      release: false
+```
+
+## Known Problems
+
+### actions/checkout and line endings
+
+In case you use the [actions/checkout](https://github.com/actions/checkout) action in your workflow and haven't configured git attributes for line endings, then git might auto convert your text files in the git repo to Windows line endings, which might lead to problems with tools provided by MSYS2.
+
+To work around this issue disable the auto conversion before running `actions/checkout`:
+
+```yaml
+  steps:
+  - run: git config --global core.autocrlf input
+  - uses: actions/checkout@v3
 ```
