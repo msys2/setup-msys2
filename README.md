@@ -11,9 +11,8 @@
 
 # Setup MSYS2
 
-**setup-msys2** is a JavaScript GitHub Action (GHA) to setup an [MSYS2](https://www.msys2.org/) environment (i.e. MSYS,
-MINGW32, MINGW64, UCRT64, CLANG32, CLANG64 and/or CLANGARM64 shells) using the GHA [toolkit](https://github.com/actions/toolkit) for
-automatic caching.
+**setup-msys2** is a GitHub Action (GHA) to setup an [MSYS2](https://www.msys2.org/) environment (i.e. MSYS,
+MINGW32, MINGW64, UCRT64, CLANG32, CLANG64 and/or CLANGARM64 shells)
 
 ## Context
 
