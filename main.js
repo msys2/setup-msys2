@@ -132,8 +132,16 @@ async function saveCacheMaybe(paths, restoreKey, saveKey) {
 }
 
 async function restoreCache(paths, primaryKey, restoreKeys) {
-    const restoreKey = await cache.restoreCache(paths, primaryKey, restoreKeys);
-    console.log(`Cache restore for ${primaryKey}, got ${restoreKey}`);
+    let restoreKey;
+    try {
+        restoreKey = await cache.restoreCache(paths, primaryKey, restoreKeys);
+        console.log(`Cache restore for ${primaryKey}, got ${restoreKey}`);
+    } catch (error) {
+        core.warning(`Restore cache failed: ${error.message}`);
+    } finally {
+        console.log(`Cache restore for ${primaryKey}, got ${restoreKey}`);
+    }
+
     return restoreKey;
 }
 
