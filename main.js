@@ -29,8 +29,8 @@ function changeGroup(str) {
 }
 
 function parseInput() {
-  let p_release = core.getInput('release') === 'true';
-  let p_update = core.getInput('update') === 'true';
+  let p_release = core.getBooleanInput('release');
+  let p_update = core.getBooleanInput('update');
   let p_pathtype = core.getInput('path-type');
   let p_msystem = core.getInput('msystem');
   let p_install = core.getInput('install');
