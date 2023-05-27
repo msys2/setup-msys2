@@ -23,14 +23,6 @@ const checksum = '80e6450388314d0aa77434f1dcacef7d14d73d9e2875cb79550eb864558c68
 const INSTALL_CACHE_ENABLED = false;
 const CACHE_FLUSH_COUNTER = 0;
 
-/**
- * @param {str} str
- * @returns {void}
- */
-function changeGroup(str) {
-  core.endGroup();
-  core.startGroup(str);
-}
 
 /**
  * @returns {object}
@@ -338,11 +330,13 @@ async function run() {
       if (!cachedInstall) {
         core.startGroup('Downloading MSYS2...');
         let inst_dest = await downloadInstaller();
+        core.endGroup();
 
-        changeGroup('Extracting MSYS2...');
+        core.startGroup('Extracting MSYS2...');
         await exec.exec(inst_dest, ['-y'], {cwd: dest});
+        core.endGroup();
 
-        changeGroup('Disable Key Refresh...');
+        core.startGroup('Disable Key Refresh...');
         await disableKeyRefresh(msysRootDir);
         core.endGroup();
       }
@@ -375,14 +369,18 @@ async function run() {
     core.endGroup();
 
     if (input.update) {
-      changeGroup('Updating packages...');
+      core.startGroup('Updating packages...');
       await pacman(['-Syuu', '--overwrite', '*'], {ignoreReturnCode: true});
       // We have changed /etc/pacman.conf above which means on a pacman upgrade
       // pacman.conf will be installed as pacman.conf.pacnew
       await runMsys(['mv', '-f', '/etc/pacman.conf.pacnew', '/etc/pacman.conf'], {ignoreReturnCode: true, silent: true});
-      changeGroup('Killing remaining tasks...');
+      core.endGroup();
+
+      core.startGroup('Killing remaining tasks...');
       await exec.exec('taskkill', ['/F', '/FI', 'MODULES eq msys-2.0.dll']);
-      changeGroup('Final system upgrade...');
+      core.endGroup();
+
+      core.startGroup('Final system upgrade...');
       await pacman(['-Syuu', '--overwrite', '*'], {});
       core.endGroup();
     }
