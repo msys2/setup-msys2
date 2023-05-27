@@ -23,9 +23,32 @@ const checksum = '80e6450388314d0aa77434f1dcacef7d14d73d9e2875cb79550eb864558c68
 const INSTALL_CACHE_ENABLED = false;
 const CACHE_FLUSH_COUNTER = 0;
 
+class Input {
+
+    constructor() {
+        /** @type {boolean} */
+        this.release;
+        /** @type {boolean} */
+        this.update;
+        /** @type {string} */
+        this.pathtype;
+        /** @type {string} */
+        this.msystem;
+        /** @type {string[]} */
+        this.install;
+        /** @type {string[]} */
+        this.pacboy;
+        /** @type {string} */
+        this.platformcheckseverity;
+        /** @type {string} */
+        this.location;
+        /** @type {boolean} */
+        this.cache;
+    }
+}
 
 /**
- * @returns {object}
+ * @returns {Input}
  */
 function parseInput() {
   let p_release = core.getBooleanInput('release');
@@ -58,17 +81,18 @@ function parseInput() {
       https://github.com/msys2/setup-msys2#release`);
   }
 
-  return {
-    release: p_release,
-    update: p_update,
-    pathtype: p_pathtype,
-    msystem: p_msystem,
-    install: p_install,
-    pacboy: p_pacboy,
-    platformcheckseverity: p_platformcheckseverity,
-    location: (p_location == "RUNNER_TEMP") ? process.env['RUNNER_TEMP'] : p_location,
-    cache: p_cache,
-  }
+  let input = new Input();
+  input.release = p_release;
+  input.update = p_update;
+  input.pathtype = p_pathtype;
+  input.msystem = p_msystem;
+  input.install = p_install;
+  input.pacboy = p_pacboy;
+  input.platformcheckseverity = p_platformcheckseverity;
+  input.location = (p_location == "RUNNER_TEMP") ? process.env['RUNNER_TEMP'] : p_location;
+  input.cache = p_cache;
+
+  return input;
 }
 
 /**
@@ -179,7 +203,7 @@ class PackageCache {
 
   /**
    * @param {string} msysRootDir
-   * @param {object} input
+   * @param {Input} input
    */
   constructor(msysRootDir, input) {
     // We include "update" in the fallback key so that a job run with update=false never fetches
@@ -226,7 +250,7 @@ class InstallCache {
 
   /**
    * @param {string} msysRootDir
-   * @param {object} input
+   * @param {Input} input
    */
   constructor(msysRootDir, input) {
     let shasum = crypto.createHash('sha1');
