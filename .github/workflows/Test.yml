@@ -349,6 +349,27 @@ jobs:
         uname -a
 
 
+  nocache:
+    needs: [cache]
+    runs-on: windows-latest
+    steps:
+    - name: 🧰 Checkout
+      uses: actions/checkout@v3
+    - name: 📥 Download artifact
+      uses: actions/download-artifact@v3
+      with:
+        name: action
+    - name: 🚧 run action
+      uses: ./
+      with:
+        release: true
+        update: true
+        cache: false
+    - shell: msys2 {0}
+      run: |
+        uname -a
+
+
   platformchecks:
     name: ${{ matrix.icon }} ${{ matrix.platform }} | platformchecks
     needs: [cache]

@@ -276,3 +276,13 @@ If set to `warn`, simply log a message and skip the rest:
     with:
       platform-check-severity: warn
 ```
+
+#### cache
+
+By default (`true`), caches various things between runs to make repeated runs faster.
+
+```yaml
+  - uses: msys2/setup-msys2@v2
+    with:
+      cache: false
+```
