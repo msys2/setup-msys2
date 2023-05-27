@@ -178,26 +178,6 @@ For example, in order to build a PKGBUILD file and then test the installed artif
       msys2 -c '<command to test the package>'
 ```
 
-#### path-type
-
-Defines which parts of the Windows `$env:PATH` environment variable leak into the MSYS2 environment.
-Allowed values:
-
-- `strict`: do not inherit anything from `$env:PATH`.
-- `minimal` *(default)*: only inherit the default Windows paths from `$env:PATH` (so that `cmd.exe` and `powershell.exe`
-  are available for example).
-- `inherit`: inherit everything; warning: this can lead to interference with other tools installed on the system.
-
-```yaml
-  - uses: msys2/setup-msys2@v2
-    with:
-      path-type: minimal
-```
-
-This option corresponds to the `MSYS2_PATH_TYPE` setting in MSYS2; hence it can be set per step through `env`.
-See [msys2/MSYS2-packages: filesystem/profile](https://github.com/msys2/MSYS2-packages/blob/915946a637e1f2b7e26e32782f3af322009293db/filesystem/profile#L28-L45)
-for further details about the configuration of each option.
-
 #### update
 
 By default, the installation is not updated; hence package versions are those of the installation tarball.
@@ -255,16 +235,6 @@ If set to `false`, the installation available in the virtual environment is used
       release: false
 ```
 
-#### location
-
-Specify the location where to install msys2:
-
-```yaml
-  - uses: msys2/setup-msys2@v2
-    with:
-      location: D:\
-```
-
 #### platform-check-severity
 
 By default (`fatal`), throw an error if the runner OS is not Windows.
@@ -276,6 +246,30 @@ If set to `warn`, simply log a message and skip the rest:
       platform-check-severity: warn
 ```
 
+### Advanced Options
+
+These options are rarely needed and shouldn't be used unless there is a good reason.
+
+#### path-type
+
+Defines which parts of the Windows `$env:PATH` environment variable leak into the MSYS2 environment.
+Allowed values:
+
+- `strict`: do not inherit anything from `$env:PATH`.
+- `minimal` *(default)*: only inherit the default Windows paths from `$env:PATH` (so that `cmd.exe` and `powershell.exe`
+  are available for example).
+- `inherit`: inherit everything; warning: this can lead to interference with other tools installed on the system.
+
+```yaml
+  - uses: msys2/setup-msys2@v2
+    with:
+      path-type: minimal
+```
+
+This option corresponds to the `MSYS2_PATH_TYPE` setting in MSYS2; hence it can be set per step through `env`.
+See [msys2/MSYS2-packages: filesystem/profile](https://github.com/msys2/MSYS2-packages/blob/915946a637e1f2b7e26e32782f3af322009293db/filesystem/profile#L28-L45)
+for further details about the configuration of each option.
+
 #### cache
 
 By default (`true`), caches various things between runs to make repeated runs faster.
@@ -284,4 +278,14 @@ By default (`true`), caches various things between runs to make repeated runs fa
   - uses: msys2/setup-msys2@v2
     with:
       cache: false
+```
+
+#### location
+
+Specify an alternate location where to install msys2 to.
+
+```yaml
+  - uses: msys2/setup-msys2@v2
+    with:
+      location: D:\
 ```
