@@ -16,9 +16,9 @@ function dummy() {
     return [__dirname + '/action.yml', __dirname + '/README.md'];
 }
 
-const inst_version = '2023-05-26';
-const inst_url = `https://github.com/msys2/msys2-installer/releases/download/${inst_version}/msys2-base-x86_64-${inst_version.replace(/-/g, '')}.sfx.exe`;
-const checksum = '80e6450388314d0aa77434f1dcacef7d14d73d9e2875cb79550eb864558c683e';
+const INSTALLER_VERSION = '2023-05-26';
+const INSTALLER_URL = `https://github.com/msys2/msys2-installer/releases/download/${INSTALLER_VERSION}/msys2-base-x86_64-${INSTALLER_VERSION.replace(/-/g, '')}.sfx.exe`;
+const INSTALLER_CHECKSUM = '80e6450388314d0aa77434f1dcacef7d14d73d9e2875cb79550eb864558c683e';
 // see https://github.com/msys2/setup-msys2/issues/61
 const INSTALL_CACHE_ENABLED = false;
 const CACHE_FLUSH_COUNTER = 0;
@@ -121,12 +121,12 @@ async function computeChecksum(filePath) {
  */
 async function downloadInstaller() {
   // We use the last field only, so that each version is ensured semver incompatible with the previous one.
-  const version = `0.0.${inst_version.replace(/-/g, '')}`
+  const version = `0.0.${INSTALLER_VERSION.replace(/-/g, '')}`
   const inst_path = tc.find('msys2-installer', version, 'x64');
-  const destination = inst_path ? path.join(inst_path, 'base.exe') : await tc.downloadTool(inst_url);
+  const destination = inst_path ? path.join(inst_path, 'base.exe') : await tc.downloadTool(INSTALLER_URL);
   let computedChecksum = await computeChecksum(destination);
-  if (computedChecksum.toUpperCase() !== checksum.toUpperCase()) {
-    throw new Error(`The SHA256 of the installer does not match! expected ${checksum} got ${computedChecksum}`);
+  if (computedChecksum.toUpperCase() !== INSTALLER_CHECKSUM.toUpperCase()) {
+    throw new Error(`The SHA256 of the installer does not match! expected ${INSTALLER_CHECKSUM} got ${computedChecksum}`);
   }
   return path.join(inst_path || await tc.cacheFile(destination, 'base.exe', 'msys2-installer', version, 'x64'), 'base.exe');
 }
@@ -214,7 +214,7 @@ class PackageCache {
     // We want a cache key that is ideally always the same for the same kind of job.
     // So that mingw32 and ming64 jobs, and jobs with different install packages have different caches.
     let shasum = crypto.createHash('sha1');
-    shasum.update([CACHE_FLUSH_COUNTER, input.release, input.update, input.pathtype, input.msystem, input.install].toString() + checksum);
+    shasum.update([CACHE_FLUSH_COUNTER, input.release, input.update, input.pathtype, input.msystem, input.install].toString() + INSTALLER_CHECKSUM);
     this.jobCacheKey = this.fallbackCacheKey + '-conf:' + shasum.digest('hex').slice(0, 8);
 
     this.restoreKey = undefined;
@@ -254,7 +254,7 @@ class InstallCache {
    */
   constructor(msysRootDir, input) {
     let shasum = crypto.createHash('sha1');
-    shasum.update(JSON.stringify(input) + checksum);
+    shasum.update(JSON.stringify(input) + INSTALLER_CHECKSUM);
     this.jobCacheKey = 'msys2-inst-conf:' + shasum.digest('hex');
     this.msysRootDir = msysRootDir
   }
