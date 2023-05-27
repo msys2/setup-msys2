@@ -78,7 +78,7 @@ In order to reduce verbosity, it is possible to set `msys2` as the default shell
     with:
       update: true
       install: >-
-        base-devel
+        curl
         git
   #- run: git config --global core.autocrlf input
   #  shell: bash
@@ -220,7 +220,7 @@ The package or list of packages are installed through `pacman --noconfirm -S --n
       update: true
       install: >-
         git
-        base-devel
+        curl
 ```
 
 #### pacboy
@@ -239,7 +239,7 @@ The package or list of packages are installed through `pacboy --noconfirm -S --n
       msystem: ${{matrix.sys}}
       install: >-
         git
-        base-devel
+        curl
       pacboy: >-
         openssl:p
 ```
