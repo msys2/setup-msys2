@@ -23,11 +23,18 @@ const checksum = '80e6450388314d0aa77434f1dcacef7d14d73d9e2875cb79550eb864558c68
 const INSTALL_CACHE_ENABLED = false;
 const CACHE_FLUSH_COUNTER = 0;
 
+/**
+ * @param {str} str
+ * @returns {void}
+ */
 function changeGroup(str) {
   core.endGroup();
   core.startGroup(str);
 }
 
+/**
+ * @returns {object}
+ */
 function parseInput() {
   let p_release = core.getBooleanInput('release');
   let p_update = core.getBooleanInput('update');
@@ -72,6 +79,10 @@ function parseInput() {
   }
 }
 
+/**
+ * @param {string} filePath
+ * @returns {Promise<string>}
+ */
 async function computeChecksum(filePath) {
   return new Promise((resolve, reject) => {
     const hash = crypto.createHash('sha256');
@@ -89,6 +100,9 @@ async function computeChecksum(filePath) {
   });
 }
 
+/**
+ * @returns {Promise<string>}
+ */
 async function downloadInstaller() {
   // We use the last field only, so that each version is ensured semver incompatible with the previous one.
   const version = `0.0.${inst_version.replace(/-/g, '')}`
@@ -101,6 +115,10 @@ async function downloadInstaller() {
   return path.join(inst_path || await tc.cacheFile(destination, 'base.exe', 'msys2-installer', version, 'x64'), 'base.exe');
 }
 
+/**
+ * @param {string} msysRootDir
+ * @returns {Promise<void>}
+ */
 async function disableKeyRefresh(msysRootDir) {
   const postFile = path.join(msysRootDir, 'etc\\post-install\\07-pacman-key.post');
   const content = await fs.promises.readFile(postFile, 'utf8');
@@ -108,6 +126,12 @@ async function disableKeyRefresh(msysRootDir) {
   await fs.promises.writeFile(postFile, newContent, 'utf8');
 }
 
+/**
+ * @param {string[]} paths
+ * @param {string} restoreKey
+ * @param {string} saveKey
+ * @returns {Promise<string|undefined>}
+ */
 async function saveCacheMaybe(paths, restoreKey, saveKey) {
     if (restoreKey === saveKey) {
         console.log(`Cache unchanged, skipping save for ${saveKey}`);
@@ -131,6 +155,12 @@ async function saveCacheMaybe(paths, restoreKey, saveKey) {
     return cacheId;
 }
 
+/**
+ * @param {string[]} paths
+ * @param {string} primaryKey
+ * @param {string[]} restoreKeys
+ * @returns {Promise<string|undefined>}
+ */
 async function restoreCache(paths, primaryKey, restoreKeys) {
     let restoreKey;
     try {
@@ -145,12 +175,20 @@ async function restoreCache(paths, primaryKey, restoreKeys) {
     return restoreKey;
 }
 
+/**
+ * @param {string} path
+ * @returns {Promise<string>}
+ */
 async function hashPath(path) {
   return (await hashElement(path, {encoding: 'hex'}))['hash'].toString();
 }
 
 class PackageCache {
 
+  /**
+   * @param {string} msysRootDir
+   * @param {object} input
+   */
   constructor(msysRootDir, input) {
     // We include "update" in the fallback key so that a job run with update=false never fetches
     // a cache created with update=true. Because this would mean a newer version than needed is in the cache
@@ -194,6 +232,10 @@ class PackageCache {
 
 class InstallCache {
 
+  /**
+   * @param {string} msysRootDir
+   * @param {object} input
+   */
   constructor(msysRootDir, input) {
     let shasum = crypto.createHash('sha1');
     shasum.update(JSON.stringify(input) + checksum);
@@ -218,6 +260,12 @@ class InstallCache {
 
 let cmd = null;
 
+/**
+ * @param {string} msysRootDir
+ * @param {string} pathtype
+ * @param {string} destDir
+ * @param {string} name
+ */
 async function writeWrapper(msysRootDir, pathtype, destDir, name) {
   let wrap = [
     `@echo off`,
@@ -231,16 +279,28 @@ async function writeWrapper(msysRootDir, pathtype, destDir, name) {
   fs.writeFileSync(cmd, wrap);
 }
 
+/**
+ * @param {string[]} args
+ * @param {object} opts
+ */
 async function runMsys(args, opts) {
   assert.ok(cmd);
   const quotedArgs = args.map((arg) => {return `'${arg.replace(/'/g, `'\\''`)}'`}); // fix confused vim syntax highlighting with: `
   await exec.exec('cmd', ['/D', '/S', '/C', cmd].concat(['-c', quotedArgs.join(' ')]), opts);
 }
 
+/**
+ * @param {string[]} args
+ * @param {object} opts
+ * @param {string} [cmd]
+ */
 async function pacman(args, opts, cmd) {
   await runMsys([cmd ? cmd : 'pacman', '--noconfirm'].concat(args), opts);
 }
 
+/**
+ * @returns {void}
+ */
 async function run() {
   try {
     const input = parseInput();

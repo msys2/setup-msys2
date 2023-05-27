@@ -1,14 +1,19 @@
 {
+    "plugins": [
+        "jsdoc"
+    ],
     "env": {
         "es2020": true,
         "node": true
     },
-    "extends": "eslint:recommended",
+    "extends": ["eslint:recommended", "plugin:jsdoc/recommended"],
     "parserOptions": {
         "ecmaVersion": 11,
         "sourceType": "module"
     },
     "rules": {
+        "jsdoc/require-param-description": 0,
+        "jsdoc/require-returns-description": 0
     },
     "ignorePatterns": ["dist/*.js"]
 }
