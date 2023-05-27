@@ -278,14 +278,16 @@ let cmd = null;
 
 /**
  * @param {string} msysRootDir
+ * @param {string} msystem
  * @param {string} pathtype
  * @param {string} destDir
  * @param {string} name
  */
-async function writeWrapper(msysRootDir, pathtype, destDir, name) {
+async function writeWrapper(msysRootDir, msystem, pathtype, destDir, name) {
   let wrap = [
     `@echo off`,
     `setlocal`,
+    `IF NOT DEFINED MSYSTEM set MSYSTEM=` + msystem,
     `IF NOT DEFINED MSYS2_PATH_TYPE set MSYS2_PATH_TYPE=` + pathtype,
     `set CHERE_INVOKING=1`,
     msysRootDir + `\\usr\\bin\\bash.exe -leo pipefail %*`
@@ -368,9 +370,10 @@ async function run() {
 
     const pathDir = path.join(tmp_dir, 'setup-msys2');
     await io.mkdirP(pathDir);
-    writeWrapper(msysRootDir, input.pathtype, pathDir, 'msys2.cmd');
+    writeWrapper(msysRootDir, input.msystem, input.pathtype, pathDir, 'msys2.cmd');
     core.addPath(pathDir);
 
+    // XXX: ideally this should be removed, we don't want to pollute the user's environment
     core.exportVariable('MSYSTEM', input.msystem);
 
     const packageCache = input.cache ? new PackageCache(msysRootDir, input) : null;
