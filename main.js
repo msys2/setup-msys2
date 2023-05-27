@@ -37,6 +37,7 @@ function parseInput() {
   let p_pacboy = core.getInput('pacboy');
   let p_platformcheckseverity = core.getInput('platform-check-severity');
   let p_location = core.getInput('location');
+  let p_cache = core.getBooleanInput('cache');
 
   const msystem_allowed = ['MSYS', 'MINGW32', 'MINGW64', 'UCRT64', 'CLANG32', 'CLANG64', 'CLANGARM64'];
   if (!msystem_allowed.includes(p_msystem.toUpperCase())) {
@@ -67,6 +68,7 @@ function parseInput() {
     pacboy: p_pacboy,
     platformcheckseverity: p_platformcheckseverity,
     location: (p_location == "RUNNER_TEMP") ? process.env['RUNNER_TEMP'] : p_location,
+    cache: p_cache,
   }
 }
 
@@ -285,12 +287,14 @@ async function run() {
 
     core.exportVariable('MSYSTEM', input.msystem);
 
-    const packageCache = new PackageCache(msysRootDir, input);
+    const packageCache = input.cache ? new PackageCache(msysRootDir, input) : null;
 
     if (!cachedInstall) {
-      core.startGroup('Restoring package cache...');
-      await packageCache.restore();
-      core.endGroup();
+      if (packageCache !== null) {
+        core.startGroup('Restoring package cache...');
+        await packageCache.restore();
+        core.endGroup();
+      }
 
       core.startGroup('Starting MSYS2 for the first time...');
       await runMsys(['uname', '-a']);
@@ -335,7 +339,7 @@ async function run() {
       core.endGroup();
     }
 
-    if (!cachedInstall) {
+    if (!cachedInstall && packageCache !== null) {
       core.startGroup('Saving package cache...');
       await packageCache.prune();
       await packageCache.save();
@@ -345,7 +349,9 @@ async function run() {
 
     if (instCache !== null) {
       core.startGroup('Saving environment...');
-      await packageCache.clear();
+      if (packageCache !== null) {
+        await packageCache.clear();
+      }
       await instCache.save();
       core.endGroup();
     }
