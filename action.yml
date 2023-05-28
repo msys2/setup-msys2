@@ -36,6 +36,10 @@ inputs:
     description: 'What to do when run on an incompatible runner: fatal, warn'
     required: false
     default: 'fatal'
+  cache:
+    description: 'If caching should be used'
+    required: false
+    default: true
 runs:
   using: 'node16'
   main: 'index.js'
