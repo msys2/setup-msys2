@@ -1,8 +1,10 @@
 # Changelog
 
-## [2.19.0](https://github.com/msys2/setup-msys2/compare/86132ac62b5f7963e748fab1b1f14e5f76113434...287411083877ecfd4b906a1af5c5ce5a7ec90d47)
+## [Unreleased](https://github.com/msys2/setup-msys2/compare/287411083877ecfd4b906a1af5c5ce5a7ec90d47...HEAD)
 
 ### Changed
+
+## [2.19.0](https://github.com/msys2/setup-msys2/compare/86132ac62b5f7963e748fab1b1f14e5f76113434...287411083877ecfd4b906a1af5c5ce5a7ec90d47)
 
 - Remove dependency on powershell
 - Add new option for disabling caching
