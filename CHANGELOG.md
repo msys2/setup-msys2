@@ -1,8 +1,10 @@
 # Changelog
 
-## [Unreleased](https://github.com/msys2/setup-msys2/compare/287411083877ecfd4b906a1af5c5ce5a7ec90d47...HEAD)
+## [2.20.0](https://github.com/msys2/setup-msys2/compare/287411083877ecfd4b906a1af5c5ce5a7ec90d47...4c4ae2a60182e50f886507d959a50e7f63ac2ad0)
 
 ### Changed
+
+- Update base distribution to [20230718](https://github.com/msys2/msys2-installer/releases/tag/2023-07-18). [[#322](https://github.com/msys2/setup-msys2/pull/322)]
 
 ## [2.19.0](https://github.com/msys2/setup-msys2/compare/86132ac62b5f7963e748fab1b1f14e5f76113434...287411083877ecfd4b906a1af5c5ce5a7ec90d47)
 
@@ -16,8 +18,7 @@
 
 ### Changed
 
-- Update base distribution to [20230526](https://github.com/msys2/msys2-installer/releases/tag/2023-05-26
-). [[#289](https://github.com/msys2/setup-msys2/pull/303)]
+- Update base distribution to [20230526](https://github.com/msys2/msys2-installer/releases/tag/2023-05-26). [[#303](https://github.com/msys2/setup-msys2/pull/303)]
 - Bump dependencies:
   - eslint to v8.41.0
 
