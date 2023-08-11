@@ -66,3 +66,4 @@ typings/
 .next
 
 dist/
+release/
