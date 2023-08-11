@@ -221,7 +221,7 @@ The package or list of packages are installed through `pacboy --noconfirm -S --n
 
 * Type: `string`
 * Allowed values: `warn | fatal`
-* Default: `warn`
+* Default: `fatal`
 
 By default (`fatal`), throw an error if the runner OS is not Windows.
 If set to `warn`, simply log a message and skip the rest:
