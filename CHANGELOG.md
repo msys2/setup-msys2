@@ -1,8 +1,14 @@
 # Changelog
 
-## [Unreleased](https://github.com/msys2/setup-msys2/compare/4c4ae2a60182e50f886507d959a50e7f63ac2ad0...HEAD)
+## [2.20.1](https://github.com/msys2/setup-msys2/compare/4c4ae2a60182e50f886507d959a50e7f63ac2ad0...a2166def46067f1a4e25754ed80420d5cc32752a)
 
 ### Changed
+
+- Tag all releases with semver tags [[#327](https://github.com/msys2/setup-msys2/issues/327)]
+- Bump dependencies:
+  - @actions/cache to v3.2.2
+  - eslint to 8.46.0
+  - eslint-plugin-jsdoc to 46.4.6
 
 ## [2.20.0](https://github.com/msys2/setup-msys2/compare/287411083877ecfd4b906a1af5c5ce5a7ec90d47...4c4ae2a60182e50f886507d959a50e7f63ac2ad0)
 
