@@ -6,29 +6,18 @@ The steps to publish a new release are the following:
 # Remove/clean everything
 git clean -xfd
 
-# Install dependencies and package the action with ncc
-npm ci
-npm run pkg
-
-# - Copy release artifacts to subdir dir
-# - Create a new orphan branch in a new empty repo
-# - Push the branch
+# Create a clone of this repo under "release" with all the new commits/tags
 ./release.sh v2.x.x
 
-# Fetch the new branch and checkout it
-git fetch --all
-git checkout -b tmp origin/v2.x.x
-
-# Reset the 'rolling' tag to the just released branch
-git tag -d v2
-git tag v2
+# Review and push to the remote
+cd release
+git push
+git push --tags
 git push origin +v2
 
-# Remove the temporal branch
-git checkout main
-git branch -D tmp
+# Fetch the new changed major version tag
+cd ..
+git fetch origin --tags --force
 ```
-
-> NOTE: although it feels unidiomatic having 'rolling' tags and/or storing release assets in specific branches, it is the recommended solution. Retrieving assets from GitHub Releases is not supported by GitHub Actions (yet). See [actions/javascript-action: Create a release branch](https://github.com/actions/javascript-action#create-a-release-branch), [actions/toolkit: docs/action-versioning.md](https://github.com/actions/toolkit/blob/main/docs/action-versioning.md) and [actions/toolkit#214](https://github.com/actions/toolkit/issues/214).
 
 > NOTE: tag `tag-for-git-describe` is used for testing `git describe --dirty --tags` in CI. See [actions/checkout#250](https://github.com/actions/checkout/issues/250).
