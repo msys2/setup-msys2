@@ -62,7 +62,7 @@ In order to reduce verbosity, it is possible to set `msys2` as the default shell
       install: >-
         curl
         git
-  - uses: actions/checkout@v3
+  - uses: actions/checkout@v4
 ```
 
 ### Build matrix
@@ -311,5 +311,5 @@ To work around this issue disable the auto conversion before running `actions/ch
 ```yaml
   steps:
   - run: git config --global core.autocrlf input
-  - uses: actions/checkout@v3
+  - uses: actions/checkout@v4
 ```
