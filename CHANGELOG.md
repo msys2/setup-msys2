@@ -3,6 +3,7 @@
 ## [2.21.0](https://github.com/msys2/setup-msys2/compare/a2166def46067f1a4e25754ed80420d5cc32752a...bbe68c7e8f9cbe6bdcb0cd8afb3e0c3aa4d56397)
 
 - Update base distribution to [20231026](https://github.com/msys2/msys2-installer/releases/tag/2023-10-26). [[#334](https://github.com/msys2/setup-msys2/pull/334)]
+- Update to node20 from node16 [#333](https://github.com/msys2/setup-msys2/pull/333)
 - Update dependencies
 
 ## [2.20.1](https://github.com/msys2/setup-msys2/compare/4c4ae2a60182e50f886507d959a50e7f63ac2ad0...a2166def46067f1a4e25754ed80420d5cc32752a)
