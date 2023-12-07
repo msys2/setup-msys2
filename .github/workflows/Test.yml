@@ -186,7 +186,7 @@ jobs:
     needs: [cache]
     runs-on: windows-latest
     steps:
-    - uses: actions/setup-go@v4
+    - uses: actions/setup-go@v5
     - name: 🧰 Checkout
       uses: actions/checkout@v4
     - name: 📥 Download artifact
@@ -204,7 +204,7 @@ jobs:
     needs: [cache]
     runs-on: windows-latest
     steps:
-    - uses: actions/setup-go@v4
+    - uses: actions/setup-go@v5
     - name: 🧰 Checkout
       uses: actions/checkout@v4
     - name: 📥 Download artifact
