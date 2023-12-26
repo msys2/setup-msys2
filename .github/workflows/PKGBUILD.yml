@@ -60,7 +60,7 @@ jobs:
         makepkg-mingw --noconfirm --noprogressbar -sCLf
 
     - name: '📤 Upload artifact: package'
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: ${{ matrix.sys }}-${{ inputs.name }}
         path: ${{ inputs.path }}/*.zst
@@ -93,7 +93,7 @@ jobs:
         update: true
 
     - name: '📥 Download artifact: package'
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4
       with:
         path: .
         name: ${{ matrix.sys }}-${{ inputs.name }}

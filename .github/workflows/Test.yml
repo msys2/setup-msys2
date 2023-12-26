@@ -30,7 +30,7 @@ jobs:
         npm run pkg
         rm -rf node_modules
     - name: 📤 Upload artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: action
         path: dist
@@ -52,7 +52,7 @@ jobs:
     - name: 🧰 Checkout
       uses: actions/checkout@v4
     - name: 📥 Download artifact
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4
       with:
         name: action
     - name: 🚧 run action
@@ -90,7 +90,7 @@ jobs:
     - name: 🧰 Checkout
       uses: actions/checkout@v4
     - name: 📥 Download artifact
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4
       with:
         name: action
     - name: 🚧 run action
@@ -134,7 +134,7 @@ jobs:
     - name: 🧰 Checkout
       uses: actions/checkout@v4
     - name: 📥 Download artifact
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4
       with:
         name: action
     - name: 🚧 run action
@@ -172,7 +172,7 @@ jobs:
     - name: 🧰 Checkout
       uses: actions/checkout@v4
     - name: 📥 Download artifact
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4
       with:
         name: action
     - name: 🚧 run action
@@ -186,11 +186,11 @@ jobs:
     needs: [cache]
     runs-on: windows-latest
     steps:
-    - uses: actions/setup-go@v4
+    - uses: actions/setup-go@v5
     - name: 🧰 Checkout
       uses: actions/checkout@v4
     - name: 📥 Download artifact
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4
       with:
         name: action
     - name: 🚧 run action
@@ -204,11 +204,11 @@ jobs:
     needs: [cache]
     runs-on: windows-latest
     steps:
-    - uses: actions/setup-go@v4
+    - uses: actions/setup-go@v5
     - name: 🧰 Checkout
       uses: actions/checkout@v4
     - name: 📥 Download artifact
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4
       with:
         name: action
     - name: 🚧 run action
@@ -230,7 +230,7 @@ jobs:
     - name: 🧰 Checkout
       uses: actions/checkout@v4
     - name: 📥 Download artifact
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4
       with:
         name: action
     - name: 🚧 run action
@@ -256,7 +256,7 @@ jobs:
       with:
         fetch-depth: 0
     - name: 📥 Download artifact
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4
       with:
         name: action
     - name: 🚧 run action
@@ -279,7 +279,7 @@ jobs:
       with:
         fetch-depth: 0
     - name: 📥 Download artifact
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4
       with:
         name: action
     - name: 🚧 run action
@@ -297,7 +297,7 @@ jobs:
     - name: 🧰 Checkout
       uses: actions/checkout@v4
     - name: 📥 Download artifact
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4
       with:
         name: action
     - name: 🚧 run action
@@ -315,7 +315,7 @@ jobs:
     - name: 🧰 Checkout
       uses: actions/checkout@v4
     - name: 📥 Download artifact
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4
       with:
         name: action
     - name: 🚧 run action
@@ -335,7 +335,7 @@ jobs:
     - name: 🧰 Checkout
       uses: actions/checkout@v4
     - name: 📥 Download artifact
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4
       with:
         name: action
     - name: 🚧 run action
@@ -356,7 +356,7 @@ jobs:
     - name: 🧰 Checkout
       uses: actions/checkout@v4
     - name: 📥 Download artifact
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4
       with:
         name: action
     - name: 🚧 run action
@@ -384,7 +384,7 @@ jobs:
     - name: 🧰 Checkout
       uses: actions/checkout@v4
     - name: 📥 Download artifact
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4
       with:
         name: action
     - name: 🚧 run action
@@ -407,7 +407,7 @@ jobs:
     - name: 🧰 Checkout
       uses: actions/checkout@v4
     - name: 📥 Download artifact
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4
       with:
         name: action
     - name: 🚧 run action
@@ -459,7 +459,7 @@ jobs:
     - name: 🧰 Checkout
       uses: actions/checkout@v4
     - name: 📥 Download artifact
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4
       with:
         name: action
     - name: 🚧 run action
@@ -481,7 +481,7 @@ jobs:
     - name: 🧰 Checkout
       uses: actions/checkout@v4
     - name: 📥 Download artifact
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4
       with:
         name: action
     - name: 🚧 run action
@@ -504,7 +504,7 @@ jobs:
     - name: 🧰 Checkout
       uses: actions/checkout@v4
     - name: 📥 Download artifact
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4
       with:
         name: action
     - name: 🚧 run action
@@ -531,7 +531,7 @@ jobs:
     - name: 🧰 Checkout
       uses: actions/checkout@v4
     - name: 📥 Download artifact
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4
       with:
         name: action
     - name: 🚧 run action
