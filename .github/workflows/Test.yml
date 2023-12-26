@@ -9,7 +9,7 @@ on:
 jobs:
 
 
-  eslint:
+  checks:
     runs-on: windows-latest
     steps:
     - name: 🧰 Checkout
@@ -17,6 +17,7 @@ jobs:
     - run: |
         npm ci
         npm run lint
+        npm run tsc
 
   cache:
     runs-on: windows-latest
