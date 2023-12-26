@@ -1,3 +1,4 @@
+// @ts-check
 import cache from '@actions/cache';
 import core from '@actions/core';
 import io from '@actions/io';
@@ -67,8 +68,8 @@ function parseInput() {
   }
   p_msystem = p_msystem.toUpperCase()
 
-  p_install = (p_install === 'false') ? [] : p_install.split(/\s+/);
-  p_pacboy = (p_pacboy === 'false') ? [] : p_pacboy.split(/\s+/);
+  let p_install_list = (p_install === 'false') ? [] : p_install.split(/\s+/);
+  let p_pacboy_list = (p_pacboy === 'false') ? [] : p_pacboy.split(/\s+/);
 
   const platformcheckseverity_allowed = ['fatal', 'warn'];
   if (!platformcheckseverity_allowed.includes(p_platformcheckseverity)) {
@@ -86,8 +87,8 @@ function parseInput() {
   input.update = p_update;
   input.pathtype = p_pathtype;
   input.msystem = p_msystem;
-  input.install = p_install;
-  input.pacboy = p_pacboy;
+  input.install = p_install_list;
+  input.pacboy = p_pacboy_list;
   input.platformcheckseverity = p_platformcheckseverity;
   input.location = (p_location == "RUNNER_TEMP") ? process.env['RUNNER_TEMP'] : p_location;
   input.cache = p_cache;
@@ -146,7 +147,7 @@ async function disableKeyRefresh(msysRootDir) {
  * @param {string[]} paths
  * @param {string} restoreKey
  * @param {string} saveKey
- * @returns {Promise<string|undefined>}
+ * @returns {Promise<number|undefined>}
  */
 async function saveCacheMaybe(paths, restoreKey, saveKey) {
     if (restoreKey === saveKey) {
@@ -317,7 +318,7 @@ async function pacman(args, opts, cmd) {
 }
 
 /**
- * @returns {void}
+ * @returns {Promise<void>}
  */
 async function run() {
   try {
