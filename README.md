@@ -8,7 +8,7 @@
   <a title="'Example PKGBUILD' workflow Status" href="https://github.com/msys2/setup-msys2/actions/workflows/Tool.yml"><img alt="'Example PKGBUILD' workflow Status" src="https://img.shields.io/github/actions/workflow/status/msys2/setup-msys2/Tool.yml?branch=main&longCache=true&style=flat-square&label=Example%20PKGBUILD&logo=github"></a><!--
   -->
 </p>
-
+ 
 # Setup MSYS2
 
 **setup-msys2** is a GitHub Action (GHA) to setup an [MSYS2](https://www.msys2.org/) environment (i.e. MSYS,
