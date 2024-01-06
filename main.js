@@ -229,7 +229,7 @@ class PackageCache {
   }
 
   async save() {
-    const saveKey = this.jobCacheKey + '-files:' + await hashPath(this.pkgCachePath);
+    const saveKey = this.jobCacheKey + '-files:' + await hashPath(this.pkgCachePath) + crypto.randomBytes(10).toString('hex');
     const cacheId = await saveCacheMaybe([this.pkgCachePath], this.restoreKey, saveKey);
     return (cacheId !== undefined);
   }
