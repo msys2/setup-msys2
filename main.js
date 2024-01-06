@@ -455,4 +455,5 @@ async function run() {
   }
 }
 
-run()
+await run()
+process.exit(0);
