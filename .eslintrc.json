@@ -8,7 +8,7 @@
     },
     "extends": ["eslint:recommended", "plugin:jsdoc/recommended"],
     "parserOptions": {
-        "ecmaVersion": 11,
+        "ecmaVersion": 13,
         "sourceType": "module"
     },
     "rules": {
