@@ -150,7 +150,6 @@ async function disableKeyRefresh(msysRootDir) {
  * @returns {Promise<number|undefined>}
  */
 async function saveCacheMaybe(paths, restoreKey, saveKey) {
-  return;
     if (restoreKey === saveKey) {
         console.log(`Cache unchanged, skipping save for ${saveKey}`);
         return;
