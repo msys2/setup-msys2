@@ -10,6 +10,7 @@ import crypto from 'node:crypto';
 import assert from 'node:assert/strict';
 import process from 'node:process';
 import { hashElement } from 'folder-hash';
+import log from 'why-is-node-running';
 
 // XXX: hack to make ncc copy those files to dist
 // eslint-disable-next-line
@@ -456,7 +457,5 @@ async function run() {
 }
 
 await run()
-console.log(process.getActiveResourcesInfo());
-console.log(process._getActiveRequests());
-console.log(process._getActiveHandles());
+log();
 process.exit(0);
