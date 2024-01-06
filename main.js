@@ -455,4 +455,8 @@ async function run() {
   }
 }
 
-await run()
+
+await run();
+
+// https://github.com/actions/toolkit/issues/1578#issuecomment-1879770064
+process.exit();
