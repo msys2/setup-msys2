@@ -456,4 +456,6 @@ async function run() {
 }
 
 await run()
+console.log(process._getActiveRequests());
+console.log(process._getActiveHandles());
 process.exit(0);
