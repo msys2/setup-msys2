@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.22.0
+
+- Update base distribution to [20240113](https://github.com/msys2/msys2-installer/releases/tag/2024-01-13). [[#355](https://github.com/msys2/setup-msys2/pull/355)]
+
 ## 2.21.1
 
 - Work around @actions/cache preventing node from exiting after a cache upload [#354](https://github.com/msys2/setup-msys2/pull/354)
