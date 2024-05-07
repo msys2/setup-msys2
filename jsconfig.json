@@ -1,7 +1,10 @@
 {
     "compilerOptions": {
+        "checkJs": true,
+        "maxNodeModuleJsDepth": 0,
         "module": "nodenext",
         "moduleResolution": "nodenext",
         "target": "esnext"
-    }
+    },
+    "exclude": ["node_modules", "dist"]
 }

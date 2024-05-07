@@ -1,4 +1,3 @@
-// @ts-check
 import cache from '@actions/cache';
 import core from '@actions/core';
 import io from '@actions/io';
