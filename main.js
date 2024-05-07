@@ -17,9 +17,9 @@ function dummy() {
     return [__dirname + '/action.yml', __dirname + '/README.md'];
 }
 
-const INSTALLER_VERSION = '2024-01-13';
+const INSTALLER_VERSION = '2024-05-07';
 const INSTALLER_URL = `https://github.com/msys2/msys2-installer/releases/download/${INSTALLER_VERSION}/msys2-base-x86_64-${INSTALLER_VERSION.replace(/-/g, '')}.sfx.exe`;
-const INSTALLER_CHECKSUM = 'dba7e6d27e6a9ab850f502da44f6bfcd16d4d7b175fc2b25bee37207335cb12f';
+const INSTALLER_CHECKSUM = 'd96c53ecbfa4b9d81f6c58077965bb2e31472a8bda4d4446ef8f45f9c601b11d';
 // see https://github.com/msys2/setup-msys2/issues/61
 const INSTALL_CACHE_ENABLED = false;
 const CACHE_FLUSH_COUNTER = 0;
