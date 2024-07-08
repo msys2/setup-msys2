@@ -39,6 +39,6 @@
     "@vercel/ncc": "^0.38.1",
     "eslint": "^9.2.0",
     "eslint-plugin-jsdoc": "^48.2.3",
-    "typescript": "^5.3.3"
+    "typescript": "^5.5.3"
   }
 }
