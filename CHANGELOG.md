@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.24.0
+
+- Update base distribution to [20240727](https://github.com/msys2/msys2-installer/releases/tag/2024-07-27). [[#402](https://github.com/msys2/setup-msys2/pull/402)]
+
 ## 2.23.0
 
 - Update base distribution to [20240507](https://github.com/msys2/msys2-installer/releases/tag/2024-05-07). [[#381](https://github.com/msys2/setup-msys2/pull/381)]
