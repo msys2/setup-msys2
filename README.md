@@ -232,6 +232,18 @@ If set to `warn`, simply log a message and skip the rest:
       platform-check-severity: warn
 ```
 
+### Outputs
+
+#### msys2-location
+
+The absolute path of the MSYS2 installation location. Example: `D:\a\_temp\msys64` or `C:\msys64`.
+
+```yaml
+  - uses: msys2/setup-msys2@v2
+    id: msys2
+  - run: echo '${{ steps.msys2.outputs.msys2-location }}'
+```
+
 ### Advanced Options
 
 These options are rarely needed and shouldn't be used unless there is a good reason.
