@@ -404,6 +404,7 @@ jobs:
         location:
         - D:\
         - D:\some\arbitrary
+        - RUNNER_TEMP
     steps:
     - name: 🧰 Checkout
       uses: actions/checkout@v4
@@ -413,6 +414,7 @@ jobs:
         name: action
     - name: 🚧 run action
       uses: ./
+      id: msys2
       with:
         location: ${{ matrix.location }}
         update: false
@@ -421,12 +423,19 @@ jobs:
         cygpath -m /
     - shell: pwsh
       run: |
-        $Env:MSYS2_ROOT = msys2 -c 'cygpath -m /'
+        echo '${{ steps.msys2.outputs.msys2-location }}'
+    - shell: pwsh
+      run: |
+        $Env:MSYS2_ROOT = msys2 -c 'cygpath -a -w /'
         $Env:MSYS2_ROOT
+        if ($env:MSYS2_ROOT -ne '${{ steps.msys2.outputs.msys2-location }}') {
+            Write-Error "Error: MSYS2_ROOT is '$env:MSYS2_ROOT', expected '${{ steps.msys2.outputs.msys2-location }}'"
+            exit 1
+        }
     - shell: python
       run: |
         from subprocess import check_output
-        MSYS2_ROOT = check_output(['msys2', '-c', 'cygpath -m /'], shell=True).decode('utf-8')
+        MSYS2_ROOT = check_output(['msys2', '-c', 'cygpath -a -w /'], shell=True).decode('utf-8')
         print(MSYS2_ROOT)
 
 

@@ -40,6 +40,9 @@ inputs:
     description: 'If caching should be used'
     required: false
     default: true
+outputs:
+  msys2-location:
+    description: 'The absolute path of the MSYS2 installation location'
 runs:
   using: 'node20'
   main: 'index.js'

@@ -373,6 +373,8 @@ async function run() {
     writeWrapper(msysRootDir, input.msystem, input.pathtype, pathDir, 'msys2.cmd');
     core.addPath(pathDir);
 
+    core.setOutput('msys2-location', msysRootDir);
+
     // XXX: ideally this should be removed, we don't want to pollute the user's environment
     core.exportVariable('MSYSTEM', input.msystem);
 
