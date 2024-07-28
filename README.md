@@ -292,7 +292,7 @@ Specify an alternate location where to install MSYS2 to.
 * Default: `true`
 
 If `true` (the default) it makes a fresh install of the latest MSYS2 installer release.
-If `false` it will try to re-use the [existing MSYS2 installation](https://github.com/actions/runner-images/blob/main/images/win/Windows2022-Readme.md#msys2) which is part of the official [GitHub Actions Runner Images](https://github.com/actions/runner-images).
+If `false` it will try to re-use the [existing MSYS2 installation](https://github.com/actions/runner-images/blob/main/images/windows/Windows2022-Readme.md#msys2) which is part of the official [GitHub Actions Runner Images](https://github.com/actions/runner-images).
 
 ```yaml
   - uses: msys2/setup-msys2@v2
