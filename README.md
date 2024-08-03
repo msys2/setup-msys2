@@ -232,6 +232,20 @@ If set to `warn`, simply log a message and skip the rest:
       platform-check-severity: warn
 ```
 
+### Outputs
+
+#### msys2-location
+
+The absolute path of the MSYS2 installation location. Example: `D:\a\_temp\msys64` or `C:\msys64`.
+
+```yaml
+  - uses: msys2/setup-msys2@v2
+    id: msys2
+  - run: echo '${{ steps.msys2.outputs.msys2-location }}'
+```
+
+Available since v2.24.1
+
 ### Advanced Options
 
 These options are rarely needed and shouldn't be used unless there is a good reason.
@@ -292,7 +306,7 @@ Specify an alternate location where to install MSYS2 to.
 * Default: `true`
 
 If `true` (the default) it makes a fresh install of the latest MSYS2 installer release.
-If `false` it will try to re-use the [existing MSYS2 installation](https://github.com/actions/runner-images/blob/main/images/win/Windows2022-Readme.md#msys2) which is part of the official [GitHub Actions Runner Images](https://github.com/actions/runner-images).
+If `false` it will try to re-use the [existing MSYS2 installation](https://github.com/actions/runner-images/blob/main/images/windows/Windows2022-Readme.md#msys2) which is part of the official [GitHub Actions Runner Images](https://github.com/actions/runner-images).
 
 ```yaml
   - uses: msys2/setup-msys2@v2
