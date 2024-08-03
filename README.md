@@ -244,6 +244,8 @@ The absolute path of the MSYS2 installation location. Example: `D:\a\_temp\msys6
   - run: echo '${{ steps.msys2.outputs.msys2-location }}'
 ```
 
+Available since v2.24.1
+
 ### Advanced Options
 
 These options are rarely needed and shouldn't be used unless there is a good reason.
