@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.25.0
+
+- Update base distribution to [20241116](https://github.com/msys2/msys2-installer/releases/tag/2024-11-16). [[#444](https://github.com/msys2/setup-msys2/pull/444)]
+
 ## 2.24.1
 
 - Added a new action output `msys2-location` to get the path to the MSYS2 installation directory. [[#404](https://github.com/msys2/setup-msys2/pull/404)]
