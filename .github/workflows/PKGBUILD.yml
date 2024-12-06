@@ -56,8 +56,10 @@ jobs:
         pacboy: toolchain:p
 
     - name: '🚧 Build package'
+      env:
+        PKGBUILD_PATH: ${{ inputs.path }}
       run: |
-        cd ${{ inputs.path }}
+        cd "$PKGBUILD_PATH"
         makepkg-mingw --noconfirm --noprogressbar -sCLf
 
     - name: '📤 Upload artifact: package'
@@ -67,10 +69,12 @@ jobs:
         path: ${{ inputs.path }}/*.zst
 
     - name: '🔍 Show package content'
+      env:
+        PKGBUILD_PATH: ${{ inputs.path }}
       run: |
         mkdir tmp
         cd tmp
-        tar -xf ../${{ inputs.path }}/*.zst
+        tar -xf ../"$PKGBUILD_PATH"/*.zst
         tree .
 
 
@@ -103,4 +107,4 @@ jobs:
       run: pacman -U --noconfirm --noprogressbar *.zst
 
     - name: '🚦 Test package'
-      run: ${{ inputs.test }}
+      run: ${{ inputs.test }}  # zizmor: ignore[template-injection]

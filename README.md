@@ -241,7 +241,9 @@ The absolute path of the MSYS2 installation location. Example: `D:\a\_temp\msys6
 ```yaml
   - uses: msys2/setup-msys2@v2
     id: msys2
-  - run: echo '${{ steps.msys2.outputs.msys2-location }}'
+  - env:
+      MSYS2_LOCATION: ${{ steps.msys2.outputs.msys2-location }}
+    run: echo "$env:MSYS2_LOCATION"
 ```
 
 Available since v2.24.1
