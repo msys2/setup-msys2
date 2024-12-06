@@ -454,14 +454,18 @@ jobs:
       run: |
         cygpath -m /
     - shell: pwsh
+      env:
+        MSYS2_LOCATION: ${{ steps.msys2.outputs.msys2-location }}
       run: |
-        echo '${{ steps.msys2.outputs.msys2-location }}'
+        echo "$env:MSYS2_LOCATION"
     - shell: pwsh
+      env:
+        MSYS2_LOCATION: ${{ steps.msys2.outputs.msys2-location }}
       run: |
         $Env:MSYS2_ROOT = msys2 -c 'cygpath -a -w /'
         $Env:MSYS2_ROOT
-        if ($env:MSYS2_ROOT -ne '${{ steps.msys2.outputs.msys2-location }}') {
-            Write-Error "Error: MSYS2_ROOT is '$env:MSYS2_ROOT', expected '${{ steps.msys2.outputs.msys2-location }}'"
+        if ($env:MSYS2_ROOT -ne "$env:MSYS2_LOCATION") {
+            Write-Error "Error: MSYS2_ROOT is '$env:MSYS2_ROOT', expected '$env:MSYS2_LOCATION'"
             exit 1
         }
     - shell: python
