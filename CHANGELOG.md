@@ -1,5 +1,15 @@
 # Changelog
 
+## 2.26.0
+
+- Update base distribution to [20241208](https://github.com/msys2/msys2-installer/releases/tag/2024-12-08). [[#444](https://github.com/msys2/setup-msys2/pull/444)]
+- Update dependencies
+- Update @actions/cache to v4 which will be required for the GitHub cache
+  backend migration, which is scheduled for 2025-02, see
+  https://github.com/actions/toolkit/discussions/1890 for details. There is no
+  action required for users of this action, but old versions of this action may
+  start to fail after the legacy cache backend is sunset.
+
 ## 2.25.0
 
 - Update base distribution to [20241116](https://github.com/msys2/msys2-installer/releases/tag/2024-11-16). [[#444](https://github.com/msys2/setup-msys2/pull/444)]
