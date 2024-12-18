@@ -61,7 +61,7 @@ function parseInput() {
   let p_location = core.getInput('location');
   let p_cache = core.getBooleanInput('cache');
 
-  const msystem_allowed = ['MSYS', 'MINGW32', 'MINGW64', 'UCRT64', 'CLANG32', 'CLANG64', 'CLANGARM64'];
+  const msystem_allowed = ['MSYS', 'MINGW32', 'MINGW64', 'UCRT64', 'CLANG64', 'CLANGARM64'];
   if (!msystem_allowed.includes(p_msystem.toUpperCase())) {
     throw new Error(`'msystem' needs to be one of ${ msystem_allowed.join(', ') }, got ${p_msystem}`);
   }

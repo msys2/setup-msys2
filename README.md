@@ -12,7 +12,7 @@
 # Setup MSYS2
 
 **setup-msys2** is a GitHub Action (GHA) to setup an [MSYS2](https://www.msys2.org/) environment (i.e. MSYS,
-MINGW32, MINGW64, UCRT64, CLANG32, CLANG64 and/or CLANGARM64 shells)
+MINGW32, MINGW64, UCRT64, CLANG64 and/or CLANGARM64 shells)
 
 It provides:
 
@@ -128,7 +128,7 @@ Find further details at [#171](https://github.com/msys2/setup-msys2/issues/171#i
 #### msystem
 
 * Type: `string`
-* Allowed values: `MSYS | MINGW64 | MINGW32 | UCRT64 | CLANG32 | CLANG64 | CLANGARM64`
+* Allowed values: `MSYS | MINGW64 | MINGW32 | UCRT64 | CLANG64 | CLANGARM64`
 * Default: `MINGW64`
 
 The default [environment](https://www.msys2.org/docs/environments/) that is used in the `msys2` command/shell provided by this action.
