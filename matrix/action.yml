@@ -5,7 +5,7 @@ inputs:
     description: 'Space separated list of systems to build and test the tool on.'
     required: false
     type: string
-    default: 'msys mingw32 mingw64 ucrt64 clang32 clang64'
+    default: 'msys mingw32 mingw64 ucrt64 clang64'
 outputs:
   jobs:
     description: "List of MSYS2 systems to be used in the matrix of other jobs."
@@ -24,7 +24,6 @@ runs:
           'mingw32': '⬛',
           'mingw64': '🟦',
           'ucrt64':  '🟨',
-          'clang32': '🟫',
           'clang64': '🟧',
         }
         jobs = [
