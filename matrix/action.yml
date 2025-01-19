@@ -17,6 +17,8 @@ runs:
     - name: Generate list of jobs
       shell: python
       id: jobs
+      env:
+        INPUT_SYSTEMS: ${{ inputs.systems }}
       run: |
         import os
         icons = {
@@ -28,7 +30,7 @@ runs:
         }
         jobs = [
             {'sys': sys.lower(), 'icon': icons[sys.lower()]}
-            for sys in '${{ inputs.systems }}'.split(' ')
+            for sys in os.environ['INPUT_SYSTEMS'].split(' ')
         ]
         with open(os.environ['GITHUB_OUTPUT'], 'a', encoding='utf-8') as h:
           h.write(f"jobs={jobs!s}\n")
