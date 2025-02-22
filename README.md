@@ -12,7 +12,7 @@
 # Setup MSYS2
 
 **setup-msys2** is a GitHub Action (GHA) to setup an [MSYS2](https://www.msys2.org/) environment (i.e. MSYS,
-MINGW32, MINGW64, UCRT64, CLANG32, CLANG64 and/or CLANGARM64 shells)
+MINGW32, MINGW64, UCRT64, CLANG64 and/or CLANGARM64 shells)
 
 It provides:
 
@@ -69,8 +69,8 @@ In order to reduce verbosity, it is possible to set `msys2` as the default shell
 
 It is common to test some package/tool on multiple environments, which typically requires installing different sets of
 packages through option `install`.
-GitHub Actions' `strategy` and `matrix` fields allow to do so, as explained in [docs.github.com: Configuring a build matrix](https://docs.github.com/en/actions/configuring-and-managing-workflows/configuring-a-workflow#configuring-a-build-matrix)
-and [docs.github.com: `jobs.<job_id>.strategy.matrix`](https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions#jobsjob_idstrategymatrix).
+GitHub Actions' `strategy` and `matrix` fields allow to do so, as explained in [docs.github.com: Running variations of jobs in a workflow](https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/running-variations-of-jobs-in-a-workflow)
+and [docs.github.com: `jobs.<job_id>.strategy.matrix`](https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstrategymatrix).
 See, for instance:
 
 ```yml
@@ -105,15 +105,15 @@ Alternatively, option `pacboy` allows using a single matrix variable:
         pacboy: openssl:p
 ```
 
-Furthermore, [.github/workflows/PKGBUILD.yml](.github/workflows/PKGBUILD.yml) is a [Reusable Workflow](https://docs.github.com/en/actions/learn-github-actions/reusing-workflows)
+Furthermore, [.github/workflows/PKGBUILD.yml](.github/workflows/PKGBUILD.yml) is a [Reusable Workflow](https://docs.github.com/en/actions/sharing-automations/reusing-workflows)
 to build and test a package in GitHub Actions using a PKGBUILD recipe.
-It can be used along with [matrix](./matrix) (a [Composite Action](https://docs.github.com/en/actions/creating-actions/creating-a-composite-action)),
+It can be used along with [matrix](./matrix) (a [Composite Action](https://docs.github.com/en/actions/sharing-automations/creating-actions/creating-a-composite-action)),
 as shown in [.github/workflows/Tool.yml](.github/workflows/Tool.yml).
 
 Note: By default, GitHub Actions terminates any running jobs if any job in matrix
 fails. This default behavior can be disabled by setting `fail-fast: false` in
 strategy section. See
-[docs.github.com: `jobs.<job_id>.strategy.fail-fast`](https://docs.github.com/en/actions/learn-github-actions/workflow-syntax-for-github-actions#jobsjob_idstrategyfail-fast)
+[docs.github.com: `jobs.<job_id>.strategy.fail-fast`](https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstrategyfail-fast)
 for more details.
 
 Find similar patterns in the following workflows:
@@ -128,7 +128,7 @@ Find further details at [#171](https://github.com/msys2/setup-msys2/issues/171#i
 #### msystem
 
 * Type: `string`
-* Allowed values: `MSYS | MINGW64 | MINGW32 | UCRT64 | CLANG32 | CLANG64 | CLANGARM64`
+* Allowed values: `MSYS | MINGW64 | MINGW32 | UCRT64 | CLANG64 | CLANGARM64`
 * Default: `MINGW64`
 
 The default [environment](https://www.msys2.org/docs/environments/) that is used in the `msys2` command/shell provided by this action.
