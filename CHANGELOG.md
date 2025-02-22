@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.27.0
+
+- Update base distribution to [20250221](https://github.com/msys2/msys2-installer/releases/tag/2025-02-21). [[#480](https://github.com/msys2/setup-msys2/pull/480)]
+- Update dependencies
+- Drop support for CLANG32
+
 ## 2.26.0
 
 - Update base distribution to [20241208](https://github.com/msys2/msys2-installer/releases/tag/2024-12-08). [[#444](https://github.com/msys2/setup-msys2/pull/444)]
