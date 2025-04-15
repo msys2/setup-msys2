@@ -5,7 +5,7 @@ inputs:
     description: 'Space separated list of systems to build and test the tool on.'
     required: false
     type: string
-    default: 'msys mingw32 mingw64 ucrt64 clang64'
+    default: 'msys mingw32 mingw64 ucrt64 clang64 clangarm64'
 outputs:
   jobs:
     description: "List of MSYS2 systems to be used in the matrix of other jobs."
@@ -22,15 +22,19 @@ runs:
       run: |
         import os
         icons = {
-          'msys':    '🟪',
-          'mingw32': '⬛',
-          'mingw64': '🟦',
-          'ucrt64':  '🟨',
-          'clang64': '🟧',
+          'msys':       '🟪',
+          'mingw32':    '⬛',
+          'mingw64':    '🟦',
+          'ucrt64':     '🟨',
+          'clang64':    '🟧',
+          'clangarm64': '🟩',
         }
         jobs = [
-            {'sys': sys.lower(), 'icon': icons[sys.lower()]}
-            for sys in os.environ['INPUT_SYSTEMS'].split(' ')
+            {
+              'sys': sys.lower(),
+              'icon': icons[sys.lower()],
+              'runs-on': 'windows-11-arm' if sys.lower() == 'clangarm64' else 'windows-latest',
+            } for sys in os.environ['INPUT_SYSTEMS'].split(' ')
         ]
         with open(os.environ['GITHUB_OUTPUT'], 'a', encoding='utf-8') as h:
           h.write(f"jobs={jobs!s}\n")

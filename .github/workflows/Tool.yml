@@ -18,14 +18,18 @@ jobs:
     outputs:
       jobs: ${{ steps.matrix.outputs.jobs }}
     steps:
+    - uses: actions/checkout@v4
+      with:
+        persist-credentials: false
     - id: matrix
-      uses: msys2/setup-msys2/matrix@main
+      uses: ./matrix
       with:
         systems: >-
           mingw32
           mingw64
           ucrt64
           clang64
+          clangarm64
 
   msys2:
     needs: matrix
