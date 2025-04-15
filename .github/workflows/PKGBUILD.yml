@@ -27,7 +27,7 @@ jobs:
 
 
   win-makepkg:
-    runs-on: windows-latest
+    runs-on: ${{ matrix.runs-on }}
     strategy:
       fail-fast: false
       matrix:
@@ -83,7 +83,7 @@ jobs:
 
   win-test:
     needs: win-makepkg
-    runs-on: windows-latest
+    runs-on: ${{ matrix.runs-on }}
     strategy:
       fail-fast: false
       matrix:

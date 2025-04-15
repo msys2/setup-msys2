@@ -10,15 +10,16 @@ on:
 jobs:
 
   build:
-    runs-on: windows-latest
+    runs-on: ${{ matrix.runs-on }}
     strategy:
       fail-fast: false
       matrix:
         include:
-          - { icon: '⬛', sys: mingw32 }
-          - { icon: '🟦', sys: mingw64 }
-          - { icon: '🟨', sys: ucrt64  }
-          - { icon: '🟧', sys: clang64 }
+          - { icon: '⬛', sys: mingw32, runs-on: 'windows-latest' }
+          - { icon: '🟦', sys: mingw64, runs-on: 'windows-latest' }
+          - { icon: '🟨', sys: ucrt64, runs-on: 'windows-latest' }
+          - { icon: '🟧', sys: clang64, runs-on: 'windows-latest' }
+          - { icon: '🟩', sys: clangarm64, runs-on: 'windows-11-arm' }
     name: 🚧${{ matrix.icon }} ${{ matrix.sys }}
     defaults:
       run:

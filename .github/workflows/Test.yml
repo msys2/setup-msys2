@@ -89,6 +89,26 @@ jobs:
         msys2 ./test.sh CLANG64
 
 
+  powershell-arm64:
+    needs: [cache]
+    runs-on: windows-11-arm
+    steps:
+    - name: 🧰 Checkout
+      uses: actions/checkout@v4
+      with:
+        persist-credentials: false
+    - name: 📥 Download artifact
+      uses: actions/download-artifact@v4
+      with:
+        name: action
+    - name: 🚧 run action
+      uses: ./
+    - name: 🟩 test CLANGARM64
+      run: |
+        $env:MSYSTEM = 'CLANGARM64'
+        msys2 ./test.sh CLANGARM64
+
+
   cmd:
     needs: [cache]
     runs-on: windows-latest
@@ -129,6 +149,25 @@ jobs:
         set MSYSTEM=CLANG64
         msys2 ./test.sh CLANG64
 
+  cmd-arm64:
+    needs: [cache]
+    runs-on: windows-11-arm
+    steps:
+    - name: 🧰 Checkout
+      uses: actions/checkout@v4
+      with:
+        persist-credentials: false
+    - name: 📥 Download artifact
+      uses: actions/download-artifact@v4
+      with:
+        name: action
+    - name: 🚧 run action
+      uses: ./
+    - name: 🟩 test CLANGARM64
+      shell: cmd
+      run: |
+        set MSYSTEM=CLANGARM64
+        msys2 ./test.sh CLANGARM64
 
   env:
     needs: [cache]
@@ -165,10 +204,33 @@ jobs:
       env:
         MSYSTEM: CLANG64
 
+  env-arm64:
+    needs: [cache]
+    runs-on: windows-11-arm
+    steps:
+    - name: 🧰 Checkout
+      uses: actions/checkout@v4
+      with:
+        persist-credentials: false
+    - name: 📥 Download artifact
+      uses: actions/download-artifact@v4
+      with:
+        name: action
+    - name: 🚧 run action
+      uses: ./
+    - name: 🟩 test CLANGARM64
+      run: msys2 ./test.sh CLANGARM64
+      env:
+        MSYSTEM: CLANGARM64
+
 
   shell:
     needs: [cache]
-    runs-on: windows-latest
+    runs-on: ${{ matrix.runs-on }}
+    strategy:
+      fail-fast: false
+      matrix:
+        runs-on: [windows-latest, windows-11-arm]
     steps:
     - name: 🧰 Checkout
       uses: actions/checkout@v4
@@ -187,7 +249,11 @@ jobs:
 
   MSYS2_PATH_TYPE:
     needs: [cache]
-    runs-on: windows-latest
+    runs-on: ${{ matrix.runs-on }}
+    strategy:
+      fail-fast: false
+      matrix:
+        runs-on: [windows-latest, windows-11-arm]
     steps:
     - uses: actions/setup-go@v5
     - name: 🧰 Checkout
@@ -207,7 +273,11 @@ jobs:
 
   path-type:
     needs: [cache]
-    runs-on: windows-latest
+    runs-on: ${{ matrix.runs-on }}
+    strategy:
+      fail-fast: false
+      matrix:
+        runs-on: [windows-latest, windows-11-arm]
     steps:
     - uses: actions/setup-go@v5
     - name: 🧰 Checkout
@@ -232,7 +302,8 @@ jobs:
       fail-fast: false
       matrix:
         install: [ false, git, 'base-devel git' ]
-    runs-on: windows-latest
+        runs-on: [windows-latest, windows-11-arm]
+    runs-on: ${{ matrix.runs-on }}
     steps:
     - name: 🧰 Checkout
       uses: actions/checkout@v4
@@ -253,7 +324,11 @@ jobs:
 
   defaultclean:
     needs: [cache]
-    runs-on: windows-latest
+    runs-on: ${{ matrix.runs-on }}
+    strategy:
+      fail-fast: false
+      matrix:
+        runs-on: [windows-latest, windows-11-arm]
     defaults:
       run:
         shell: msys2 {0}
@@ -279,7 +354,11 @@ jobs:
 
   defaultdirty:
     needs: [cache]
-    runs-on: windows-latest
+    runs-on: ${{ matrix.runs-on }}
+    strategy:
+      fail-fast: false
+      matrix:
+        runs-on: [windows-latest, windows-11-arm]
     defaults:
       run:
         shell: msys2 {0}
@@ -303,7 +382,11 @@ jobs:
 
   errorhandling:
     needs: [cache]
-    runs-on: windows-latest
+    runs-on: ${{ matrix.runs-on }}
+    strategy:
+      fail-fast: false
+      matrix:
+        runs-on: [windows-latest, windows-11-arm]
     steps:
     - name: 🧰 Checkout
       uses: actions/checkout@v4
@@ -323,7 +406,11 @@ jobs:
 
   workingdir:
     needs: [cache]
-    runs-on: windows-latest
+    runs-on: ${{ matrix.runs-on }}
+    strategy:
+      fail-fast: false
+      matrix:
+        runs-on: [windows-latest, windows-11-arm]
     steps:
     - name: 🧰 Checkout
       uses: actions/checkout@v4
@@ -368,7 +455,11 @@ jobs:
 
   nocache:
     needs: [cache]
-    runs-on: windows-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        runs-on: [windows-latest, windows-11-arm]
+    runs-on: ${{ matrix.runs-on }}
     steps:
     - name: 🧰 Checkout
       uses: actions/checkout@v4
@@ -417,13 +508,14 @@ jobs:
   location:
     name: location | ${{ matrix.location }}
     needs: [cache]
-    runs-on: windows-latest
+    runs-on: ${{ matrix.runs-on }}
     strategy:
       fail-fast: false
       matrix:
+        runs-on: [windows-latest, windows-11-arm]
         location:
-        - D:\
-        - D:\some\arbitrary
+        - \
+        - \some\arbitrary
         - RUNNER_TEMP
     steps:
     - name: 🧰 Checkout
@@ -453,7 +545,7 @@ jobs:
         MSYS2_LOCATION: ${{ steps.msys2.outputs.msys2-location }}
       run: |
         $Env:MSYS2_ROOT = msys2 -c 'cygpath -a -w /'
-        $Env:MSYS2_ROOT
+        $env:MSYS2_LOCATION = (Resolve-Path "$env:MSYS2_LOCATION").Path
         if ($env:MSYS2_ROOT -ne "$env:MSYS2_LOCATION") {
             Write-Error "Error: MSYS2_ROOT is '$env:MSYS2_ROOT', expected '$env:MSYS2_LOCATION'"
             exit 1
@@ -492,7 +584,7 @@ jobs:
       fail-fast: false
       matrix:
         include: ${{ fromJson(needs.matrix.outputs.jobs) }}
-    runs-on: windows-latest
+    runs-on: ${{ matrix.runs-on }}
     steps:
     - name: 🧰 Checkout
       uses: actions/checkout@v4
@@ -516,7 +608,7 @@ jobs:
       fail-fast: false
       matrix:
         include: ${{ fromJson(needs.matrix.outputs.jobs) }}
-    runs-on: windows-latest
+    runs-on: ${{ matrix.runs-on }}
     steps:
     - name: 🧰 Checkout
       uses: actions/checkout@v4
@@ -537,7 +629,7 @@ jobs:
   install-and-pacboy:
     name: ${{ matrix.icon }} ${{ matrix.sys }} | install-and-pacboy
     needs: matrix
-    runs-on: windows-latest
+    runs-on: ${{ matrix.runs-on }}
     strategy:
       fail-fast: false
       matrix:
@@ -566,7 +658,7 @@ jobs:
   pacboy:
     name: ${{ matrix.icon }} ${{ matrix.sys }} | pacboy
     needs: matrix
-    runs-on: windows-latest
+    runs-on: ${{ matrix.runs-on }}
     strategy:
       fail-fast: false
       matrix:
