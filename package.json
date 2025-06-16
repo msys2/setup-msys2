@@ -39,7 +39,7 @@
     "@types/node": "^20.19.0",
     "@vercel/ncc": "^0.38.3",
     "eslint": "^9.28.0",
-    "eslint-plugin-jsdoc": "^50.8.0",
+    "eslint-plugin-jsdoc": "^51.0.1",
     "globals": "^16.2.0",
     "typescript": "^5.8.3"
   }
