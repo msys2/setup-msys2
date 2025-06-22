@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.28.0
+
+- Update base distribution to [20250622](https://github.com/msys2/msys2-installer/releases/tag/2025-06-22). [[#518](https://github.com/msys2/setup-msys2/pull/518)]
+- Update dependencies
+
 ## 2.27.0
 
 - Update base distribution to [20250221](https://github.com/msys2/msys2-installer/releases/tag/2025-02-21). [[#480](https://github.com/msys2/setup-msys2/pull/480)]
