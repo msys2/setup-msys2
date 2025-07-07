@@ -40,7 +40,7 @@
     "@vercel/ncc": "^0.38.3",
     "eslint": "^9.29.0",
     "eslint-plugin-jsdoc": "^51.0.2",
-    "globals": "^16.2.0",
+    "globals": "^16.3.0",
     "typescript": "^5.8.3"
   }
 }
