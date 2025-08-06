@@ -101,7 +101,7 @@ jobs:
         update: true
 
     - name: '📥 Download artifact: package'
-      uses: actions/download-artifact@v4
+      uses: actions/download-artifact@v5
       with:
         path: .
         name: ${{ matrix.sys }}-${{ inputs.name }}
