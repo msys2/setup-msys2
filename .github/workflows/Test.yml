@@ -16,7 +16,7 @@ jobs:
     runs-on: windows-latest
     steps:
     - name: 🧰 Checkout
-      uses: actions/checkout@v4
+      uses: actions/checkout@v5
       with:
         persist-credentials: false
     - run: |
@@ -28,7 +28,7 @@ jobs:
     runs-on: windows-latest
     steps:
     - name: 🧰 Checkout
-      uses: actions/checkout@v4
+      uses: actions/checkout@v5
       with:
         persist-credentials: false
     - name: 🚧 build action
@@ -58,7 +58,7 @@ jobs:
     runs-on: windows-latest
     steps:
     - name: 🧰 Checkout
-      uses: actions/checkout@v4
+      uses: actions/checkout@v5
       with:
         persist-credentials: false
     - name: 📥 Download artifact
@@ -94,7 +94,7 @@ jobs:
     runs-on: windows-11-arm
     steps:
     - name: 🧰 Checkout
-      uses: actions/checkout@v4
+      uses: actions/checkout@v5
       with:
         persist-credentials: false
     - name: 📥 Download artifact
@@ -114,7 +114,7 @@ jobs:
     runs-on: windows-latest
     steps:
     - name: 🧰 Checkout
-      uses: actions/checkout@v4
+      uses: actions/checkout@v5
       with:
         persist-credentials: false
     - name: 📥 Download artifact
@@ -154,7 +154,7 @@ jobs:
     runs-on: windows-11-arm
     steps:
     - name: 🧰 Checkout
-      uses: actions/checkout@v4
+      uses: actions/checkout@v5
       with:
         persist-credentials: false
     - name: 📥 Download artifact
@@ -174,7 +174,7 @@ jobs:
     runs-on: windows-latest
     steps:
     - name: 🧰 Checkout
-      uses: actions/checkout@v4
+      uses: actions/checkout@v5
       with:
         persist-credentials: false
     - name: 📥 Download artifact
@@ -209,7 +209,7 @@ jobs:
     runs-on: windows-11-arm
     steps:
     - name: 🧰 Checkout
-      uses: actions/checkout@v4
+      uses: actions/checkout@v5
       with:
         persist-credentials: false
     - name: 📥 Download artifact
@@ -233,7 +233,7 @@ jobs:
         runs-on: [windows-latest, windows-11-arm]
     steps:
     - name: 🧰 Checkout
-      uses: actions/checkout@v4
+      uses: actions/checkout@v5
       with:
         persist-credentials: false
     - name: 📥 Download artifact
@@ -257,7 +257,7 @@ jobs:
     steps:
     - uses: actions/setup-go@v5
     - name: 🧰 Checkout
-      uses: actions/checkout@v4
+      uses: actions/checkout@v5
       with:
         persist-credentials: false
     - name: 📥 Download artifact
@@ -281,7 +281,7 @@ jobs:
     steps:
     - uses: actions/setup-go@v5
     - name: 🧰 Checkout
-      uses: actions/checkout@v4
+      uses: actions/checkout@v5
       with:
         persist-credentials: false
     - name: 📥 Download artifact
@@ -306,7 +306,7 @@ jobs:
     runs-on: ${{ matrix.runs-on }}
     steps:
     - name: 🧰 Checkout
-      uses: actions/checkout@v4
+      uses: actions/checkout@v5
       with:
         persist-credentials: false
     - name: 📥 Download artifact
@@ -336,7 +336,7 @@ jobs:
     - run: git config --global core.autocrlf input
       shell: bash
     - name: 🧰 Checkout
-      uses: actions/checkout@v4
+      uses: actions/checkout@v5
       with:
         fetch-depth: 0
         persist-credentials: false
@@ -364,7 +364,7 @@ jobs:
         shell: msys2 {0}
     steps:
     - name: 🧰 Checkout
-      uses: actions/checkout@v4
+      uses: actions/checkout@v5
       with:
         fetch-depth: 0
         persist-credentials: false
@@ -389,7 +389,7 @@ jobs:
         runs-on: [windows-latest, windows-11-arm]
     steps:
     - name: 🧰 Checkout
-      uses: actions/checkout@v4
+      uses: actions/checkout@v5
       with:
         persist-credentials: false
     - name: 📥 Download artifact
@@ -413,7 +413,7 @@ jobs:
         runs-on: [windows-latest, windows-11-arm]
     steps:
     - name: 🧰 Checkout
-      uses: actions/checkout@v4
+      uses: actions/checkout@v5
       with:
         persist-credentials: false
     - name: 📥 Download artifact
@@ -435,7 +435,7 @@ jobs:
     runs-on: windows-latest
     steps:
     - name: 🧰 Checkout
-      uses: actions/checkout@v4
+      uses: actions/checkout@v5
       with:
         persist-credentials: false
     - name: 📥 Download artifact
@@ -462,7 +462,7 @@ jobs:
     runs-on: ${{ matrix.runs-on }}
     steps:
     - name: 🧰 Checkout
-      uses: actions/checkout@v4
+      uses: actions/checkout@v5
       with:
         persist-credentials: false
     - name: 📥 Download artifact
@@ -492,7 +492,7 @@ jobs:
     runs-on: ${{ matrix.platform }}-latest
     steps:
     - name: 🧰 Checkout
-      uses: actions/checkout@v4
+      uses: actions/checkout@v5
       with:
         persist-credentials: false
     - name: 📥 Download artifact
@@ -519,7 +519,7 @@ jobs:
         - RUNNER_TEMP
     steps:
     - name: 🧰 Checkout
-      uses: actions/checkout@v4
+      uses: actions/checkout@v5
       with:
         persist-credentials: false
     - name: 📥 Download artifact
@@ -566,7 +566,7 @@ jobs:
       min: ${{ steps.min.outputs.jobs }}
     steps:
     - name: 🧰 Checkout
-      uses: actions/checkout@v4
+      uses: actions/checkout@v5
       with:
         persist-credentials: false
     - id: all
@@ -587,7 +587,7 @@ jobs:
     runs-on: ${{ matrix.runs-on }}
     steps:
     - name: 🧰 Checkout
-      uses: actions/checkout@v4
+      uses: actions/checkout@v5
       with:
         persist-credentials: false
     - name: 📥 Download artifact
@@ -611,7 +611,7 @@ jobs:
     runs-on: ${{ matrix.runs-on }}
     steps:
     - name: 🧰 Checkout
-      uses: actions/checkout@v4
+      uses: actions/checkout@v5
       with:
         persist-credentials: false
     - name: 📥 Download artifact
@@ -636,7 +636,7 @@ jobs:
         include: ${{ fromJson(needs.matrix.outputs.min) }}
     steps:
     - name: 🧰 Checkout
-      uses: actions/checkout@v4
+      uses: actions/checkout@v5
       with:
         persist-credentials: false
     - name: 📥 Download artifact
@@ -665,7 +665,7 @@ jobs:
         include: ${{ fromJson(needs.matrix.outputs.min) }}
     steps:
     - name: 🧰 Checkout
-      uses: actions/checkout@v4
+      uses: actions/checkout@v5
       with:
         persist-credentials: false
     - name: 📥 Download artifact
