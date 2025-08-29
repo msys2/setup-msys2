@@ -17,11 +17,36 @@ function dummy() {
 }
 
 const INSTALLER_VERSION = '2025-06-22';
-const INSTALLER_URL = `https://github.com/msys2/msys2-installer/releases/download/${INSTALLER_VERSION}/msys2-base-x86_64-${INSTALLER_VERSION.replace(/-/g, '')}.sfx.exe`;
-const INSTALLER_CHECKSUM = 'df6c053891d0b87c9104c118c0ce22885c3bc350a7659958d6d97a6760ccfa76';
+const INSTALLER_URL = {
+    x64: `https://github.com/msys2/msys2-installer/releases/download/${INSTALLER_VERSION}/msys2-base-x86_64-${INSTALLER_VERSION.replace(/-/g, '')}.sfx.exe`,
+    arm64: `https://github.com/msys2/msys2-installer/releases/download/nightly-x86_64/msys2-base-arm64-latest.sfx.exe`,
+};
+const INSTALLER_CHECKSUM = {
+    x64: 'df6c053891d0b87c9104c118c0ce22885c3bc350a7659958d6d97a6760ccfa76',
+    arm64: 'd02aa1f10bdcd48e30aac85b49afacadd48e240934345004af19f212beb5351f',
+};
 // see https://github.com/msys2/setup-msys2/issues/61
 const INSTALL_CACHE_ENABLED = false;
 const CACHE_FLUSH_COUNTER = 0;
+
+/**
+ * Returns the system architecture in the same format as process.arch.
+ * If the architecture cannot be determined, it returns process.arch.
+ * @returns {string}
+ */
+function getSystemArch() {
+  if (process.platform === 'win32') {
+    const winArch = process.env.PROCESSOR_ARCHITEW6432 || process.env.PROCESSOR_ARCHITECTURE;
+    if (winArch) {
+      const archMap = {
+        'amd64': 'x64',
+        'arm64': 'arm64',
+      };
+      return archMap[winArch.toLowerCase()] || process.arch;
+    }
+  }
+  return process.arch;
+}
 
 class Input {
 
@@ -118,17 +143,21 @@ async function computeChecksum(filePath) {
 
 /**
  * @returns {Promise<string>}
+ * @param {string} arch - either 'x64' or 'arm64'
  */
-async function downloadInstaller() {
+async function downloadInstaller(arch) {
+  if(!(arch in INSTALLER_URL)) {
+    throw new Error(`Unsupported architecture: ${arch}`);
+  }
   // We use the last field only, so that each version is ensured semver incompatible with the previous one.
   const version = `0.0.${INSTALLER_VERSION.replace(/-/g, '')}`
-  const inst_path = tc.find('msys2-installer', version, 'x64');
-  const destination = inst_path ? path.join(inst_path, 'base.exe') : await tc.downloadTool(INSTALLER_URL);
+  const inst_path = tc.find('msys2-installer', version, arch);
+  const destination = inst_path ? path.join(inst_path, 'base.exe') : await tc.downloadTool(INSTALLER_URL[arch]);
   let computedChecksum = await computeChecksum(destination);
-  if (computedChecksum.toUpperCase() !== INSTALLER_CHECKSUM.toUpperCase()) {
+  if (computedChecksum.toUpperCase() !== INSTALLER_CHECKSUM[arch].toUpperCase()) {
     throw new Error(`The SHA256 of the installer does not match! expected ${INSTALLER_CHECKSUM} got ${computedChecksum}`);
   }
-  return path.join(inst_path || await tc.cacheFile(destination, 'base.exe', 'msys2-installer', version, 'x64'), 'base.exe');
+  return path.join(inst_path || await tc.cacheFile(destination, 'base.exe', 'msys2-installer', version, arch), 'base.exe');
 }
 
 /**
@@ -355,7 +384,7 @@ async function run() {
       }
       if (!cachedInstall) {
         core.startGroup('Downloading MSYS2...');
-        let inst_dest = await downloadInstaller();
+        let inst_dest = await downloadInstaller(getSystemArch());
         core.endGroup();
 
         core.startGroup('Extracting MSYS2...');
