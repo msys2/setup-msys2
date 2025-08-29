@@ -556,7 +556,6 @@ jobs:
         MSYS2_ROOT = check_output(['msys2', '-c', 'cygpath -a -w /'], shell=True).decode('utf-8')
         print(MSYS2_ROOT)
 
-
   matrix:
     needs: cache
     name: ⬜ Generate lists of jobs
@@ -574,8 +573,19 @@ jobs:
     - id: min
       uses: ./matrix
       with:
-        systems: 'mingw32 mingw64 ucrt64 clang64'
+        systems: 'mingw32 mingw64 ucrt64 clang64 clangarm64'
 
+  makepkg:
+    needs: matrix
+    uses: ./.github/workflows/PKGBUILD.yml
+    with:
+      name: TOOL
+      matrix: ${{ needs.matrix.outputs.min }}
+      path: examples/pkgbuild
+      test: |
+        uname -a
+        which TOOL
+        TOOL
 
   msystem:
     name: ${{ matrix.icon }} ${{ matrix.sys }} | msystem
