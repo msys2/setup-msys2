@@ -75,12 +75,6 @@ function parseInput() {
     throw new Error(`'platform-check-severity' needs to be one of ${ platformcheckseverity_allowed.join(', ') }, got ${p_platformcheckseverity}`);
   }
 
-  if ( process.platform === 'win32' && (p_location === 'C:\\' || p_location === 'C:') ) {
-    throw new Error(`'location' cannot be 'C:' because that contains the built-in MSYS2 installation
-      in GitHub Actions environments. See option 'release', in order to use that installation:
-      https://github.com/msys2/setup-msys2#release`);
-  }
-
   let input = new Input();
   input.release = p_release;
   input.update = p_update;
@@ -341,11 +335,16 @@ async function run() {
 
     let cachedInstall = false;
     let instCache = null;
-    let msysRootDir = path.join('C:', 'msys64');
+    let msysRootDir;
+
     if (input.release) {
       // Use upstream package instead of the default installation in the virtual environment.
       let dest = (input.location) ? input.location : tmp_dir;
       msysRootDir = path.join(dest, 'msys64');
+      if (fs.existsSync(msysRootDir)) {
+        core.setFailed(`Trying to install MSYS2 to ${msysRootDir} but that already exists, cannot continue.`);
+        return;
+      }
       await io.mkdirP(msysRootDir);
       if (INSTALL_CACHE_ENABLED) {
         instCache = new InstallCache(msysRootDir, input);
@@ -366,6 +365,13 @@ async function run() {
         await disableKeyRefresh(msysRootDir);
         core.endGroup();
       }
+    } else {
+        msysRootDir = path.join('C:', 'msys64');
+    }
+
+    if (!fs.existsSync(msysRootDir)) {
+      core.setFailed(`MSYS2 installation not found at ${msysRootDir}, cannot continue.`)
+      return;
     }
 
     const pathDir = path.join(tmp_dir, 'setup-msys2');
