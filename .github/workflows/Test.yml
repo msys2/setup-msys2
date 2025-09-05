@@ -255,7 +255,7 @@ jobs:
       matrix:
         runs-on: [windows-latest, windows-11-arm]
     steps:
-    - uses: actions/setup-go@v5
+    - uses: actions/setup-go@v6
     - name: 🧰 Checkout
       uses: actions/checkout@v5
       with:
@@ -279,7 +279,7 @@ jobs:
       matrix:
         runs-on: [windows-latest, windows-11-arm]
     steps:
-    - uses: actions/setup-go@v5
+    - uses: actions/setup-go@v6
     - name: 🧰 Checkout
       uses: actions/checkout@v5
       with:
