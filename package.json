@@ -35,11 +35,11 @@
     "folder-hash": "^4.1.1"
   },
   "devDependencies": {
-    "@eslint/js": "^9.34.0",
-    "@types/node": "^20.19.11",
+    "@eslint/js": "^9.35.0",
+    "@types/node": "^20.19.13",
     "@vercel/ncc": "^0.38.3",
-    "eslint": "^9.34.0",
-    "eslint-plugin-jsdoc": "^54.1.1",
+    "eslint": "^9.35.0",
+    "eslint-plugin-jsdoc": "^54.5.0",
     "globals": "^16.3.0",
     "typescript": "^5.9.2"
   }
