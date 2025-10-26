@@ -21,6 +21,7 @@ jobs:
         persist-credentials: false
     - run: |
         npm ci
+        npm run test
         npm run lint
         npm run tsc
 

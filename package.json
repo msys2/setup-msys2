@@ -10,7 +10,8 @@
   "scripts": {
     "pkg": "ncc build main.js --minify --out dist",
     "lint": "eslint .",
-    "tsc": "tsc -p jsconfig.json"
+    "tsc": "tsc -p jsconfig.json",
+    "test": "node --test"
   },
   "keywords": [
     "GitHub",
@@ -31,8 +32,7 @@
     "@actions/cache": "^4.1.0",
     "@actions/core": "^1.11.1",
     "@actions/exec": "^1.1.1",
-    "@actions/tool-cache": "^2.0.2",
-    "folder-hash": "^4.1.1"
+    "@actions/tool-cache": "^2.0.2"
   },
   "devDependencies": {
     "@eslint/js": "^9.38.0",
