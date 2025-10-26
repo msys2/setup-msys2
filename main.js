@@ -8,7 +8,7 @@ import fs from 'node:fs';
 import crypto from 'node:crypto';
 import assert from 'node:assert/strict';
 import process from 'node:process';
-import { hashElement } from 'folder-hash';
+import { hashPath } from './src/fs-hash.js';
 
 // XXX: hack to make ncc copy those files to dist
 // eslint-disable-next-line
@@ -183,14 +183,6 @@ async function restoreCache(paths, primaryKey, restoreKeys) {
     }
 
     return restoreKey;
-}
-
-/**
- * @param {string} path
- * @returns {Promise<string>}
- */
-async function hashPath(path) {
-  return (await hashElement(path, {encoding: 'hex'}))['hash'].toString();
 }
 
 class PackageCache {
