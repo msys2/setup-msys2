@@ -62,7 +62,7 @@ jobs:
       with:
         persist-credentials: false
     - name: 📥 Download artifact
-      uses: actions/download-artifact@v5
+      uses: actions/download-artifact@v6
       with:
         name: action
     - name: 🚧 run action
@@ -98,7 +98,7 @@ jobs:
       with:
         persist-credentials: false
     - name: 📥 Download artifact
-      uses: actions/download-artifact@v5
+      uses: actions/download-artifact@v6
       with:
         name: action
     - name: 🚧 run action
@@ -118,7 +118,7 @@ jobs:
       with:
         persist-credentials: false
     - name: 📥 Download artifact
-      uses: actions/download-artifact@v5
+      uses: actions/download-artifact@v6
       with:
         name: action
     - name: 🚧 run action
@@ -158,7 +158,7 @@ jobs:
       with:
         persist-credentials: false
     - name: 📥 Download artifact
-      uses: actions/download-artifact@v5
+      uses: actions/download-artifact@v6
       with:
         name: action
     - name: 🚧 run action
@@ -178,7 +178,7 @@ jobs:
       with:
         persist-credentials: false
     - name: 📥 Download artifact
-      uses: actions/download-artifact@v5
+      uses: actions/download-artifact@v6
       with:
         name: action
     - name: 🚧 run action
@@ -213,7 +213,7 @@ jobs:
       with:
         persist-credentials: false
     - name: 📥 Download artifact
-      uses: actions/download-artifact@v5
+      uses: actions/download-artifact@v6
       with:
         name: action
     - name: 🚧 run action
@@ -237,7 +237,7 @@ jobs:
       with:
         persist-credentials: false
     - name: 📥 Download artifact
-      uses: actions/download-artifact@v5
+      uses: actions/download-artifact@v6
       with:
         name: action
     - name: 🚧 run action
@@ -261,7 +261,7 @@ jobs:
       with:
         persist-credentials: false
     - name: 📥 Download artifact
-      uses: actions/download-artifact@v5
+      uses: actions/download-artifact@v6
       with:
         name: action
     - name: 🚧 run action
@@ -285,7 +285,7 @@ jobs:
       with:
         persist-credentials: false
     - name: 📥 Download artifact
-      uses: actions/download-artifact@v5
+      uses: actions/download-artifact@v6
       with:
         name: action
     - name: 🚧 run action
@@ -310,7 +310,7 @@ jobs:
       with:
         persist-credentials: false
     - name: 📥 Download artifact
-      uses: actions/download-artifact@v5
+      uses: actions/download-artifact@v6
       with:
         name: action
     - name: 🚧 run action
@@ -341,7 +341,7 @@ jobs:
         fetch-depth: 0
         persist-credentials: false
     - name: 📥 Download artifact
-      uses: actions/download-artifact@v5
+      uses: actions/download-artifact@v6
       with:
         name: action
     - name: 🚧 run action
@@ -369,7 +369,7 @@ jobs:
         fetch-depth: 0
         persist-credentials: false
     - name: 📥 Download artifact
-      uses: actions/download-artifact@v5
+      uses: actions/download-artifact@v6
       with:
         name: action
     - name: 🚧 run action
@@ -393,7 +393,7 @@ jobs:
       with:
         persist-credentials: false
     - name: 📥 Download artifact
-      uses: actions/download-artifact@v5
+      uses: actions/download-artifact@v6
       with:
         name: action
     - name: 🚧 run action
@@ -417,7 +417,7 @@ jobs:
       with:
         persist-credentials: false
     - name: 📥 Download artifact
-      uses: actions/download-artifact@v5
+      uses: actions/download-artifact@v6
       with:
         name: action
     - name: 🚧 run action
@@ -439,7 +439,7 @@ jobs:
       with:
         persist-credentials: false
     - name: 📥 Download artifact
-      uses: actions/download-artifact@v5
+      uses: actions/download-artifact@v6
       with:
         name: action
     - name: 🚧 run action
@@ -466,7 +466,7 @@ jobs:
       with:
         persist-credentials: false
     - name: 📥 Download artifact
-      uses: actions/download-artifact@v5
+      uses: actions/download-artifact@v6
       with:
         name: action
     - name: 🚧 run action
@@ -496,7 +496,7 @@ jobs:
       with:
         persist-credentials: false
     - name: 📥 Download artifact
-      uses: actions/download-artifact@v5
+      uses: actions/download-artifact@v6
       with:
         name: action
     - name: 🚧 run action
@@ -523,7 +523,7 @@ jobs:
       with:
         persist-credentials: false
     - name: 📥 Download artifact
-      uses: actions/download-artifact@v5
+      uses: actions/download-artifact@v6
       with:
         name: action
     - name: 🚧 run action
@@ -601,7 +601,7 @@ jobs:
       with:
         persist-credentials: false
     - name: 📥 Download artifact
-      uses: actions/download-artifact@v5
+      uses: actions/download-artifact@v6
       with:
         name: action
     - name: 🚧 run action
@@ -625,7 +625,7 @@ jobs:
       with:
         persist-credentials: false
     - name: 📥 Download artifact
-      uses: actions/download-artifact@v5
+      uses: actions/download-artifact@v6
       with:
         name: action
     - name: 🚧 run action
@@ -650,7 +650,7 @@ jobs:
       with:
         persist-credentials: false
     - name: 📥 Download artifact
-      uses: actions/download-artifact@v5
+      uses: actions/download-artifact@v6
       with:
         name: action
     - name: 🚧 run action
@@ -679,7 +679,7 @@ jobs:
       with:
         persist-credentials: false
     - name: 📥 Download artifact
-      uses: actions/download-artifact@v5
+      uses: actions/download-artifact@v6
       with:
         name: action
     - name: 🚧 run action
