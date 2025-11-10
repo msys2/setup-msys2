@@ -35,11 +35,11 @@
     "@actions/tool-cache": "^2.0.2"
   },
   "devDependencies": {
-    "@eslint/js": "^9.39.0",
+    "@eslint/js": "^9.39.1",
     "@types/node": "^20.19.24",
     "@vercel/ncc": "^0.38.4",
-    "eslint": "^9.39.0",
-    "eslint-plugin-jsdoc": "^61.1.11",
+    "eslint": "^9.39.1",
+    "eslint-plugin-jsdoc": "^61.1.12",
     "globals": "^16.5.0",
     "typescript": "^5.9.3"
   }
