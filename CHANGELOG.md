@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.30.0
+
+- Update base distribution to [20251213](https://github.com/msys2/msys2-installer/releases/tag/2025-12-13). [[#565](https://github.com/msys2/setup-msys2/pull/565)]
+- Remove folder-hash dependency [[#555](https://github.com/msys2/setup-msys2/pull/555)]
+- Update dependencies
+
 ## 2.29.0
 
 - Allow installation to C:\msys64 if it doesn't exist already. Like with the new `windows-11-arm` image, for example. [[#542](https://github.com/msys2/setup-msys2/issues/542)]
