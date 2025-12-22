@@ -51,7 +51,7 @@ jobs:
         persist-credentials: false
 
     - name: 📥 Download artifact
-      uses: actions/download-artifact@v6
+      uses: actions/download-artifact@v7
       with:
         name: action
 
@@ -100,7 +100,7 @@ jobs:
     steps:
 
     - name: 📥 Download artifact
-      uses: actions/download-artifact@v6
+      uses: actions/download-artifact@v7
       with:
         name: action
 
@@ -111,7 +111,7 @@ jobs:
         update: true
 
     - name: '📥 Download artifact: package'
-      uses: actions/download-artifact@v6
+      uses: actions/download-artifact@v7
       with:
         path: .
         name: ${{ matrix.sys }}-${{ inputs.name }}
