@@ -6,7 +6,7 @@ updates:
       interval: "weekly"
     ignore:
       - dependency-name: "@types/node"
-        versions: [">= 21.0.0"]
+        versions: [">= 25.0.0"]
     groups:
       all-dependencies:
         patterns:

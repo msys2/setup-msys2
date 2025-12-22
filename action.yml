@@ -44,5 +44,5 @@ outputs:
   msys2-location:
     description: 'The absolute path of the MSYS2 installation location'
 runs:
-  using: 'node20'
+  using: 'node24'
   main: 'index.js'
