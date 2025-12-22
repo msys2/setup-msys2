@@ -39,7 +39,7 @@ jobs:
         npm run pkg
         rm -rf node_modules
     - name: 📤 Upload artifact
-      uses: actions/upload-artifact@v5
+      uses: actions/upload-artifact@v6
       with:
         name: action
         path: dist
