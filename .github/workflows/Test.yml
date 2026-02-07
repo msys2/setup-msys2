@@ -699,3 +699,47 @@ jobs:
       run: |
         uname -a
         openssl help
+
+
+  main-mirror:
+    name: 🔒 main-mirror-only
+    needs: [cache]
+    runs-on: windows-latest
+    steps:
+    - name: 🧰 Checkout
+      uses: actions/checkout@v6
+      with:
+        persist-credentials: false
+    - name: 📥 Download artifact
+      uses: actions/download-artifact@v7
+      with:
+        name: action
+    - name: 🚧 run action
+      uses: ./
+      with:
+        update: true
+        install: git
+      env:
+        __SETUP_MSYS2_USE_MAIN_MIRROR_ONLY: 'true'
+    - shell: msys2 {0}
+      run: |
+        # Verify pacman-conf.exe output doesn't contain mirror.msys2.org
+        echo "Checking pacman-conf.exe output:"
+        pacman-conf.exe
+        if pacman-conf.exe | grep -q 'mirror\.msys2\.org'; then
+          echo "ERROR: pacman-conf.exe output contains mirror.msys2.org"
+          exit 1
+        fi
+        echo "✓ No mirror.msys2.org found in pacman-conf.exe output"
+
+        # Verify mirrorlist files only contain repo.msys2.org
+        echo "Checking mirrorlist.mingw:"
+        cat /etc/pacman.d/mirrorlist.mingw
+        grep -q 'repo.msys2.org/mingw' /etc/pacman.d/mirrorlist.mingw
+        [ $(wc -l < /etc/pacman.d/mirrorlist.mingw) -eq 1 ] || exit 1
+        echo "Checking mirrorlist.msys:"
+        cat /etc/pacman.d/mirrorlist.msys
+        grep -q 'repo.msys2.org/msys' /etc/pacman.d/mirrorlist.msys
+        [ $(wc -l < /etc/pacman.d/mirrorlist.msys) -eq 1 ] || exit 1
+
+        git --version
