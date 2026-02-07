@@ -44,6 +44,8 @@ class Input {
         this.location;
         /** @type {boolean} */
         this.cache;
+        /** @type {boolean} */
+        this.usemainmirroronly;
     }
 }
 
@@ -60,6 +62,14 @@ function parseInput() {
   let p_platformcheckseverity = core.getInput('platform-check-severity');
   let p_location = core.getInput('location');
   let p_cache = core.getBooleanInput('cache');
+
+  // Configures pacman to use only repo.msys2.org instead of the mirrorlist.
+  // See: https://github.com/msys2/setup-msys2/issues/571
+  let p_use_main_mirror_only = false;
+  const envValue = process.env['__SETUP_MSYS2_USE_MAIN_MIRROR_ONLY'];
+  if (envValue === 'true' || envValue === '1') {
+    p_use_main_mirror_only = true;
+  }
 
   const msystem_allowed = ['MSYS', 'MINGW32', 'MINGW64', 'UCRT64', 'CLANG64', 'CLANGARM64'];
   if (!msystem_allowed.includes(p_msystem.toUpperCase())) {
@@ -85,6 +95,7 @@ function parseInput() {
   input.platformcheckseverity = p_platformcheckseverity;
   input.location = (p_location == "RUNNER_TEMP") ? process.env['RUNNER_TEMP'] : p_location;
   input.cache = p_cache;
+  input.usemainmirroronly = p_use_main_mirror_only;
 
   return input;
 }
@@ -134,6 +145,18 @@ async function disableKeyRefresh(msysRootDir) {
   const content = await fs.promises.readFile(postFile, 'utf8');
   const newContent = content.replace('--refresh-keys', '--version');
   await fs.promises.writeFile(postFile, newContent, 'utf8');
+}
+
+/**
+ * @param {string} msysRootDir
+ * @returns {Promise<void>}
+ */
+async function configureMainMirror(msysRootDir) {
+  const mirrorlistMingw = path.join(msysRootDir, 'etc', 'pacman.d', 'mirrorlist.mingw');
+  const mirrorlistMsys = path.join(msysRootDir, 'etc', 'pacman.d', 'mirrorlist.msys');
+
+  await fs.promises.writeFile(mirrorlistMingw, 'Server = https://repo.msys2.org/mingw/$repo/\n', 'utf8');
+  await fs.promises.writeFile(mirrorlistMsys, 'Server = https://repo.msys2.org/msys/$arch/\n', 'utf8');
 }
 
 /**
@@ -200,7 +223,7 @@ class PackageCache {
     // We want a cache key that is ideally always the same for the same kind of job.
     // So that mingw32 and ming64 jobs, and jobs with different install packages have different caches.
     let shasum = crypto.createHash('sha1');
-    shasum.update([CACHE_FLUSH_COUNTER, input.release, input.update, input.pathtype, input.msystem, input.install].toString() + INSTALLER_CHECKSUM);
+    shasum.update([CACHE_FLUSH_COUNTER, input.release, input.update, input.pathtype, input.msystem, input.install, input.usemainmirroronly].toString() + INSTALLER_CHECKSUM);
     this.jobCacheKey = this.fallbackCacheKey + '-conf:' + shasum.digest('hex').slice(0, 8);
 
     this.restoreKey = undefined;
@@ -387,6 +410,12 @@ async function run() {
 
       core.startGroup('Starting MSYS2 for the first time...');
       await runMsys(['uname', '-a']);
+      core.endGroup();
+    }
+
+    if (input.usemainmirroronly) {
+      core.startGroup('Configuring main mirror...');
+      await configureMainMirror(msysRootDir);
       core.endGroup();
     }
 
