@@ -1,8 +1,8 @@
-import cache from '@actions/cache';
-import core from '@actions/core';
-import io from '@actions/io';
-import exec from '@actions/exec';
-import tc from '@actions/tool-cache';
+import * as cache from '@actions/cache';
+import * as core from '@actions/core';
+import * as io from '@actions/io';
+import * as exec from '@actions/exec';
+import * as tc from '@actions/tool-cache';
 import path from 'node:path';
 import fs from 'node:fs';
 import crypto from 'node:crypto';
