@@ -131,29 +131,29 @@ jobs:
     - name: 🚧 run action
       uses: ./
     - name: 🟪 test MSYS
-      shell: cmd
+      shell: pwsh
       run: |
-        set MSYSTEM=MSYS
+        $env:MSYSTEM = "MSYS"
         msys2 ./test.sh MSYS
     - name: 🟦 test MINGW64
-      shell: cmd
+      shell: pwsh
       run: |
-        set MSYSTEM=MINGW64
+        $env:MSYSTEM = "MINGW64"
         msys2 ./test.sh MINGW64
     - name: ⬛ test MINGW32
-      shell: cmd
+      shell: pwsh
       run: |
-        set MSYSTEM=MINGW32
+        $env:MSYSTEM = "MINGW32"
         msys2 ./test.sh MINGW32
     - name: 🟨 test UCRT64
-      shell: cmd
+      shell: pwsh
       run: |
-        set MSYSTEM=UCRT64
+        $env:MSYSTEM = "UCRT64"
         msys2 ./test.sh UCRT64
     - name: 🟧 test CLANG64
-      shell: cmd
+      shell: pwsh
       run: |
-        set MSYSTEM=CLANG64
+        $env:MSYSTEM = "CLANG64"
         msys2 ./test.sh CLANG64
 
   cmd-arm64:
@@ -171,9 +171,9 @@ jobs:
     - name: 🚧 run action
       uses: ./
     - name: 🟩 test CLANGARM64
-      shell: cmd
+      shell: pwsh
       run: |
-        set MSYSTEM=CLANGARM64
+        $env:MSYSTEM = "CLANGARM64"
         msys2 ./test.sh CLANGARM64
 
   env:
