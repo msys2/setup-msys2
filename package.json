@@ -36,10 +36,10 @@
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
-    "@types/node": "^24.10.12",
+    "@types/node": "^24.10.13",
     "@vercel/ncc": "^0.38.4",
     "eslint": "^10.0.0",
-    "eslint-plugin-jsdoc": "^62.5.4",
+    "eslint-plugin-jsdoc": "^62.5.5",
     "globals": "^17.3.0",
     "typescript": "^5.9.3"
   }
