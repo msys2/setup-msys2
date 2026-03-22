@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.31.0
+
+- Update base distribution to [20260322](https://github.com/msys2/msys2-installer/releases/tag/2026-03-22). [[#597](https://github.com/msys2/setup-msys2/pull/597)]
+- Update dependencies
+- Move to node24 from node20
+
 ## 2.30.0
 
 - Update base distribution to [20251213](https://github.com/msys2/msys2-installer/releases/tag/2025-12-13). [[#565](https://github.com/msys2/setup-msys2/pull/565)]
