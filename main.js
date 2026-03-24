@@ -67,8 +67,14 @@ function parseInput() {
   // See: https://github.com/msys2/setup-msys2/issues/571
   let p_use_main_mirror_only = false;
   const envValue = process.env['__SETUP_MSYS2_USE_MAIN_MIRROR_ONLY'];
-  if (envValue === 'true' || envValue === '1') {
-    p_use_main_mirror_only = true;
+  if (envValue !== undefined) {
+    if (envValue === 'true' || envValue === '1') {
+      p_use_main_mirror_only = true;
+    } else if (envValue === 'false' || envValue === '0') {
+      p_use_main_mirror_only = false;
+    } else {
+      throw new Error(`'__SETUP_MSYS2_USE_MAIN_MIRROR_ONLY' must be 'true', '1', 'false', or '0', got '${envValue}'`);
+    }
   }
 
   const msystem_allowed = ['MSYS', 'MINGW32', 'MINGW64', 'UCRT64', 'CLANG64', 'CLANGARM64'];
