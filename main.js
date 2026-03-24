@@ -77,8 +77,14 @@ function parseInput() {
   }
   p_msystem = p_msystem.toUpperCase()
 
-  let p_install_list = (p_install === 'false') ? [] : p_install.split(/\s+/);
-  let p_pacboy_list = (p_pacboy === 'false') ? [] : p_pacboy.split(/\s+/);
+  if (p_install === 'false') {
+    core.warning("'install: false' is deprecated, use 'install: \"\"' or omit the input entirely");
+  }
+  let p_install_list = (p_install === 'false') ? [] : p_install.split(/\s+/).filter(s => s.length > 0);
+  if (p_pacboy === 'false') {
+    core.warning("'pacboy: false' is deprecated, use 'pacboy: \"\"' or omit the input entirely");
+  }
+  let p_pacboy_list = (p_pacboy === 'false') ? [] : p_pacboy.split(/\s+/).filter(s => s.length > 0);
 
   const platformcheckseverity_allowed = ['fatal', 'warn'];
   if (!platformcheckseverity_allowed.includes(p_platformcheckseverity)) {
