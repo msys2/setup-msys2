@@ -19,11 +19,11 @@ inputs:
   install:
     description: 'After installation and/or update, install additional packages through pacman'
     required: false
-    default: false
+    default: ''
   pacboy:
     description: 'After installation and/or update, install additional packages through pacboy'
     required: false
-    default: false
+    default: ''
   release:
     description: 'Retrieve and extract base installation from upstream GitHub Releases'
     required: false
