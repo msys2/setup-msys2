@@ -31,7 +31,7 @@ async function hashFile(filePath) {
   await new Promise((resolve, reject) => {
     const stream = fs.createReadStream(filePath);
     stream.on("data", (chunk) => hash.update(chunk));
-    stream.on("end", () => resolve());
+    stream.on("end", () => resolve(undefined));
     stream.on("error", reject);
   });
   
@@ -66,7 +66,7 @@ async function hashDirectory(dirPath) {
       await new Promise((resolve, reject) => {
         const stream = fs.createReadStream(fullPath);
         stream.on("data", (chunk) => hash.update(chunk));
-        stream.on("end", () => resolve());
+        stream.on("end", () => resolve(undefined));
         stream.on("error", reject);
       });
     }
