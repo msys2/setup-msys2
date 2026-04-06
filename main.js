@@ -40,7 +40,7 @@ class Input {
         this.pacboy;
         /** @type {string} */
         this.platformcheckseverity;
-        /** @type {string} */
+        /** @type {string|null} */
         this.location;
         /** @type {boolean} */
         this.cache;
@@ -105,7 +105,7 @@ function parseInput() {
   input.install = p_install_list;
   input.pacboy = p_pacboy_list;
   input.platformcheckseverity = p_platformcheckseverity;
-  input.location = (p_location == "RUNNER_TEMP") ? process.env['RUNNER_TEMP'] : p_location;
+  input.location = (p_location == "RUNNER_TEMP") ? null : p_location;
   input.cache = p_cache;
   input.usemainmirroronly = p_use_main_mirror_only;
 
@@ -173,7 +173,7 @@ async function configureMainMirror(msysRootDir) {
 
 /**
  * @param {string[]} paths
- * @param {string} restoreKey
+ * @param {string | undefined} restoreKey
  * @param {string} saveKey
  * @returns {Promise<number|undefined>}
  */
@@ -190,7 +190,7 @@ async function saveCacheMaybe(paths, restoreKey, saveKey) {
         // In case we try to save a cache for a key that already exists we'll get an error.
         // This usually happens because something created the same cache while we were running.
         // Since the cache is already there now this is fine with us.
-        console.log(error.message);
+        console.log(String(error));
     }
 
     if (cacheId !== undefined) {
@@ -212,7 +212,7 @@ async function restoreCache(paths, primaryKey, restoreKeys) {
         restoreKey = await cache.restoreCache(paths, primaryKey, restoreKeys);
         console.log(`Cache restore for ${primaryKey}, got ${restoreKey}`);
     } catch (error) {
-        core.warning(`Restore cache failed: ${error.message}`);
+        core.warning(`Restore cache failed: ${String(error)}`);
     } finally {
         console.log(`Cache restore for ${primaryKey}, got ${restoreKey}`);
     }
@@ -295,6 +295,7 @@ class InstallCache {
   }
 }
 
+/** @type {string | null} */
 let cmd = null;
 
 /**
@@ -320,7 +321,7 @@ async function writeWrapper(msysRootDir, msystem, pathtype, destDir, name) {
 
 /**
  * @param {string[]} args
- * @param {object} opts
+ * @param {object} [opts]
  */
 async function runMsys(args, opts) {
   assert.ok(cmd);
@@ -330,7 +331,7 @@ async function runMsys(args, opts) {
 
 /**
  * @param {string[]} args
- * @param {object} opts
+ * @param {object} [opts]
  * @param {string} [cmd]
  */
 async function pacman(args, opts, cmd) {
@@ -366,7 +367,7 @@ async function run() {
 
     if (input.release) {
       // Use upstream package instead of the default installation in the virtual environment.
-      let dest = (input.location) ? input.location : tmp_dir;
+      let dest = (input.location !== null) ? input.location : tmp_dir;
       msysRootDir = path.join(dest, 'msys64');
       if (fs.existsSync(msysRootDir)) {
         core.setFailed(`Trying to install MSYS2 to ${msysRootDir} but that already exists, cannot continue.`);
@@ -491,7 +492,7 @@ async function run() {
     }
   }
   catch (error) {
-    core.setFailed(error.message);
+    core.setFailed(String(error));
   }
 }
 

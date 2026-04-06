@@ -6,6 +6,7 @@ import os from "node:os";
 import { hashPath } from "../src/fs-hash.js";
 
 describe("hashPath", () => {
+  /** @type {string} */
   let tempDir;
 
   beforeEach(async () => {
