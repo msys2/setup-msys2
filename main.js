@@ -97,6 +97,10 @@ function parseInput() {
     throw new Error(`'platform-check-severity' needs to be one of ${ platformcheckseverity_allowed.join(', ') }, got ${p_platformcheckseverity}`);
   }
 
+  if (p_location === 'RUNNER_TEMP') {
+    core.warning("'location: RUNNER_TEMP' is deprecated, use 'location: \"\"' or omit the input entirely");
+  }
+
   let input = new Input();
   input.release = p_release;
   input.update = p_update;
@@ -105,7 +109,7 @@ function parseInput() {
   input.install = p_install_list;
   input.pacboy = p_pacboy_list;
   input.platformcheckseverity = p_platformcheckseverity;
-  input.location = (p_location == "RUNNER_TEMP") ? null : p_location;
+  input.location = (p_location === "RUNNER_TEMP" || p_location === '') ? null : p_location;
   input.cache = p_cache;
   input.usemainmirroronly = p_use_main_mirror_only;
 

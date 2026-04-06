@@ -31,7 +31,7 @@ inputs:
   location:
     description: 'Where to install MSYS2'
     required: false
-    default: 'RUNNER_TEMP'
+    default: ''
   platform-check-severity:
     description: 'What to do when run on an incompatible runner: fatal, warn'
     required: false
