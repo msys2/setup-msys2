@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.31.1
+
+- input: allow empty input for "install" and "pacboy", meaning not packages will
+  be installed [[#589](https://github.com/msys2/setup-msys2/issues/589)]
+- input: deprecate the special "RUNNER_TEMP" value for "location" in favor of an
+  empty string
+- Update dependencies
+
 ## 2.31.0
 
 - Update base distribution to [20260322](https://github.com/msys2/msys2-installer/releases/tag/2026-03-22). [[#597](https://github.com/msys2/setup-msys2/pull/597)]
