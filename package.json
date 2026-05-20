@@ -8,7 +8,7 @@
   },
   "type": "module",
   "scripts": {
-    "pkg": "ncc build main.js --minify --out dist",
+    "pkg": "rolldown -c",
     "lint": "eslint .",
     "tsc": "tsc -p jsconfig.json",
     "test": "node --test"
@@ -37,10 +37,11 @@
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "@types/node": "^24.12.3",
-    "@vercel/ncc": "^0.38.4",
     "eslint": "^10.3.0",
     "eslint-plugin-jsdoc": "^62.9.0",
     "globals": "^17.6.0",
+    "rolldown": "^1.0.1",
+    "rollup-plugin-sbom": "^3.2.0",
     "typescript": "^6.0.3"
   }
 }
