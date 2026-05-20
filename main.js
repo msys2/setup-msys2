@@ -10,12 +10,6 @@ import assert from 'node:assert/strict';
 import process from 'node:process';
 import { hashPath } from './src/fs-hash.js';
 
-// XXX: hack to make ncc copy those files to dist
-// eslint-disable-next-line
-function dummy() {
-    return [__dirname + '/action.yml', __dirname + '/README.md'];
-}
-
 const INSTALLER_VERSION = '2026-03-22';
 const INSTALLER_URL = `https://github.com/msys2/msys2-installer/releases/download/${INSTALLER_VERSION}/msys2-base-x86_64-${INSTALLER_VERSION.replace(/-/g, '')}.sfx.exe`;
 const INSTALLER_CHECKSUM = '6fe0cc8154132040e034ff4daface2a4163a9d1f6ebaaa1133394bff460bd5cf';
