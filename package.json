@@ -36,8 +36,8 @@
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
-    "@types/node": "^24.12.3",
-    "eslint": "^10.3.0",
+    "@types/node": "^24.12.4",
+    "eslint": "^10.4.0",
     "eslint-plugin-jsdoc": "^62.9.0",
     "globals": "^17.6.0",
     "rolldown": "^1.0.1",
