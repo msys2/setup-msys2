@@ -10,9 +10,9 @@ import assert from 'node:assert/strict';
 import process from 'node:process';
 import { hashPath } from './src/fs-hash.js';
 
-const INSTALLER_VERSION = '2026-03-22';
+const INSTALLER_VERSION = '2026-06-11';
 const INSTALLER_URL = `https://github.com/msys2/msys2-installer/releases/download/${INSTALLER_VERSION}/msys2-base-x86_64-${INSTALLER_VERSION.replace(/-/g, '')}.sfx.exe`;
-const INSTALLER_CHECKSUM = '6fe0cc8154132040e034ff4daface2a4163a9d1f6ebaaa1133394bff460bd5cf';
+const INSTALLER_CHECKSUM = 'c105946e64e08f099ac0e4647461ce762b95333ad211777666476a9a41451d65';
 // see https://github.com/msys2/setup-msys2/issues/61
 const INSTALL_CACHE_ENABLED = false;
 const CACHE_FLUSH_COUNTER = 0;
