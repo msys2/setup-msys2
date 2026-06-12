@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.32.0
+
+- Update base distribution to [20260611](https://github.com/msys2/msys2-installer/releases/tag/2026-06-11). [[#624](https://github.com/msys2/setup-msys2/pull/624)]
+- Port from ncc to rolldown for bundling
+- Include an SBOM of the bundle
+- Update dependencies
+
 ## 2.31.1
 
 - input: allow empty input for "install" and "pacboy", meaning not packages will
