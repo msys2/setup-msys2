@@ -29,19 +29,19 @@
   },
   "homepage": "https://github.com/msys2/setup-msys2",
   "dependencies": {
-    "@actions/cache": "^6.1.0",
+    "@actions/cache": "^6.2.0",
     "@actions/core": "^3.0.1",
     "@actions/exec": "^3.0.0",
     "@actions/tool-cache": "^4.0.0"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
-    "@types/node": "^24.13.2",
-    "eslint": "^10.6.0",
-    "eslint-plugin-jsdoc": "^63.0.12",
+    "@types/node": "^24.13.3",
+    "eslint": "^10.7.0",
+    "eslint-plugin-jsdoc": "^63.2.0",
     "globals": "^17.7.0",
-    "rolldown": "^1.1.4",
-    "rollup-plugin-sbom": "^3.2.3",
-    "typescript": "^6.0.3"
+    "rolldown": "^1.2.0",
+    "rollup-plugin-sbom": "^4.0.0",
+    "typescript": "^7.0.2"
   }
 }
