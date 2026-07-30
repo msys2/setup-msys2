@@ -18,29 +18,26 @@ const INSTALL_CACHE_ENABLED = false;
 const CACHE_FLUSH_COUNTER = 0;
 
 class Input {
-
-    constructor() {
-        /** @type {boolean} */
-        this.release;
-        /** @type {boolean} */
-        this.update;
-        /** @type {string} */
-        this.pathtype;
-        /** @type {string} */
-        this.msystem;
-        /** @type {string[]} */
-        this.install;
-        /** @type {string[]} */
-        this.pacboy;
-        /** @type {string} */
-        this.platformcheckseverity;
-        /** @type {string|null} */
-        this.location;
-        /** @type {boolean} */
-        this.cache;
-        /** @type {boolean} */
-        this.usemainmirroronly;
-    }
+    /** @type {boolean} */
+    release = false;
+    /** @type {boolean} */
+    update = false;
+    /** @type {string} */
+    pathtype = '';
+    /** @type {string} */
+    msystem = '';
+    /** @type {string[]} */
+    install = [];
+    /** @type {string[]} */
+    pacboy = [];
+    /** @type {string} */
+    platformcheckseverity = '';
+    /** @type {string|null} */
+    location = null;
+    /** @type {boolean} */
+    cache = false;
+    /** @type {boolean} */
+    usemainmirroronly = false;
 }
 
 /**
