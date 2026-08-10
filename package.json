@@ -38,9 +38,9 @@
     "@eslint/js": "^10.0.1",
     "@types/node": "^24.13.3",
     "eslint": "^10.8.0",
-    "eslint-plugin-jsdoc": "^63.3.0",
-    "globals": "^17.8.0",
-    "rolldown": "^1.2.0",
+    "eslint-plugin-jsdoc": "^63.3.3",
+    "globals": "^17.9.0",
+    "rolldown": "^1.2.1",
     "rollup-plugin-sbom": "^4.0.0",
     "typescript": "^7.0.2"
   }
