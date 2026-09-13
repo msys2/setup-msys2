@@ -523,6 +523,9 @@ jobs:
         - \
         - \some\arbitrary
         - RUNNER_TEMP
+        exclude:
+        - runs-on: windows-11-arm
+          location: \
     steps:
     - name: 🧰 Checkout
       uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
