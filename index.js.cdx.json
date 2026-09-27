@@ -1,7 +1,7 @@
 {
-	"$schema": "http://cyclonedx.org/schema/bom-1.6.schema.json",
+	"$schema": "http://cyclonedx.org/schema/bom-1.7.schema.json",
 	"bomFormat": "CycloneDX",
-	"specVersion": "1.6",
+	"specVersion": "1.7",
 	"version": 1,
 	"metadata": {
 		"lifecycles": [
@@ -12,7 +12,7 @@
 		"tools": [
 			{
 				"name": "rollup-plugin-sbom",
-				"version": "3.2.2",
+				"version": "4.0.0",
 				"externalReferences": [
 					{
 						"url": "git+https://github.com/janbiasi/rollup-plugin-sbom.git",
@@ -33,7 +33,7 @@
 			},
 			{
 				"name": "rolldown",
-				"version": "1.0.3",
+				"version": "1.2.8",
 				"externalReferences": [
 					{
 						"url": "git+https://github.com/rolldown/rolldown.git#packages/rolldown",
@@ -192,8 +192,8 @@
 		{
 			"type": "library",
 			"name": "undici",
-			"version": "6.24.1",
-			"bom-ref": "pkg:npm/undici@6.24.1?vcs_url=git%2Bhttps%3A%2F%2Fgithub.com%2Fnodejs%2Fundici.git",
+			"version": "6.28.0",
+			"bom-ref": "pkg:npm/undici@6.28.0?vcs_url=git%2Bhttps%3A%2F%2Fgithub.com%2Fnodejs%2Fundici.git",
 			"description": "An HTTP/1.1 client, written from scratch for Node.js",
 			"licenses": [
 				{
@@ -203,7 +203,7 @@
 					}
 				}
 			],
-			"purl": "pkg:npm/undici@6.24.1?vcs_url=git%2Bhttps%3A%2F%2Fgithub.com%2Fnodejs%2Fundici.git",
+			"purl": "pkg:npm/undici@6.28.0?vcs_url=git%2Bhttps%3A%2F%2Fgithub.com%2Fnodejs%2Fundici.git",
 			"externalReferences": [
 				{
 					"url": "git+https://github.com/nodejs/undici.git",
@@ -395,8 +395,8 @@
 		{
 			"type": "library",
 			"name": "brace-expansion",
-			"version": "1.1.13",
-			"bom-ref": "pkg:npm/brace-expansion@1.1.13?vcs_url=git%3A%2F%2Fgithub.com%2Fjuliangruber%2Fbrace-expansion.git",
+			"version": "1.1.18",
+			"bom-ref": "pkg:npm/brace-expansion@1.1.18?vcs_url=git%3A%2F%2Fgithub.com%2Fjuliangruber%2Fbrace-expansion.git",
 			"author": "Julian Gruber",
 			"description": "Brace expansion as known from sh/bash",
 			"licenses": [
@@ -407,7 +407,7 @@
 					}
 				}
 			],
-			"purl": "pkg:npm/brace-expansion@1.1.13?vcs_url=git%3A%2F%2Fgithub.com%2Fjuliangruber%2Fbrace-expansion.git",
+			"purl": "pkg:npm/brace-expansion@1.1.18?vcs_url=git%3A%2F%2Fgithub.com%2Fjuliangruber%2Fbrace-expansion.git",
 			"externalReferences": [
 				{
 					"url": "git://github.com/juliangruber/brace-expansion.git",
@@ -463,8 +463,8 @@
 		{
 			"type": "library",
 			"name": "semver",
-			"version": "7.8.1",
-			"bom-ref": "pkg:npm/semver@7.8.1?vcs_url=git%2Bhttps%3A%2F%2Fgithub.com%2Fnpm%2Fnode-semver.git",
+			"version": "7.8.5",
+			"bom-ref": "pkg:npm/semver@7.8.5?vcs_url=git%2Bhttps%3A%2F%2Fgithub.com%2Fnpm%2Fnode-semver.git",
 			"author": "GitHub Inc.",
 			"description": "The semantic version parser used by npm.",
 			"licenses": [
@@ -475,7 +475,7 @@
 					}
 				}
 			],
-			"purl": "pkg:npm/semver@7.8.1?vcs_url=git%2Bhttps%3A%2F%2Fgithub.com%2Fnpm%2Fnode-semver.git",
+			"purl": "pkg:npm/semver@7.8.5?vcs_url=git%2Bhttps%3A%2F%2Fgithub.com%2Fnpm%2Fnode-semver.git",
 			"externalReferences": [
 				{
 					"url": "git+https://github.com/npm/node-semver.git",
@@ -498,8 +498,8 @@
 			"type": "library",
 			"name": "cache",
 			"group": "@actions",
-			"version": "6.0.1",
-			"bom-ref": "pkg:npm/%40actions/cache@6.0.1?vcs_url=git%2Bhttps%3A%2F%2Fgithub.com%2Factions%2Ftoolkit.git%23packages%2Fcache",
+			"version": "6.2.0",
+			"bom-ref": "pkg:npm/%40actions/cache@6.2.0?vcs_url=git%2Bhttps%3A%2F%2Fgithub.com%2Factions%2Ftoolkit.git%23packages%2Fcache",
 			"description": "Actions cache lib",
 			"licenses": [
 				{
@@ -509,7 +509,7 @@
 					}
 				}
 			],
-			"purl": "pkg:npm/%40actions/cache@6.0.1?vcs_url=git%2Bhttps%3A%2F%2Fgithub.com%2Factions%2Ftoolkit.git%23packages%2Fcache",
+			"purl": "pkg:npm/%40actions/cache@6.2.0?vcs_url=git%2Bhttps%3A%2F%2Fgithub.com%2Factions%2Ftoolkit.git%23packages%2Fcache",
 			"externalReferences": [
 				{
 					"url": "git+https://github.com/actions/toolkit.git#packages/cache",
@@ -1466,7 +1466,7 @@
 			"dependsOn": [
 				"pkg:npm/%40actions/core@3.0.1?vcs_url=git%2Bhttps%3A%2F%2Fgithub.com%2Factions%2Ftoolkit.git%23packages%2Fcore",
 				"pkg:npm/%40actions/exec@3.0.0?vcs_url=git%2Bhttps%3A%2F%2Fgithub.com%2Factions%2Ftoolkit.git%23packages%2Fexec",
-				"pkg:npm/%40actions/cache@6.0.1?vcs_url=git%2Bhttps%3A%2F%2Fgithub.com%2Factions%2Ftoolkit.git%23packages%2Fcache",
+				"pkg:npm/%40actions/cache@6.2.0?vcs_url=git%2Bhttps%3A%2F%2Fgithub.com%2Factions%2Ftoolkit.git%23packages%2Fcache",
 				"pkg:npm/%40actions/tool-cache@4.0.0?vcs_url=git%2Bhttps%3A%2F%2Fgithub.com%2Factions%2Ftoolkit.git%23packages%2Ftool-cache"
 			]
 		},
@@ -1481,14 +1481,14 @@
 			"ref": "pkg:npm/%40actions/http-client@4.0.1?vcs_url=git%2Bhttps%3A%2F%2Fgithub.com%2Factions%2Ftoolkit.git%23packages%2Fhttp-client",
 			"dependsOn": [
 				"pkg:npm/tunnel@0.0.6?vcs_url=git%2Bhttps%3A%2F%2Fgithub.com%2Fkoichik%2Fnode-tunnel.git",
-				"pkg:npm/undici@6.24.1?vcs_url=git%2Bhttps%3A%2F%2Fgithub.com%2Fnodejs%2Fundici.git"
+				"pkg:npm/undici@6.28.0?vcs_url=git%2Bhttps%3A%2F%2Fgithub.com%2Fnodejs%2Fundici.git"
 			]
 		},
 		{
 			"ref": "pkg:npm/tunnel@0.0.6?vcs_url=git%2Bhttps%3A%2F%2Fgithub.com%2Fkoichik%2Fnode-tunnel.git"
 		},
 		{
-			"ref": "pkg:npm/undici@6.24.1?vcs_url=git%2Bhttps%3A%2F%2Fgithub.com%2Fnodejs%2Fundici.git"
+			"ref": "pkg:npm/undici@6.28.0?vcs_url=git%2Bhttps%3A%2F%2Fgithub.com%2Fnodejs%2Fundici.git"
 		},
 		{
 			"ref": "pkg:npm/%40actions/io@3.0.2?vcs_url=git%2Bhttps%3A%2F%2Fgithub.com%2Factions%2Ftoolkit.git%23packages%2Fio"
@@ -1513,7 +1513,7 @@
 			"ref": "pkg:npm/balanced-match@1.0.2?vcs_url=git%3A%2F%2Fgithub.com%2Fjuliangruber%2Fbalanced-match.git"
 		},
 		{
-			"ref": "pkg:npm/brace-expansion@1.1.13?vcs_url=git%3A%2F%2Fgithub.com%2Fjuliangruber%2Fbrace-expansion.git",
+			"ref": "pkg:npm/brace-expansion@1.1.18?vcs_url=git%3A%2F%2Fgithub.com%2Fjuliangruber%2Fbrace-expansion.git",
 			"dependsOn": [
 				"pkg:npm/concat-map@0.0.1?vcs_url=git%3A%2F%2Fgithub.com%2Fsubstack%2Fnode-concat-map.git",
 				"pkg:npm/balanced-match@1.0.2?vcs_url=git%3A%2F%2Fgithub.com%2Fjuliangruber%2Fbalanced-match.git"
@@ -1522,20 +1522,20 @@
 		{
 			"ref": "pkg:npm/minimatch@3.1.5?vcs_url=git%3A%2F%2Fgithub.com%2Fisaacs%2Fminimatch.git",
 			"dependsOn": [
-				"pkg:npm/brace-expansion@1.1.13?vcs_url=git%3A%2F%2Fgithub.com%2Fjuliangruber%2Fbrace-expansion.git"
+				"pkg:npm/brace-expansion@1.1.18?vcs_url=git%3A%2F%2Fgithub.com%2Fjuliangruber%2Fbrace-expansion.git"
 			]
 		},
 		{
-			"ref": "pkg:npm/semver@7.8.1?vcs_url=git%2Bhttps%3A%2F%2Fgithub.com%2Fnpm%2Fnode-semver.git"
+			"ref": "pkg:npm/semver@7.8.5?vcs_url=git%2Bhttps%3A%2F%2Fgithub.com%2Fnpm%2Fnode-semver.git"
 		},
 		{
-			"ref": "pkg:npm/%40actions/cache@6.0.1?vcs_url=git%2Bhttps%3A%2F%2Fgithub.com%2Factions%2Ftoolkit.git%23packages%2Fcache",
+			"ref": "pkg:npm/%40actions/cache@6.2.0?vcs_url=git%2Bhttps%3A%2F%2Fgithub.com%2Factions%2Ftoolkit.git%23packages%2Fcache",
 			"dependsOn": [
 				"pkg:npm/%40actions/core@3.0.1?vcs_url=git%2Bhttps%3A%2F%2Fgithub.com%2Factions%2Ftoolkit.git%23packages%2Fcore",
 				"pkg:npm/%40actions/exec@3.0.0?vcs_url=git%2Bhttps%3A%2F%2Fgithub.com%2Factions%2Ftoolkit.git%23packages%2Fexec",
 				"pkg:npm/%40actions/glob@0.6.1?vcs_url=git%2Bhttps%3A%2F%2Fgithub.com%2Factions%2Ftoolkit.git%23packages%2Fglob",
 				"pkg:npm/%40actions/io@3.0.2?vcs_url=git%2Bhttps%3A%2F%2Fgithub.com%2Factions%2Ftoolkit.git%23packages%2Fio",
-				"pkg:npm/semver@7.8.1?vcs_url=git%2Bhttps%3A%2F%2Fgithub.com%2Fnpm%2Fnode-semver.git",
+				"pkg:npm/semver@7.8.5?vcs_url=git%2Bhttps%3A%2F%2Fgithub.com%2Fnpm%2Fnode-semver.git",
 				"pkg:npm/%40azure/storage-blob@12.31.0?vcs_url=git%2Bhttps%3A%2F%2Fgithub.com%2FAzure%2Fazure-sdk-for-js.git",
 				"pkg:npm/%40actions/http-client@4.0.1?vcs_url=git%2Bhttps%3A%2F%2Fgithub.com%2Factions%2Ftoolkit.git%23packages%2Fhttp-client",
 				"pkg:npm/%40protobuf-ts/runtime@2.11.1?vcs_url=git%2Bhttps%3A%2F%2Fgithub.com%2Ftimostamm%2Fprotobuf-ts.git%23packages%2Fruntime",
@@ -1694,7 +1694,7 @@
 		{
 			"ref": "pkg:npm/%40actions/tool-cache@4.0.0?vcs_url=git%2Bhttps%3A%2F%2Fgithub.com%2Factions%2Ftoolkit.git%23packages%2Ftool-cache",
 			"dependsOn": [
-				"pkg:npm/semver@7.8.1?vcs_url=git%2Bhttps%3A%2F%2Fgithub.com%2Fnpm%2Fnode-semver.git",
+				"pkg:npm/semver@7.8.5?vcs_url=git%2Bhttps%3A%2F%2Fgithub.com%2Fnpm%2Fnode-semver.git",
 				"pkg:npm/%40actions/core@3.0.1?vcs_url=git%2Bhttps%3A%2F%2Fgithub.com%2Factions%2Ftoolkit.git%23packages%2Fcore",
 				"pkg:npm/%40actions/io@3.0.2?vcs_url=git%2Bhttps%3A%2F%2Fgithub.com%2Factions%2Ftoolkit.git%23packages%2Fio",
 				"pkg:npm/%40actions/http-client@4.0.1?vcs_url=git%2Bhttps%3A%2F%2Fgithub.com%2Factions%2Ftoolkit.git%23packages%2Fhttp-client",

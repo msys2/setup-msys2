@@ -122,7 +122,7 @@ Find further details at [#171](https://github.com/msys2/setup-msys2/issues/171#i
 
 The default [environment](https://www.msys2.org/docs/environments/) that is used in the `msys2` command/shell provided by this action.
 
-MSYS2 recommends `UCRT64` nowadays as the default instead of `MINGW64`.
+`MINGW32` and `MINGW64` are deprecated. There is no replacement for `MINGW32`; use `UCRT64` or `CLANG64` instead of `MINGW64`. Selecting either environment emits a warning.
 
 For example:
 
@@ -148,6 +148,23 @@ For example, in order to build a PKGBUILD file and then test the installed artif
       set MSYSTEM=UCRT64
       msys2 -c '<command to test the package>'
 ```
+
+#### suppress-deprecation-warnings
+
+* Type: `string`
+* Allowed values: `msystem-mingw32 | msystem-mingw64`
+* Default: -
+
+Suppress warnings for deprecated environments that you still need to use:
+
+```yaml
+  - uses: msys2/setup-msys2@v2
+    with:
+      msystem: MINGW32
+      suppress-deprecation-warnings: msystem-mingw32
+```
+
+Multiple IDs can be separated by whitespace. Unknown IDs emit a warning and are ignored.
 
 #### update
 

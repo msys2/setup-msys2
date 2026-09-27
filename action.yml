@@ -40,6 +40,10 @@ inputs:
     description: 'If caching should be used'
     required: false
     default: true
+  suppress-deprecation-warnings:
+    description: 'Whitespace-separated deprecation warning IDs to acknowledge and suppress'
+    required: false
+    default: ''
 outputs:
   msys2-location:
     description: 'The absolute path of the MSYS2 installation location'
