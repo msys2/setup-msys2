@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.33.0
+
+- Update base distribution to [20260927](https://github.com/msys2/msys2-installer/releases/tag/2026-09-27). [[#657](https://github.com/msys2/setup-msys2/pull/657)]
+- Due to dependency cleanups "perl" and some related libraries are no longer installed by default.
+- Add a deprecation warning for MINGW32/MINGW64. See the new `suppress-deprecation-warnings` option for how to silence them. [[#644](https://github.com/msys2/setup-msys2/pull/644)]
+- pacboy caching fixes [[#650](https://github.com/msys2/setup-msys2/pull/650)]
+- Update dependencies
+
 ## 2.32.0
 
 - Update base distribution to [20260611](https://github.com/msys2/msys2-installer/releases/tag/2026-06-11). [[#624](https://github.com/msys2/setup-msys2/pull/624)]
