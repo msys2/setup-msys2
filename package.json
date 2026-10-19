@@ -34,10 +34,10 @@
     "@actions/tool-cache": "^4.0.0"
   },
   "devDependencies": {
-    "@types/node": "^24.19.1",
+    "@types/node": "^24.19.2",
     "oxlint": "^1.87.0",
-    "oxlint-tsgolint": "^7.0.2003",
-    "rolldown": "^1.2.12",
+    "oxlint-tsgolint": "^7.0.2004",
+    "rolldown": "^1.2.13",
     "rollup-plugin-sbom": "^4.0.1",
     "typescript": "^7.0.2"
   }
