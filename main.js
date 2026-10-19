@@ -26,6 +26,8 @@ class Input {
     release = false;
     /** @type {boolean} */
     update = false;
+    /** @type {boolean} */
+    staging = false;
     /** @type {string} */
     pathtype = '';
     /** @type {string} */
@@ -91,6 +93,18 @@ function parseInput() {
     }
   }
 
+  let p_staging = false;
+  const stagingEnvValue = process.env['__SETUP_MSYS2_USE_STAGING'];
+  if (stagingEnvValue !== undefined) {
+    if (stagingEnvValue === 'true' || stagingEnvValue === '1') {
+      p_staging = true;
+    } else if (stagingEnvValue === 'false' || stagingEnvValue === '0') {
+      p_staging = false;
+    } else {
+      throw new Error(`'__SETUP_MSYS2_USE_STAGING' must be 'true', '1', 'false', or '0', got '${stagingEnvValue}'`);
+    }
+  }
+
   const msystem_allowed = ['MSYS', 'MINGW32', 'MINGW64', 'UCRT64', 'CLANG64', 'CLANGARM64'];
   if (!msystem_allowed.includes(p_msystem.toUpperCase())) {
     throw new Error(`'msystem' needs to be one of ${ msystem_allowed.join(', ') }, got ${p_msystem}`);
@@ -124,6 +138,7 @@ function parseInput() {
   let input = new Input();
   input.release = p_release;
   input.update = p_update;
+  input.staging = p_staging;
   input.pathtype = p_pathtype;
   input.msystem = p_msystem;
   input.install = p_install_list;
@@ -196,6 +211,22 @@ async function configureMainMirror(msysRootDir) {
 }
 
 /**
+ * @param {string} msysRootDir
+ * @param {boolean} staging
+ * @returns {Promise<void>}
+ */
+async function configurePacman(msysRootDir, staging) {
+  const confPath = path.join(msysRootDir, 'etc', 'pacman.conf');
+  let content = await fs.promises.readFile(confPath, 'utf8');
+  // Reduce time required to install packages by disabling pacman's disk space checking
+  content = content.replace(/^CheckSpace/gm, '#CheckSpace');
+  if (staging) {
+    content = content.replace(/^# \[staging\](?:\r?\n# .*)*/gm, section => section.replace(/^# /gm, ''));
+  }
+  await fs.promises.writeFile(confPath, content, 'utf8');
+}
+
+/**
  * @param {string[]} paths
  * @param {string | undefined} restoreKey
  * @param {string} saveKey
@@ -259,7 +290,7 @@ class PackageCache {
     // We want a cache key that is ideally always the same for the same kind of job.
     // So that mingw32 and ming64 jobs, and jobs with different install packages have different caches.
     let shasum = crypto.createHash('sha1');
-    shasum.update([CACHE_FLUSH_COUNTER, input.release, input.update, input.pathtype, input.msystem, input.install, input.pacboy, input.usemainmirroronly].toString() + INSTALLER_CHECKSUM);
+    shasum.update([CACHE_FLUSH_COUNTER, input.release, input.update, input.staging, input.pathtype, input.msystem, input.install, input.pacboy, input.usemainmirroronly].toString() + INSTALLER_CHECKSUM);
     this.jobCacheKey = this.fallbackCacheKey + '-conf:' + shasum.digest('hex').slice(0, 8);
 
     this.restoreKey = undefined;
@@ -456,9 +487,8 @@ async function run() {
       core.endGroup();
     }
 
-    core.startGroup('Disable CheckSpace...');
-    // Reduce time required to install packages by disabling pacman's disk space checking
-    await runMsys(['sed', '-i', 's/^CheckSpace/#CheckSpace/g', '/etc/pacman.conf']);
+    core.startGroup('Configuring pacman...');
+    await configurePacman(msysRootDir, input.staging);
     core.endGroup();
 
     if (input.update) {
@@ -466,7 +496,11 @@ async function run() {
       await pacman(['-Syuu', '--overwrite', '*'], {ignoreReturnCode: true});
       // We have changed /etc/pacman.conf above which means on a pacman upgrade
       // pacman.conf will be installed as pacman.conf.pacnew
-      await runMsys(['mv', '-f', '/etc/pacman.conf.pacnew', '/etc/pacman.conf'], {ignoreReturnCode: true, silent: true});
+      const pacnew = path.join(msysRootDir, 'etc', 'pacman.conf.pacnew');
+      if (fs.existsSync(pacnew)) {
+        await fs.promises.rename(pacnew, path.join(msysRootDir, 'etc', 'pacman.conf'));
+        await configurePacman(msysRootDir, input.staging);
+      }
       core.endGroup();
 
       core.startGroup('Killing remaining tasks...');
