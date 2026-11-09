@@ -35,10 +35,10 @@
   },
   "devDependencies": {
     "@types/node": "^24.19.2",
-    "oxlint": "^1.89.0",
+    "oxlint": "^1.90.0",
     "oxlint-tsgolint": "^7.0.2005",
-    "rolldown": "^1.2.15",
-    "rollup-plugin-sbom": "^4.0.1",
+    "rolldown": "^1.2.16",
+    "rollup-plugin-sbom": "^5.0.1",
     "typescript": "^7.0.2"
   }
 }
