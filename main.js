@@ -418,11 +418,14 @@ async function run() {
 
     let cachedInstall = false;
     let instCache = null;
+    let dest = tmp_dir;
     let msysRootDir;
 
     if (input.release) {
       // Use upstream package instead of the default installation in the virtual environment.
-      let dest = (input.location !== null) ? input.location : tmp_dir;
+      if (input.location !== null) {
+        dest = path.resolve(tmp_dir, input.location);
+      }
       msysRootDir = path.join(dest, 'msys64');
       if (fs.existsSync(msysRootDir)) {
         core.setFailed(`Trying to install MSYS2 to ${msysRootDir} but that already exists, cannot continue.`);
@@ -457,7 +460,7 @@ async function run() {
       return;
     }
 
-    const pathDir = path.join(tmp_dir, 'setup-msys2');
+    const pathDir = path.join(dest, 'setup-msys2');
     await io.mkdirP(pathDir);
     writeWrapper(msysRootDir, input.msystem, input.pathtype, pathDir, 'msys2.cmd');
     core.addPath(pathDir);
