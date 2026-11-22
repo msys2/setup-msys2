@@ -79,7 +79,7 @@ function parseInput() {
     }
   }
 
-  // Configures pacman to use only repo.msys2.org instead of the mirrorlist.
+  // Configures pacman to use only repo.msys2.org instead of the mirrorlist in MSYS2 CI.
   // See: https://github.com/msys2/setup-msys2/issues/571
   let p_use_main_mirror_only = false;
   const envValue = process.env['__SETUP_MSYS2_USE_MAIN_MIRROR_ONLY'];
@@ -90,6 +90,15 @@ function parseInput() {
       p_use_main_mirror_only = false;
     } else {
       throw new Error(`'__SETUP_MSYS2_USE_MAIN_MIRROR_ONLY' must be 'true', '1', 'false', or '0', got '${envValue}'`);
+    }
+  }
+
+  if (p_use_main_mirror_only) {
+    const is_msys2_ci = process.env['GITHUB_SERVER_URL'] === 'https://github.com' &&
+      process.env['GITHUB_REPOSITORY_OWNER']?.toLowerCase() === 'msys2';
+    if (!is_msys2_ci) {
+      p_use_main_mirror_only = false;
+      core.warning("Ignoring '__SETUP_MSYS2_USE_MAIN_MIRROR_ONLY': it is only supported in the 'msys2' organization on github.com.");
     }
   }
 
