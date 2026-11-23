@@ -731,7 +731,6 @@ jobs:
 
   main-mirror:
     name: 🔒 main-mirror-only
-    if: github.server_url == 'https://github.com' && github.repository_owner == 'msys2'
     needs: [cache]
     runs-on: windows-latest
     steps:
